@@ -4,6 +4,7 @@ namespace Spice.Domain
 {
     public class Plant
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Specimen { get; set; }
         public string FieldName { get; set; }
