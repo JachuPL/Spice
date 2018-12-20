@@ -9,6 +9,10 @@ namespace Spice.Persistence
     {
         public DbSet<Plant> Plants { get; set; }
 
+        public SpiceContext(DbContextOptions<SpiceContext> options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PlantConfiguration());
