@@ -27,16 +27,16 @@ namespace Spice.WebAPI.Plants.Models.Validators
                 .Must(BeAValidValue).WithMessage("Select a valid state of plant.");
         }
 
-        private bool BeAValidValue(PlantStateViewModelEnum state)
+        private bool BeAValidValue(PlantStateViewModel state)
         {
             switch (state)
             {
-                case PlantStateViewModelEnum.Healthy:
-                case PlantStateViewModelEnum.Deceased:
-                case PlantStateViewModelEnum.Flowering:
-                case PlantStateViewModelEnum.Fruiting:
-                case PlantStateViewModelEnum.Harvested:
-                case PlantStateViewModelEnum.Sick:
+                case PlantStateViewModel.Healthy:
+                case PlantStateViewModel.Deceased:
+                case PlantStateViewModel.Flowering:
+                case PlantStateViewModel.Fruiting:
+                case PlantStateViewModel.Harvested:
+                case PlantStateViewModel.Sick:
                     return true;
 
                 default: return false;

@@ -15,7 +15,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
-                State = PlantStateViewModelEnum.Healthy
+                State = PlantStateViewModel.Healthy
             };
         }
 
@@ -29,7 +29,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
-                State = (PlantStateViewModelEnum)999
+                State = (PlantStateViewModel)999
             };
         }
 
@@ -43,7 +43,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
-                State = PlantStateViewModelEnum.Healthy
+                State = PlantStateViewModel.Healthy
             };
         }
 
@@ -57,7 +57,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
-                State = (PlantStateViewModelEnum)999
+                State = (PlantStateViewModel)999
             };
         }
     }

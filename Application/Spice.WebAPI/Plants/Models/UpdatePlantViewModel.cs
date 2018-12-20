@@ -10,6 +10,6 @@ namespace Spice.WebAPI.Plants.Models
         public uint Row { get; set; }
         public uint Column { get; set; }
         public DateTime Planted { get; set; }
-        public PlantStateViewModelEnum State { get; set; }
+        public PlantStateViewModel State { get; set; }
     }
 }

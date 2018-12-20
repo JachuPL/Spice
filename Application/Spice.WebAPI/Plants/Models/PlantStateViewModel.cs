@@ -1,6 +1,6 @@
 ﻿namespace Spice.WebAPI.Plants.Models
 {
-    public enum PlantStateViewModelEnum
+    public enum PlantStateViewModel
     {
         Healthy,
         Flowering,
