@@ -13,17 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0D1E3A8A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.WebAPI.Tests", "Application\Tests\Spice.WebAPI.Tests\Spice.WebAPI.Tests.csproj", "{EF9120E6-F2FF-49EF-809A-FCAFBB07BEFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spice.Application", "Application\Spice.Application\Spice.Application.csproj", "{2EB0E4DA-0E14-497C-83CE-78837B99ED42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Application", "Application\Spice.Application\Spice.Application.csproj", "{2EB0E4DA-0E14-497C-83CE-78837B99ED42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spice.Persistence", "Application\Spice.Persistence\Spice.Persistence.csproj", "{56ED6CFD-45C9-45E3-B503-8A367084819F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Persistence", "Application\Spice.Persistence\Spice.Persistence.csproj", "{56ED6CFD-45C9-45E3-B503-8A367084819F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spice.Application.Tests", "Application\Tests\Spice.Application.Tests\Spice.Application.Tests.csproj", "{A4B8E6A4-5769-4B3E-928E-1F0A4A395CC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Application.Tests", "Application\Tests\Spice.Application.Tests\Spice.Application.Tests.csproj", "{A4B8E6A4-5769-4B3E-928E-1F0A4A395CC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{133063EA-0F4F-4D1D-BC06-1232F76CDBDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Domain", "Domain\Spice.Domain\Spice.Domain.csproj", "{BE5B8436-F1C4-4CA4-B9A7-EAD1FC41AA10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spice.Domain.Tests", "Domain\Spice.Domain.Tests\Spice.Domain.Tests.csproj", "{372BBF0D-5563-4D7A-B77C-E78EF4580100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Domain.Tests", "Domain\Spice.Domain.Tests\Spice.Domain.Tests.csproj", "{372BBF0D-5563-4D7A-B77C-E78EF4580100}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{85AF9241-0C19-4968-8ABA-F8558CB9DF52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
