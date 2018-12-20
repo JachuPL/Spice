@@ -107,9 +107,19 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommandPlants.Create(A<CreatePlantModel>.Ignored))
                 .Throws(new PlantExistsAtCoordinatesException(0, 0));
             string remoteEndPoint = "/api/plants";
+            CreatePlantViewModel model = new CreatePlantViewModel()
+            {
+                Name = "Pepper",
+                Specimen = "Capsicum annuum",
+                FieldName = "Field A",
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = PlantStateViewModelEnum.Healthy
+            };
 
             // Act
-            var response = await _client.PostAsJsonAsync(remoteEndPoint, A.Fake<CreatePlantViewModel>());
+            var response = await _client.PostAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -123,9 +133,19 @@ namespace Spice.WebAPI.Tests.Plants
             // Arrange
             A.CallTo(() => _fakeCommandPlants.Create(A<CreatePlantModel>.Ignored)).Returns(Guid.NewGuid());
             string remoteEndPoint = "/api/plants";
+            CreatePlantViewModel model = new CreatePlantViewModel()
+            {
+                Name = "Pepper",
+                Specimen = "Capsicum annuum",
+                FieldName = "Field A",
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = PlantStateViewModelEnum.Healthy
+            };
 
             // Act
-            var response = await _client.PostAsJsonAsync(remoteEndPoint, A.Fake<CreatePlantViewModel>());
+            var response = await _client.PostAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -139,9 +159,19 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Arrange
             string remoteEndPoint = "/api/plants";
+            CreatePlantViewModel model = new CreatePlantViewModel()
+            {
+                Name = string.Empty,
+                Specimen = string.Empty,
+                FieldName = string.Empty,
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = (PlantStateViewModelEnum)999
+            };
 
             // Act
-            var response = await _client.PostAsJsonAsync(remoteEndPoint, "");
+            var response = await _client.PostAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -155,9 +185,19 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommandPlants.Update(A<UpdatePlantModel>.Ignored))
                 .Throws(new PlantExistsAtCoordinatesException(0, 0));
             string remoteEndPoint = "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F";
+            UpdatePlantViewModel model = new UpdatePlantViewModel()
+            {
+                Name = "Pepper",
+                Specimen = "Capsicum annuum",
+                FieldName = "Field A",
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = PlantStateViewModelEnum.Healthy
+            };
 
             // Act
-            var response = await _client.PutAsJsonAsync(remoteEndPoint, A.Fake<UpdatePlantViewModel>());
+            var response = await _client.PutAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -171,9 +211,19 @@ namespace Spice.WebAPI.Tests.Plants
             // Arrange
             A.CallTo(() => _fakeCommandPlants.Update(A<UpdatePlantModel>.Ignored)).Returns(Task.FromResult<Plant>(null));
             string remoteEndPoint = "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F";
+            UpdatePlantViewModel model = new UpdatePlantViewModel()
+            {
+                Name = "Pepper",
+                Specimen = "Capsicum annuum",
+                FieldName = "Field A",
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = PlantStateViewModelEnum.Healthy
+            };
 
             // Act
-            var response = await _client.PutAsJsonAsync(remoteEndPoint, A.Fake<UpdatePlantViewModel>());
+            var response = await _client.PutAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -187,9 +237,19 @@ namespace Spice.WebAPI.Tests.Plants
             // Arrange
             A.CallTo(() => _fakeCommandPlants.Update(A<UpdatePlantModel>.Ignored)).Returns(A.Fake<Plant>());
             string remoteEndPoint = "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F";
+            UpdatePlantViewModel model = new UpdatePlantViewModel()
+            {
+                Name = "Pepper",
+                Specimen = "Capsicum annuum",
+                FieldName = "Field A",
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = PlantStateViewModelEnum.Healthy
+            };
 
             // Act
-            var response = await _client.PutAsJsonAsync(remoteEndPoint, A.Fake<UpdatePlantViewModel>());
+            var response = await _client.PutAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -202,9 +262,19 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Arrange
             string remoteEndPoint = "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F";
+            UpdatePlantViewModel model = new UpdatePlantViewModel()
+            {
+                Name = string.Empty,
+                Specimen = string.Empty,
+                FieldName = string.Empty,
+                Row = 0,
+                Column = 0,
+                Planted = DateTime.Now,
+                State = (PlantStateViewModelEnum)999
+            };
 
             // Act
-            var response = await _client.PutAsJsonAsync(remoteEndPoint, "");
+            var response = await _client.PutAsJsonAsync(remoteEndPoint, model);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
