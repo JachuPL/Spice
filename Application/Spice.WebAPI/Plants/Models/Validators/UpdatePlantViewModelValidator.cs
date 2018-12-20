@@ -17,7 +17,7 @@ namespace Spice.WebAPI.Plants.Models.Validators
                 .MaximumLength(50).WithMessage("Maximum lenght of plant specimen is 50 characters.");
 
             RuleFor(x => x.FieldName)
-                .NotEmpty().WithMessage("Filed name cannot be empty.")
+                .NotEmpty().WithMessage("Field name cannot be empty.")
                 .MaximumLength(50).WithMessage("Maximum lenght of field name is 50 characters.");
 
             RuleFor(x => x.Planted)

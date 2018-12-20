@@ -31,8 +31,8 @@ namespace Spice.WebAPI.Plants
         }
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<Plant>> Get(Guid id)
+        [HttpGet("{id:guid}", Name = nameof(GetPlant))]
+        public async Task<ActionResult<Plant>> GetPlant(Guid id)
         {
             Plant plant = await _queries.Get(id);
             if (plant is null)
@@ -51,8 +51,8 @@ namespace Spice.WebAPI.Plants
             try
             {
                 var createPlantModel = new CreatePlantModel(); // TODO: map viewmodel to models
-                Guid id = await _commands.Create(createPlantModel);
-                return CreatedAtAction("Get", new { id = id });
+                Guid plantId = await _commands.Create(createPlantModel);
+                return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
             catch (PlantExistsAtCoordinatesException ex)
             {
