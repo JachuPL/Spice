@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Spice.Application.Plants
+namespace Spice.Application.Plants.Interfaces
 {
     public interface IQueryPlants
     {

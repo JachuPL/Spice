@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
+using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Domain;
 using Spice.WebAPI.Plants.Models;
