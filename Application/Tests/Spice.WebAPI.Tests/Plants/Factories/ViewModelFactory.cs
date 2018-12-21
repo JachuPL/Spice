@@ -1,4 +1,4 @@
-﻿using Spice.WebAPI.Plants.Models;
+﻿using Spice.ViewModels.Plants;
 using System;
 
 namespace Spice.WebAPI.Tests.Plants.Factories

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Spice.Application\Spice.Application.csproj" />
+    <ProjectReference Include="..\..\Spice.AutoMapper\Spice.AutoMapper.csproj" />
     <ProjectReference Include="..\..\Spice.Persistence\Spice.Persistence.csproj" />
     <ProjectReference Include="..\..\Spice.WebAPI\Spice.WebAPI.csproj" />
   </ItemGroup>

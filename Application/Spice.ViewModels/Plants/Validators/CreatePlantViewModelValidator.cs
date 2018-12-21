@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Spice.WebAPI.Plants.Models.Validators
+namespace Spice.ViewModels.Plants.Validators
 {
     public class CreatePlantViewModelValidator : AbstractValidator<CreatePlantViewModel>
     {

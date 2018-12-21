@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Domain;
-using Spice.WebAPI.Plants.Models;
+using Spice.ViewModels.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Spice.WebAPI.Plants
+namespace Spice.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,11 +17,13 @@ namespace Spice.WebAPI.Plants
     {
         private readonly IQueryPlants _queries;
         private readonly ICommandPlants _commands;
+        private readonly IMapper _mapper;
 
-        public PlantsController(IQueryPlants queries, ICommandPlants commands)
+        public PlantsController(IQueryPlants queries, ICommandPlants commands, IMapper mapper)
         {
             _queries = queries;
             _commands = commands;
+            _mapper = mapper;
         }
 
         // GET api/plants
@@ -50,7 +53,7 @@ namespace Spice.WebAPI.Plants
 
             try
             {
-                var createPlantModel = new CreatePlantModel(); // TODO: map viewmodel to models
+                CreatePlantModel createPlantModel = _mapper.Map<CreatePlantModel>(model);
                 Guid plantId = await _commands.Create(createPlantModel);
                 return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
@@ -72,7 +75,9 @@ namespace Spice.WebAPI.Plants
 
             try
             {
-                var updatePlantModel = new UpdatePlantModel(); // TODO: map viewmodel to models
+                UpdatePlantModel updatePlantModel = _mapper.Map<UpdatePlantModel>(model);
+                updatePlantModel.Id = id;
+
                 Plant plant = await _commands.Update(updatePlantModel);
                 if (plant is null)
                     return NotFound();
