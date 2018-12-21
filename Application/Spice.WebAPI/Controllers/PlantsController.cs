@@ -28,20 +28,21 @@ namespace Spice.WebAPI.Controllers
 
         // GET api/plants
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plant>>> Get()
+        public async Task<ActionResult<IEnumerable<PlantIndexViewModel>>> Get()
         {
-            return Ok(await _queries.GetAll());
+            IEnumerable<Plant> plants = await _queries.GetAll();
+            return Ok(_mapper.Map<IEnumerable<PlantIndexViewModel>>(plants));
         }
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
         [HttpGet("{id:guid}", Name = nameof(GetPlant))]
-        public async Task<ActionResult<Plant>> GetPlant(Guid id)
+        public async Task<ActionResult<PlantDetailsViewModel>> GetPlant(Guid id)
         {
             Plant plant = await _queries.Get(id);
             if (plant is null)
                 return NotFound();
 
-            return Ok(plant);
+            return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
         }
 
         // POST api/plants
@@ -82,7 +83,7 @@ namespace Spice.WebAPI.Controllers
                 if (plant is null)
                     return NotFound();
 
-                return Ok(plant);
+                return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
             }
             catch (PlantExistsAtCoordinatesException ex)
             {

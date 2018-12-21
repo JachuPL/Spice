@@ -22,6 +22,9 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<CreatePlantModel, Domain.Plant>()
                 .ForMember(x => x.Id, ex => ex.MapFrom(x => Guid.Empty));
+
+            CreateMap<Domain.Plant, PlantIndexViewModel>();
+            CreateMap<Domain.Plant, PlantDetailsViewModel>();
         }
     }
 }
