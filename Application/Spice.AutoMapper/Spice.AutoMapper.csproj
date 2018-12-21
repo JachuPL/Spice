@@ -6,11 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Spice.Domain\Spice.Domain.csproj" />
+    <ProjectReference Include="..\Spice.Application\Spice.Application.csproj" />
+    <ProjectReference Include="..\Spice.ViewModels\Spice.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

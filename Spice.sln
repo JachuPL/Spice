@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.Domain.Tests", "Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.AutoMapper", "Application\Spice.AutoMapper\Spice.AutoMapper.csproj", "{A040C721-5CA6-4F23-A9CB-3056142D2D58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spice.ViewModels", "Application\Spice.ViewModels\Spice.ViewModels.csproj", "{E28CB2E3-3150-4510-810D-18B4E73E0A4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spice.ViewModels", "Application\Spice.ViewModels\Spice.ViewModels.csproj", "{E28CB2E3-3150-4510-810D-18B4E73E0A4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
