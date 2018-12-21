@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Spice.WebAPI.Plants.Models.Validators;
+using Spice.ViewModels.Plants.Validators;
 
 namespace Spice.WebAPI
 {

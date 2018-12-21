@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spice.WebAPI.Plants.Models
+namespace Spice.ViewModels.Plants
 {
     public class CreatePlantViewModel
     {
