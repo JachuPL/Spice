@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spice.AutoMapper;
 using Spice.ViewModels.Plants.Validators;
 
 namespace Spice.WebAPI
@@ -20,6 +21,8 @@ namespace Spice.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(AutoMapperFactory.CreateMapper());
+
             services.AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreatePlantViewModelValidator>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

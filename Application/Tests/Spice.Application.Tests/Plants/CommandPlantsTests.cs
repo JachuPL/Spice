@@ -1,9 +1,11 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
+using Spice.AutoMapper;
 using Spice.Domain;
 using Spice.Persistence;
 using System;
@@ -15,13 +17,15 @@ namespace Spice.Application.Tests.Plants
     {
         private CommandPlants _commands;
         private SpiceContext _service;
+        private IMapper _mapper;
 
         [SetUp]
         public void SetUp()
         {
             _service = SetupInMemoryDatabase();
             _service.Database.EnsureCreated();
-            _commands = new CommandPlants(_service);
+            _mapper = AutoMapperFactory.CreateMapper();
+            _commands = new CommandPlants(_service, _mapper);
         }
 
         [TearDown]

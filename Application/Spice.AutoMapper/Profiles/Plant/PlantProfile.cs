@@ -19,6 +19,9 @@ namespace Spice.AutoMapper.Profiles.Plant
             CreateMap<PlantStateViewModel, PlantState>().ConvertUsing<PlantStateViewModelConverter>();
 
             CreateMap<PlantState, PlantStateViewModel>().ConvertUsing<PlantStateConverter>();
+
+            CreateMap<CreatePlantModel, Domain.Plant>()
+                .ForMember(x => x.Id, ex => ex.MapFrom(x => Guid.Empty));
         }
     }
 }
