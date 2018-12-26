@@ -8,6 +8,7 @@ using Spice.ViewModels.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spice.Application.Fields.Exceptions;
 
 namespace Spice.WebAPI.Controllers
 {
@@ -58,6 +59,13 @@ namespace Spice.WebAPI.Controllers
                 Guid plantId = await _commands.Create(createPlantModel);
                 return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
+            catch (FieldDoesNotExistException)
+            {
+                return Conflict(new
+                {
+                    Error = $"No field by id {model.FieldId}"
+                });
+            }
             catch (PlantExistsAtCoordinatesException ex)
             {
                 return Conflict(new
@@ -84,6 +92,13 @@ namespace Spice.WebAPI.Controllers
                     return NotFound();
 
                 return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
+            }
+            catch (FieldDoesNotExistException)
+            {
+                return Conflict(new
+                {
+                    Error = $"No field by id {model.FieldId}"
+                });
             }
             catch (PlantExistsAtCoordinatesException ex)
             {
