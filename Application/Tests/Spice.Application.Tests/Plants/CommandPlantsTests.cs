@@ -121,7 +121,7 @@ namespace Spice.Application.Tests.Plants
             plant.Should().NotBeNull();
             plant.Id.Should().Be(id);
             plant.Name.Should().Contain("Red");
-            plant.FieldName.Should().Contain("A");
+            plant.Field.Should().NotBeNull();
             plant.Column.Should().Be(0);
             plant.Row.Should().Be(0);
             plant.Planted.Day.Should().Be(DateTime.Now.Day);

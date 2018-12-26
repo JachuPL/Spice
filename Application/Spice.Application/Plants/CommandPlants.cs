@@ -25,7 +25,7 @@ namespace Spice.Application.Plants
         public async Task<Guid> Create(CreatePlantModel model)
         {
             Plant existingAtCoordinates =
-                await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.FieldName == model.FieldName);
+                await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
 
             if (existingAtCoordinates != null)
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
@@ -44,7 +44,7 @@ namespace Spice.Application.Plants
             if (plant is null)
                 return null;
 
-            if (_database.Plants.AsNoTracking().Any(x => x.Row == model.Row && x.Column == model.Column && x.FieldName == model.FieldName))
+            if (_database.Plants.AsNoTracking().Any(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
             _mapper.Map(model, plant);

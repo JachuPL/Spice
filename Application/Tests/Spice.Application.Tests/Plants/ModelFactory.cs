@@ -12,7 +12,7 @@ namespace Spice.Application.Tests.Plants
             {
                 Name = "Rocoto Giant Red",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                FieldId = Guid.NewGuid(),
                 Column = 0,
                 Row = 0,
                 Planted = DateTime.Now,
@@ -27,7 +27,7 @@ namespace Spice.Application.Tests.Plants
                 Id = id ?? Guid.NewGuid(),
                 Name = "Rocoto Giant Red",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                FieldId = Guid.NewGuid(),
                 Column = 0,
                 Row = 0,
                 Planted = DateTime.Now,
@@ -41,7 +41,7 @@ namespace Spice.Application.Tests.Plants
             {
                 Name = "Rocoto Giant Red",
                 Specimen = "Capsicum annuum",
-                FieldName = fieldName,
+                Field = new Field(),
                 Column = col,
                 Row = row,
                 Planted = DateTime.Now,
