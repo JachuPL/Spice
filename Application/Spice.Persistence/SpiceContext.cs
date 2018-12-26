@@ -25,6 +25,7 @@ namespace Spice.Persistence
         {
             modelBuilder.ApplyConfiguration(new PlantConfiguration());
             modelBuilder.ApplyConfiguration(new FieldConfiguration());
+            modelBuilder.ApplyConfiguration(new SpeciesConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
