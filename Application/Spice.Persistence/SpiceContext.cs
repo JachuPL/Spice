@@ -8,6 +8,7 @@ namespace Spice.Persistence
     public class SpiceContext : DbContext, IDatabaseService
     {
         public DbSet<Plant> Plants { get; set; }
+        public DbSet<Field> Fields { get; set; }
 
         public SpiceContext() : base()
         {
