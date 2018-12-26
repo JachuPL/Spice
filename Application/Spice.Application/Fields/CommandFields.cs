@@ -38,7 +38,7 @@ namespace Spice.Application.Fields
             if (field is null)
                 throw new FieldDoesNotExistException();
 
-            if (await _database.Fields.AnyAsync(x => x.Name == model.Name))
+            if (await _database.Fields.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
                 throw new FieldWithNameAlreadyExistsException(model.Name);
 
             _mapper.Map(model, field);

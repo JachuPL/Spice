@@ -57,7 +57,7 @@ namespace Spice.Application.Plants
             if (field is null)
                 throw new FieldDoesNotExistException();
 
-            if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column))
+            if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
             _mapper.Map(model, plant);
