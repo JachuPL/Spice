@@ -57,7 +57,11 @@ Spice is all about plants. As of now, the following requests are available:
     "id": "fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8",
     "name": "Aji Lemon Drop",
     "specimen": "Capsicum annuum L.",
-    "fieldName": "Field A",
+    "field": {
+        "id": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
+        "name": "Another one",
+        "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
+    },
     "row": 0,
     "column": 0,
     "planted": "2018-12-09T14:30:00",
@@ -70,7 +74,7 @@ Spice is all about plants. As of now, the following requests are available:
 {
 	"Name": "Aji Lemon Drop",
 	"Specimen": "Capsicum annuum L.",
-	"FieldName": "Field A",
+  "FieldId": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
 	"Row": 0,
 	"Column": 0,
 	"Planted": "2018-12-26 11:30:00",
@@ -85,7 +89,7 @@ Note that if a plant is found growing on specified field, row and column this op
 {
 	"Name": "Rocoto Giant Red",
 	"Specimen": "Capsicum annuum L.",
-	"FieldName": "Field B",
+  "FieldId": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
 	"Row": 1,
 	"Column": 0,
 	"Planted": "2018-12-26 11:30:00",
@@ -169,4 +173,4 @@ Note that if a field with specified name already exists this operation will resu
 // Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
 // Returns 204 No Content
 ```
-Note that once a plant is deleted it is not possible to restore it!
+Note that once a field is deleted it is not possible to restore it!

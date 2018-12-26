@@ -24,7 +24,9 @@ namespace Spice.Application.Plants
 
         public async Task<Plant> Get(Guid id)
         {
-            return await _database.Plants.FindAsync(id);
+            return await _database.Plants
+                .Include(x => x.Field)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
