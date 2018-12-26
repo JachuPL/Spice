@@ -8,7 +8,7 @@ namespace Spice.Application.Species.Interfaces
     {
         Task<Guid> Create(CreateSpeciesModel model);
 
-        Task<Domain.Plants.Species> Update(UpdateSpeciesModel ignored);
+        Task<Domain.Plants.Species> Update(UpdateSpeciesModel model);
 
         Task Delete(Guid id);
     }
