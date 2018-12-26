@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
+using Spice.Application.Fields.Exceptions;
 using Spice.Application.Fields.Interfaces;
 using Spice.Application.Fields.Models;
 using Spice.Domain;
@@ -19,19 +21,40 @@ namespace Spice.Application.Fields
             _mapper = mapper;
         }
 
-        public Task<Guid> Create(CreateFieldModel model)
+        public async Task<Guid> Create(CreateFieldModel model)
         {
-            throw new NotImplementedException();
+            if (await _database.Fields.AnyAsync(x => x.Name == model.Name))
+                throw new FieldWithNameAlreadyExistsException(model.Name);
+
+            Field field = _mapper.Map<Field>(model);
+            await _database.Fields.AddAsync(field);
+            await _database.SaveAsync();
+            return field.Id;
         }
 
-        public Task<Field> Update(UpdateFieldModel model)
+        public async Task<Field> Update(UpdateFieldModel model)
         {
-            throw new NotImplementedException();
+            Field field = await _database.Fields.FindAsync(model.Id);
+            if (field is null)
+                throw new FieldDoesNotExistException();
+
+            if (await _database.Fields.AnyAsync(x => x.Name == model.Name))
+                throw new FieldWithNameAlreadyExistsException(model.Name);
+
+            _mapper.Map(model, field);
+            _database.Fields.Update(field);
+            await _database.SaveAsync();
+            return field;
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Field field = await _database.Fields.FindAsync(id);
+            if (field is null)
+                return;
+
+            _database.Fields.Remove(field);
+            await _database.SaveAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Spice.Application.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Spice.Application.Common;
 using Spice.Application.Fields.Interfaces;
 using Spice.Domain;
 using System;
@@ -16,14 +17,14 @@ namespace Spice.Application.Fields
             _database = database;
         }
 
-        public Task<IEnumerable<Field>> GetAll()
+        public async Task<IEnumerable<Field>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _database.Fields.AsNoTracking().ToListAsync();
         }
 
-        public Task<Field> Get(Guid id)
+        public async Task<Field> Get(Guid id)
         {
-            throw new NotImplementedException();
+            return await _database.Fields.FindAsync(id);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Fields;
+using Spice.Domain;
 using Spice.Persistence;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Tests.Fields
@@ -37,19 +40,60 @@ namespace Spice.Application.Tests.Fields
         [TestCase(TestName = "GetAll query on fields returns all fields")]
         public async Task GetAllReturnsAllFields()
         {
-            throw new NotImplementedException();
+            // Given
+            SeedDatabaseForGetAllTesting();
+
+            // When
+            IEnumerable<Field> fields = await _queries.GetAll();
+
+            // Then
+            fields.Should().NotBeNullOrEmpty();
+        }
+
+        private void SeedDatabaseForGetAllTesting()
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                ctx.Fields.Add(ModelFactory.DomainModel("Field A"));
+                ctx.Fields.Add(ModelFactory.DomainModel("Field B"));
+                ctx.Fields.Add(ModelFactory.DomainModel("Field C"));
+                ctx.Fields.Add(ModelFactory.DomainModel("Field D"));
+                ctx.Save();
+            }
         }
 
         [TestCase(TestName = "Get by id query on fields returns null if field was not found")]
         public async Task GetFieldReturnsNullWhenNotFound()
         {
-            throw new NotImplementedException();
+            // When
+            Field field = await _queries.Get(Guid.NewGuid());
+
+            // Then
+            field.Should().BeNull();
         }
 
         [TestCase(TestName = "Get by id query on fields returns field if found")]
         public async Task GetFieldReturnsFieldWhenFound()
         {
-            throw new NotImplementedException();
+            // Given
+            Guid fieldId = SeedDatabaseForGetByIdTesting();
+
+            // When
+            Field field = await _queries.Get(fieldId);
+
+            // Then
+            field.Should().NotBeNull();
+        }
+
+        private Guid SeedDatabaseForGetByIdTesting()
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                Field field = ModelFactory.DomainModel();
+                ctx.Fields.Add(field);
+                ctx.Save();
+                return field.Id;
+            }
         }
     }
 }
