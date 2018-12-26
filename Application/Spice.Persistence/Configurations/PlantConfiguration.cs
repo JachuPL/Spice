@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Spice.Domain;
 
-namespace Spice.Persistence
+namespace Spice.Persistence.Configurations
 {
     internal sealed class PlantConfiguration : IEntityTypeConfiguration<Plant>
     {
