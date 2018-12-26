@@ -6,7 +6,7 @@ namespace Spice.Domain.Plants
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Specimen { get; set; }
+        public Species Species { get; set; }
         public Field Field { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
