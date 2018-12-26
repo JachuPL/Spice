@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Common

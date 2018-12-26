@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Plants.Interfaces;
-using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

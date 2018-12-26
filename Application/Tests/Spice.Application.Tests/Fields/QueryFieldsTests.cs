@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Fields;
+using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
-using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,30 +10,22 @@ using System.Threading.Tasks;
 namespace Spice.Application.Tests.Fields
 {
     [TestFixture]
-    public class QueryFieldsTests
+    internal sealed class QueryFieldsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private QueryFields _queries;
-        private SpiceContext _service;
 
         [SetUp]
         public void SetUp()
         {
-            _service = SetupInMemoryDatabase();
-            _service.Database.EnsureCreated();
-            _queries = new QueryFields(_service);
+            DatabaseContext = SetupInMemoryDatabase();
+            DatabaseContext.Database.EnsureCreated();
+            _queries = new QueryFields(DatabaseContext);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service.Database.EnsureDeleted();
-        }
-
-        private SpiceContext SetupInMemoryDatabase()
-        {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
-            ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
-            return new SpiceContext(ctxOptionsBuilder.Options);
+            DatabaseContext.Database.EnsureDeleted();
         }
 
         [TestCase(TestName = "GetAll query on fields returns all fields")]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spice.Domain.Plants;
+using System;
 using System.Collections.Generic;
 
 namespace Spice.Domain

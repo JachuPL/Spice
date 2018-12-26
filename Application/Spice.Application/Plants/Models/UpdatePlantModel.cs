@@ -1,4 +1,4 @@
-﻿using Spice.Domain;
+﻿using Spice.Domain.Plants;
 using System;
 
 namespace Spice.Application.Plants.Models
