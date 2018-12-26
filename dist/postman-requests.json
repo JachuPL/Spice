@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "8b8cfcb6-c6f0-4b32-8d3c-5036a4537ef5",
+		"name": "Spice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Plants",
+			"item": [
+				{
+					"name": "List all plants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/plants",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"plants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plant details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"plants",
+								"fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create plant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum L.\",\n\t\"FieldName\": \"Field A\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/plants/",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"plants",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update plant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Rocoto Giant Yellow\",\n\t\"Specimen\": \"Capsicum annuum\",\n\t\"FieldName\": \"Field B\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/plants/3f12efa0-1b6b-424f-ba7c-08d66b07fda8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"plants",
+								"3f12efa0-1b6b-424f-ba7c-08d66b07fda8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete plant",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/plants/3f12efa0-1b6b-424f-ba7c-08d66b07fda8",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"plants",
+								"3f12efa0-1b6b-424f-ba7c-08d66b07fda8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8ff07e23-46aa-45cf-a6e3-e95018cbb82e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7399dde8-db7a-423f-8d57-a5bf8bd8d891",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "33276553-0b22-46b7-9fcc-06a2c804cc36",
+			"key": "appUrl",
+			"value": "https://localhost:44398",
+			"type": "string"
+		},
+		{
+			"id": "2a10107c-78a4-41f4-9499-de5b7bcba90b",
+			"key": "apiUrl",
+			"value": "{{appUrl}}/api",
+			"type": "string"
+		}
+	]
+}
