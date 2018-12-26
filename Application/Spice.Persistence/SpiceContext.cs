@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Domain;
+using Spice.Persistence.Configurations;
 using System.Threading.Tasks;
 
 namespace Spice.Persistence
@@ -21,6 +22,7 @@ namespace Spice.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PlantConfiguration());
+            modelBuilder.ApplyConfiguration(new FieldConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
