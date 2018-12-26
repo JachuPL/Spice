@@ -1,4 +1,4 @@
-﻿using Spice.Domain;
+﻿using Spice.Domain.Plants;
 using System;
 
 namespace Spice.Application.Plants.Models
@@ -7,7 +7,7 @@ namespace Spice.Application.Plants.Models
     {
         public string Name { get; set; }
         public string Specimen { get; set; }
-        public string FieldName { get; set; }
+        public Guid FieldId { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
         public DateTime Planted { get; set; }

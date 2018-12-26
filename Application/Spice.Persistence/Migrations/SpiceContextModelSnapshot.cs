@@ -19,6 +19,32 @@ namespace Spice.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Spice.Domain.Field", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .IsUnicode(true);
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longtitude");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Fields");
+                });
+
             modelBuilder.Entity("Spice.Domain.Plant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -26,10 +52,7 @@ namespace Spice.Persistence.Migrations
 
                     b.Property<int>("Column");
 
-                    b.Property<string>("FieldName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(true);
+                    b.Property<Guid>("FieldId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -49,9 +72,19 @@ namespace Spice.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FieldId");
+
                     b.HasIndex("Id");
 
                     b.ToTable("Plants");
+                });
+
+            modelBuilder.Entity("Spice.Domain.Plant", b =>
+                {
+                    b.HasOne("Spice.Domain.Field", "Field")
+                        .WithMany("Plants")
+                        .HasForeignKey("FieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

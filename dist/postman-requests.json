@@ -65,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum L.\",\n\t\"FieldName\": \"Field A\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
+							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum L.\",\n\t\"FieldId\": \"c4fcb846-65a1-4c86-92fc-08d66b49d1b7\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
 						},
 						"url": {
 							"raw": "{{apiUrl}}/plants/",
@@ -94,16 +94,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Rocoto Giant Yellow\",\n\t\"Specimen\": \"Capsicum annuum\",\n\t\"FieldName\": \"Field B\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
+							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum\",\n\t\"FieldId\": \"fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/3f12efa0-1b6b-424f-ba7c-08d66b07fda8",
+							"raw": "{{apiUrl}}/plants/3f53a293-4da6-4d1a-0c57-08d66b4a591d",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"3f12efa0-1b6b-424f-ba7c-08d66b07fda8"
+								"3f53a293-4da6-4d1a-0c57-08d66b4a591d"
 							]
 						}
 					},
@@ -139,6 +139,141 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Fields",
+			"item": [
+				{
+					"name": "List all fields",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/fields",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"fields"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Field details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"fields",
+								"c4fcb846-65a1-4c86-92fc-08d66b49d1b7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create field",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Field, field, endless field\",\n\t\"Description\": \"Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/fields/",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"fields",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update field",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Pole, pole, łyse pole\",\n\t\"Description\": \"Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"fields",
+								"c4fcb846-65a1-4c86-92fc-08d66b49d1b7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete field",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/fields/f7b66d8f-d00b-43c7-92fb-08d66b49d1b7",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"fields",
+								"f7b66d8f-d00b-43c7-92fb-08d66b49d1b7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -165,13 +300,13 @@
 	],
 	"variable": [
 		{
-			"id": "33276553-0b22-46b7-9fcc-06a2c804cc36",
+			"id": "840caa90-3c7f-43ad-9291-f785cf3dd855",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "2a10107c-78a4-41f4-9499-de5b7bcba90b",
+			"id": "dc6c793f-d592-49ed-b497-0bbfb716eb9d",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"

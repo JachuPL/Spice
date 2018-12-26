@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Spice.Domain;
+using Spice.Domain.Plants;
 
-namespace Spice.Persistence
+namespace Spice.Persistence.Configurations
 {
     internal sealed class PlantConfiguration : IEntityTypeConfiguration<Plant>
     {
@@ -15,11 +15,12 @@ namespace Spice.Persistence
 
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired().IsUnicode();
             builder.Property(x => x.Specimen).HasMaxLength(50).IsRequired().IsUnicode();
-            builder.Property(x => x.FieldName).HasMaxLength(50).IsRequired().IsUnicode();
             builder.Property(x => x.Row).IsRequired();
             builder.Property(x => x.Column).IsRequired();
             builder.Property(x => x.Planted).IsRequired();
             builder.Property(x => x.State).IsRequired();
+
+            builder.HasOne(x => x.Field).WithMany(x => x.Plants).IsRequired();
         }
     }
 }
