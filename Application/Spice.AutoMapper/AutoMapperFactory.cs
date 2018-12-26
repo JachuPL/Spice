@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Spice.AutoMapper.Profiles.Field;
 using Spice.AutoMapper.Profiles.Plant;
 
 namespace Spice.AutoMapper
@@ -12,6 +13,7 @@ namespace Spice.AutoMapper
             _configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<PlantProfile>();
+                cfg.AddProfile<FieldProfile>();
             });
         }
 
