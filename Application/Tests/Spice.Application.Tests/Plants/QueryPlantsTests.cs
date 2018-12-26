@@ -45,36 +45,9 @@ namespace Spice.Application.Tests.Plants
 
         private void SeedDatabaseForGetAllTesting()
         {
-            _service.Plants.Add(new Plant()
-            {
-                Name = "Rocoto Giant Red",
-                Specimen = "Capsicum annuum",
-                Field = new Field()
-                {
-                    Name = "Field A",
-                    Latitude = 51,
-                    Longtitude = 20
-                },
-                Column = 0,
-                Row = 0,
-                Planted = DateTime.Now,
-                State = PlantState.Healthy
-            });
-            _service.Plants.Add(new Plant()
-            {
-                Name = "Rocoto Giant Yellow",
-                Specimen = "Capsicum annuum",
-                Field = new Field()
-                {
-                    Name = "Field A",
-                    Latitude = 51,
-                    Longtitude = 20
-                },
-                Column = 1,
-                Row = 0,
-                Planted = DateTime.Now,
-                State = PlantState.Healthy
-            });
+            Field field = Fields.ModelFactory.DomainModel();
+            _service.Plants.Add(ModelFactory.DomainModel(field));
+            _service.Plants.Add(ModelFactory.DomainModel(field, 0, 1));
             _service.Save();
         }
 
@@ -105,22 +78,10 @@ namespace Spice.Application.Tests.Plants
         {
             using (var ctx = SetupInMemoryDatabase())
             {
-                Plant plant = new Plant()
-                {
-                    Name = "Rocoto Giant Red",
-                    Specimen = "Capsicum annuum",
-                    Field = new Field()
-                    {
-                        Name = "Field A",
-                        Latitude = 51,
-                        Longtitude = 20
-                    },
-                    Column = 0,
-                    Row = 0,
-                    Planted = DateTime.Now,
-                    State = PlantState.Healthy
-                };
+                Field field = Fields.ModelFactory.DomainModel();
+                Plant plant = ModelFactory.DomainModel(field);
                 ctx.Plants.Add(plant);
+                ctx.Fields.Add(field);
                 ctx.Save();
                 return plant.Id;
             }
