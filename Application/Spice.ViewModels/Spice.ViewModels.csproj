@@ -8,8 +8,4 @@
     <PackageReference Include="FluentValidation" Version="8.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Fields\Validators\" />
-  </ItemGroup>
-
 </Project>
