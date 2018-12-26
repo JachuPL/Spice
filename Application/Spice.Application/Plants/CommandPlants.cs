@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
+using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
@@ -8,7 +9,6 @@ using Spice.Domain;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Spice.Application.Fields.Exceptions;
 
 namespace Spice.Application.Plants
 {
