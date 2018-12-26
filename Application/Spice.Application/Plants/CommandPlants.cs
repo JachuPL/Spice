@@ -8,6 +8,7 @@ using Spice.Domain;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Spice.Application.Fields.Exceptions;
 
 namespace Spice.Application.Plants
 {
@@ -24,13 +25,19 @@ namespace Spice.Application.Plants
 
         public async Task<Guid> Create(CreatePlantModel model)
         {
+            Field field = await _database.Fields.FirstOrDefaultAsync(x => x.Id == model.FieldId);
+            if (field is null)
+                throw new FieldDoesNotExistException();
+
             Plant existingAtCoordinates =
-                await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.FieldName == model.FieldName);
+                await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
 
             if (existingAtCoordinates != null)
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
             Plant plant = _mapper.Map<Plant>(model);
+            plant.Field = field;
+            field.Plants.Add(plant);
 
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
@@ -44,10 +51,18 @@ namespace Spice.Application.Plants
             if (plant is null)
                 return null;
 
-            if (_database.Plants.AsNoTracking().Any(x => x.Row == model.Row && x.Column == model.Column && x.FieldName == model.FieldName))
+            Field field = await _database.Fields
+                .Include(x => x.Plants)
+                .FirstOrDefaultAsync(x => x.Id == model.FieldId);
+            if (field is null)
+                throw new FieldDoesNotExistException();
+
+            if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
             _mapper.Map(model, plant);
+            plant.Field = field;
+            field.Plants.Add(plant);
 
             _database.Plants.Update(plant);
             await _database.SaveAsync();

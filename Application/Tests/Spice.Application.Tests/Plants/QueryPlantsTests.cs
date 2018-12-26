@@ -55,7 +55,12 @@ namespace Spice.Application.Tests.Plants
             {
                 Name = "Rocoto Giant Red",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                Field = new Field()
+                {
+                    Name = "Field A",
+                    Latitude = 51,
+                    Longtitude = 20
+                },
                 Column = 0,
                 Row = 0,
                 Planted = DateTime.Now,
@@ -65,7 +70,12 @@ namespace Spice.Application.Tests.Plants
             {
                 Name = "Rocoto Giant Yellow",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                Field = new Field()
+                {
+                    Name = "Field A",
+                    Latitude = 51,
+                    Longtitude = 20
+                },
                 Column = 1,
                 Row = 0,
                 Planted = DateTime.Now,
@@ -105,7 +115,12 @@ namespace Spice.Application.Tests.Plants
                 {
                     Name = "Rocoto Giant Red",
                     Specimen = "Capsicum annuum",
-                    FieldName = "Field A",
+                    Field = new Field()
+                    {
+                        Name = "Field A",
+                        Latitude = 51,
+                        Longtitude = 20
+                    },
                     Column = 0,
                     Row = 0,
                     Planted = DateTime.Now,

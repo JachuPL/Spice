@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
@@ -45,8 +46,10 @@ namespace Spice.Application.Tests.Plants
         public void CreatePlantThrowsExceptionIfPlantExistsAtCoordinates()
         {
             // Given
-            SeedDatabase(ModelFactory.DomainModel());
-            CreatePlantModel model = ModelFactory.CreationModel();
+            Field field = Fields.ModelFactory.DomainModel();
+            Guid fieldId = SeedDatabase(field);
+            SeedDatabase(ModelFactory.DomainModel(field));
+            CreatePlantModel model = ModelFactory.CreationModel(fieldId);
 
             // When
             Func<Task> createPlant = async () => await _commands.Create(model);
@@ -55,10 +58,25 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<PlantExistsAtCoordinatesException>();
         }
 
+        [TestCase(TestName = "Create plant throws exception if field with specified id does not exist")]
+        public void CreatePlantThrowsExceptionIfFieldDoesNotExist()
+        {
+            // Given
+            SeedDatabase(ModelFactory.DomainModel());
+            CreatePlantModel model = ModelFactory.CreationModel();
+
+            // When
+            Func<Task> createPlant = async () => await _commands.Create(model);
+
+            // Then
+            createPlant.Should().Throw<FieldDoesNotExistException>();
+        }
+
         private Guid SeedDatabase(Plant plant)
         {
             using (var ctx = SetupInMemoryDatabase())
             {
+                plant.Field = ctx.Fields.Find(plant.Field.Id);
                 ctx.Plants.Add(plant);
                 ctx.Save();
 
@@ -66,11 +84,23 @@ namespace Spice.Application.Tests.Plants
             }
         }
 
+        private Guid SeedDatabase(Field field)
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                ctx.Fields.Add(field);
+                ctx.Save();
+
+                return field.Id;
+            }
+        }
+
         [TestCase(TestName = "Create plant returns Guid on success")]
         public async Task CreatePlantReturnsGuidOnSuccess()
         {
             // Given
-            CreatePlantModel model = ModelFactory.CreationModel();
+            Guid fieldId = SeedDatabase(Fields.ModelFactory.DomainModel());
+            CreatePlantModel model = ModelFactory.CreationModel(fieldId);
 
             // When
             Guid id = await _commands.Create(model);
@@ -83,6 +113,23 @@ namespace Spice.Application.Tests.Plants
         public void UpdatePlantThrowsExceptionIfPlantExistsAtCoordinates()
         {
             // Given
+            Field field = Fields.ModelFactory.DomainModel();
+            Guid fieldId = SeedDatabase(field);
+            SeedDatabase(ModelFactory.DomainModel(field));   // existing plant on existing field
+            Guid id = SeedDatabase(ModelFactory.DomainModel(field));
+            UpdatePlantModel model = ModelFactory.UpdateModel(id, fieldId);
+
+            // When
+            Func<Task> updatePlant = async () => await _commands.Update(model);
+
+            // Then
+            updatePlant.Should().Throw<PlantExistsAtCoordinatesException>();
+        }
+
+        [TestCase(TestName = "Update plant throws exception if field with specified id does not exist")]
+        public void UpdatePlantThrowsExceptionIfFieldDoesNotExist()
+        {
+            // Given
             SeedDatabase(ModelFactory.DomainModel());   // existing plant
             Guid id = SeedDatabase(ModelFactory.DomainModel());
             UpdatePlantModel model = ModelFactory.UpdateModel(id);
@@ -91,7 +138,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> updatePlant = async () => await _commands.Update(model);
 
             // Then
-            updatePlant.Should().Throw<PlantExistsAtCoordinatesException>();
+            updatePlant.Should().Throw<FieldDoesNotExistException>();
         }
 
         [TestCase(TestName = "Update plant returns null if plant does not exist")]
@@ -111,17 +158,21 @@ namespace Spice.Application.Tests.Plants
         public async Task UpdatePlantReturnsPlantOnSuccess()
         {
             // Given
-            Guid id = SeedDatabase(ModelFactory.DomainModel("Field X", 13, 37));
-            UpdatePlantModel model = ModelFactory.UpdateModel(id);
+            Field field = Fields.ModelFactory.DomainModel();
+            Guid fieldId = SeedDatabase(field);
+            Plant plant = ModelFactory.DomainModel(field, 13, 37);
+            Guid plantId = SeedDatabase(plant);
+
+            UpdatePlantModel model = ModelFactory.UpdateModel(plantId, fieldId);
 
             // When
-            Plant plant = await _commands.Update(model);
+            plant = await _commands.Update(model);
 
             // Then
             plant.Should().NotBeNull();
-            plant.Id.Should().Be(id);
+            plant.Id.Should().Be(plantId);
             plant.Name.Should().Contain("Red");
-            plant.FieldName.Should().Contain("A");
+            plant.Field.Should().NotBeNull();
             plant.Column.Should().Be(0);
             plant.Row.Should().Be(0);
             plant.Planted.Day.Should().Be(DateTime.Now.Day);

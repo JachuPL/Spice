@@ -11,7 +11,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             {
                 Name = "Pepper",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                FieldId = Guid.NewGuid(),
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
@@ -25,7 +25,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             {
                 Name = string.Empty,
                 Specimen = string.Empty,
-                FieldName = string.Empty,
+                FieldId = Guid.Empty,
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
@@ -39,7 +39,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             {
                 Name = "Pepper",
                 Specimen = "Capsicum annuum",
-                FieldName = "Field A",
+                FieldId = Guid.NewGuid(),
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
@@ -53,7 +53,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             {
                 Name = string.Empty,
                 Specimen = string.Empty,
-                FieldName = string.Empty,
+                FieldId = Guid.Empty,
                 Row = 0,
                 Column = 0,
                 Planted = DateTime.Now,
