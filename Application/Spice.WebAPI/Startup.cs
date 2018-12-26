@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spice.Application.Common;
+using Spice.Application.Plants;
+using Spice.Application.Plants.Interfaces;
+using Spice.AutoMapper;
+using Spice.Persistence;
+using Spice.ViewModels.Plants.Validators;
 
 namespace Spice.WebAPI
 {
@@ -18,7 +26,24 @@ namespace Spice.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton(AutoMapperFactory.CreateMapper());
+
+            RegisterApplicationServices(services);
+
+            services.AddDbContext<SpiceContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreatePlantViewModelValidator>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
+
+        private void RegisterApplicationServices(IServiceCollection services)
+        {
+            services.AddTransient<IDatabaseService, SpiceContext>();
+
+            services.AddTransient<IQueryPlants, QueryPlants>();
+            services.AddTransient<ICommandPlants, CommandPlants>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
