@@ -9,7 +9,7 @@ namespace Spice.ViewModels.Fields.Validators
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Field name cannot be empty.")
                 .MinimumLength(2).WithMessage("Minimum length of field name is 2 characters.")
-                .MaximumLength(20).WithMessage("Maximum length of field name is 20 characters.");
+                .MaximumLength(50).WithMessage("Maximum length of field name is 50 characters.");
 
             RuleFor(x => x.Description)
                 .MinimumLength(5).WithMessage("Minimum length of field description is 5 characters.")

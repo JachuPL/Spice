@@ -14,7 +14,7 @@ namespace Spice.Persistence.Configurations
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.HasIndex(x => x.Id);
 
-            builder.Property(x => x.Name).HasMaxLength(20).IsRequired().IsUnicode();
+            builder.Property(x => x.Name).HasMaxLength(50).IsRequired().IsUnicode();
             builder.Property(x => x.Description).HasMaxLength(500).IsUnicode();
             builder.Property(x => x.Latitude).IsRequired();
             builder.Property(x => x.Longtitude).IsRequired();
