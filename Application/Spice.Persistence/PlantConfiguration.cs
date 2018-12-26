@@ -8,6 +8,7 @@ namespace Spice.Persistence
     {
         public void Configure(EntityTypeBuilder<Plant> builder)
         {
+            builder.ToTable("Plants");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.HasIndex(x => x.Id);
