@@ -89,7 +89,7 @@ namespace Spice.Application.Tests.Species
         public async Task UpdateSpeciesReturnsSpeciesOnSuccess()
         {
             // Given
-            Domain.Plants.Species species = ModelFactory.DomainModel("Species B");
+            Domain.Plants.Species species = ModelFactory.DomainModel("Basil");
             Guid speciesId = SeedDatabase(species);
             UpdateSpeciesModel model = ModelFactory.UpdateModel(speciesId);
 
@@ -98,7 +98,7 @@ namespace Spice.Application.Tests.Species
 
             // Then
             species.Should().NotBeNull();
-            species.Name.Should().Be("Species A");
+            species.Name.Should().Be("Pepper");
         }
 
         [TestCase(TestName = "Delete Species succeeds")]

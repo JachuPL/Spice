@@ -1,4 +1,5 @@
-﻿using Spice.Application.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Spice.Application.Common;
 using Spice.Application.Species.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,14 @@ namespace Spice.Application.Species
             _database = database;
         }
 
-        public Task<IEnumerable<Domain.Plants.Species>> GetAll()
+        public async Task<IEnumerable<Domain.Plants.Species>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _database.Species.AsNoTracking().ToListAsync();
         }
 
-        public Task<Domain.Plants.Species> Get(Guid id)
+        public async Task<Domain.Plants.Species> Get(Guid id)
         {
-            throw new NotImplementedException();
+            return await _database.Species.FindAsync(id);
         }
     }
 }
