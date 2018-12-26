@@ -10,7 +10,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
             {
                 Name = "Pepper",
                 LatinName = "Capsicum annuum",
-                Descriptions = "Some cultivars of this species yield very spicy fruits."
+                Description = "Some cultivars of this species yield very spicy fruits."
             };
         }
 
@@ -20,7 +20,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
             {
                 Name = "A",
                 LatinName = "B",
-                Descriptions = "Some cultivars of this species yield very spicy fruits."
+                Description = "Some cultivars of this species yield very spicy fruits."
             };
         }
 
@@ -30,7 +30,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
             {
                 Name = "Chinese Pepper",
                 LatinName = "Capsicum chinense",
-                Descriptions = "Some cultivars of this species yield very spicy fruits. Cultivated in eastern Asian regions."
+                Description = "Some cultivars of this species yield very spicy fruits. Cultivated in eastern Asian regions."
             };
         }
 
@@ -40,7 +40,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
             {
                 Name = "A",
                 LatinName = "B",
-                Descriptions = "Some cultivars of this species yield very spicy fruits."
+                Description = "Some cultivars of this species yield very spicy fruits."
             };
         }
     }
