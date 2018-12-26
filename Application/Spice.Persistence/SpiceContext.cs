@@ -11,6 +11,7 @@ namespace Spice.Persistence
     {
         public DbSet<Plant> Plants { get; set; }
         public DbSet<Field> Fields { get; set; }
+        public DbSet<Species> Species { get; set; }
 
         public SpiceContext() : base()
         {

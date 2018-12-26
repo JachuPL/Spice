@@ -6,9 +6,9 @@ using System;
 namespace Spice.Domain.Tests
 {
     [TestFixture]
-    internal sealed class StateTests
+    internal sealed class PlantsTests
     {
-        [TestCase(TestName = "Get and Set field Id property works properly")]
+        [TestCase(TestName = "Get and Set plant Id property works properly")]
         public void GetAndSetIdWorksProperly()
         {
             // Given
@@ -22,7 +22,7 @@ namespace Spice.Domain.Tests
             plant.Id.Should().Be(id);
         }
 
-        [TestCase(TestName = "Get and Set field Name property works properly")]
+        [TestCase(TestName = "Get and Set plant Name property works properly")]
         public void GetAndSetNameWorksProperly()
         {
             // Given
@@ -36,21 +36,25 @@ namespace Spice.Domain.Tests
             plant.Name.Should().Be(name);
         }
 
-        [TestCase(TestName = "Get and Set field Specimen property works properly")]
-        public void GetAndSetSpecimenWorksProperly()
+        [TestCase(TestName = "Get and Set plant Species property works properly")]
+        public void GetAndSetSpeciesWorksProperly()
         {
             // Given
             Plant plant = new Plant();
-            string Specimen = Guid.Empty.ToString();
+            Species species = new Species()
+            {
+                Name = "Pepper",
+                LatinName = "Capsicum Annuum"
+            };
 
             // When
-            plant.Specimen = Specimen;
+            plant.Species = species;
 
             // Then
-            plant.Specimen.Should().Be(Specimen);
+            plant.Species.Should().Be(species);
         }
 
-        [TestCase(TestName = "Get and Set field Field property works properly")]
+        [TestCase(TestName = "Get and Set plant field property works properly")]
         public void GetAndSetFieldWorksProperly()
         {
             // Given
@@ -67,7 +71,7 @@ namespace Spice.Domain.Tests
             plant.Field.Should().Be(field);
         }
 
-        [TestCase(TestName = "Get and Set field Row property works properly")]
+        [TestCase(TestName = "Get and Set plant Row property works properly")]
         public void GetAndSetRowWorksProperly()
         {
             // Given
@@ -81,7 +85,7 @@ namespace Spice.Domain.Tests
             plant.Row.Should().Be(row);
         }
 
-        [TestCase(TestName = "Get and Set field Column property works properly")]
+        [TestCase(TestName = "Get and Set plant Column property works properly")]
         public void GetAndSetColumnWorksProperly()
         {
             // Given
@@ -95,7 +99,7 @@ namespace Spice.Domain.Tests
             plant.Column.Should().Be(column);
         }
 
-        [TestCase(TestName = "Get and Set field Planted property works properly")]
+        [TestCase(TestName = "Get and Set plant Planted property works properly")]
         public void GetAndSetPlantedWorksProperly()
         {
             // Given
@@ -109,7 +113,7 @@ namespace Spice.Domain.Tests
             plant.Planted.Day.Should().Be(planted.Day);
         }
 
-        [TestCase(TestName = "Get and Set field State property works properly")]
+        [TestCase(TestName = "Get and Set plant State property works properly")]
         public void GetAndSetStateWorksProperly()
         {
             // Given
