@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spice.Application.Common;
+using Spice.Application.Fields;
+using Spice.Application.Fields.Interfaces;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Interfaces;
 using Spice.AutoMapper;
@@ -44,6 +46,9 @@ namespace Spice.WebAPI
 
             services.AddTransient<IQueryPlants, QueryPlants>();
             services.AddTransient<ICommandPlants, CommandPlants>();
+
+            services.AddTransient<IQueryFields, QueryFields>();
+            services.AddTransient<ICommandFields, CommandFields>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Plants;
+using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
-using Spice.Persistence;
+using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,30 +11,22 @@ using System.Threading.Tasks;
 namespace Spice.Application.Tests.Plants
 {
     [TestFixture]
-    public class QueryPlantsTests
+    internal sealed class QueryPlantsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private QueryPlants _queries;
-        private SpiceContext _service;
 
         [SetUp]
         public void SetUp()
         {
-            _service = SetupInMemoryDatabase();
-            _service.Database.EnsureCreated();
-            _queries = new QueryPlants(_service);
+            DatabaseContext = SetupInMemoryDatabase();
+            DatabaseContext.Database.EnsureCreated();
+            _queries = new QueryPlants(DatabaseContext);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service.Database.EnsureDeleted();
-        }
-
-        private SpiceContext SetupInMemoryDatabase()
-        {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
-            ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
-            return new SpiceContext(ctxOptionsBuilder.Options);
+            DatabaseContext.Database.EnsureDeleted();
         }
 
         [TestCase(TestName = "GetAll query on plants returns all plants")]
@@ -42,6 +34,7 @@ namespace Spice.Application.Tests.Plants
         {
             // Given
             SeedDatabaseForGetAllTesting();
+
             // When
             IEnumerable<Plant> plants = await _queries.GetAll();
 
@@ -51,27 +44,10 @@ namespace Spice.Application.Tests.Plants
 
         private void SeedDatabaseForGetAllTesting()
         {
-            _service.Plants.Add(new Plant()
-            {
-                Name = "Rocoto Giant Red",
-                Specimen = "Capsicum annuum",
-                FieldName = "Field A",
-                Column = 0,
-                Row = 0,
-                Planted = DateTime.Now,
-                State = PlantState.Healthy
-            });
-            _service.Plants.Add(new Plant()
-            {
-                Name = "Rocoto Giant Yellow",
-                Specimen = "Capsicum annuum",
-                FieldName = "Field A",
-                Column = 1,
-                Row = 0,
-                Planted = DateTime.Now,
-                State = PlantState.Healthy
-            });
-            _service.Save();
+            Field field = Fields.ModelFactory.DomainModel();
+            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field));
+            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field, 0, 1));
+            DatabaseContext.Save();
         }
 
         [TestCase(TestName = "Get by id query on plants returns null if plant was not found")]
@@ -101,17 +77,10 @@ namespace Spice.Application.Tests.Plants
         {
             using (var ctx = SetupInMemoryDatabase())
             {
-                Plant plant = new Plant()
-                {
-                    Name = "Rocoto Giant Red",
-                    Specimen = "Capsicum annuum",
-                    FieldName = "Field A",
-                    Column = 0,
-                    Row = 0,
-                    Planted = DateTime.Now,
-                    State = PlantState.Healthy
-                };
+                Field field = Fields.ModelFactory.DomainModel();
+                Plant plant = ModelFactory.DomainModel(field);
                 ctx.Plants.Add(plant);
+                ctx.Fields.Add(field);
                 ctx.Save();
                 return plant.Id;
             }

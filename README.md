@@ -77,7 +77,7 @@ Spice is all about plants. As of now, the following requests are available:
 	"State": "Healthy"
 }
 ```
-Note that if a plant is found growing on specified field, row and column this operation will result in Conflict.
+Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/:guid - updates plant data with specified id. Example:
 ```
@@ -94,9 +94,79 @@ Note that if a plant is found growing on specified field, row and column this op
 ```
 Note that if a plant is found growing on specified field, row and column this operation will result in Conflict.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/:guid - updates plant data with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/:guid - deletes plant with specified id. Example:
 ```
 // Requested uri: api/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8
+// Returns 204 No Content
+```
+Note that once a plant is deleted it is not possible to restore it!
+
+### Fields
+Not all plants grow on fields - some are raised using hydroponics or just in a pot on your balcony. You should rather consider 'Field' as a group of plants, no matter where it grows. As of now, you can make such request to Spice API in fields context:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields - returns list of all fields. Example:
+```
+[
+    {
+        "id": "10000000-0000-0000-0000-000000000001",
+        "name": "Unknown Field",
+        "description": "This field was automatically created while applying migration to database. Since it ignores domain restrictions, please move all plants from this field to another one."
+    },
+    {
+        "id": "c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+        "name": "Field, field, endless field",
+        "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
+    }
+]
+```
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields/:guid - returns field details by id (specified guid). Example:
+```
+// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
+
+{
+    "id": "c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+    "name": "Field, field, endless field",
+    "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.",
+    "latitude": 50.9657062,
+    "longtitude": 22.3966112,
+    "plants": [
+        {
+            "id": "3f53a293-4da6-4d1a-0c57-08d66b4a591d",
+            "name": "Aji Lemon Drop",
+            "specimen": "Capsicum annuum L.",
+            "state": 0
+        }
+    ]
+}
+```
+
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants - adds new field with specified data. Example:
+```
+{
+	"Name": "Field, field, endless field",
+	"Description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.",
+	"Latitude": 50.9657062,
+	"Longtitude": 22.3966112
+}
+```
+Note that if a field with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
+
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/fields/:guid - updates field data with specified id. Example:
+```
+// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
+
+{
+	"Name": "Pole, pole, łyse pole",
+	"Description": "Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank.",
+	"Latitude": 50.9657062,
+	"Longtitude": 22.3966112
+}
+```
+Note that if a field with specified name already exists this operation will result in Conflict.
+
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/fields/:guid - deletes field with specified id. Example:
+```
+// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
 // Returns 204 No Content
 ```
 Note that once a plant is deleted it is not possible to restore it!

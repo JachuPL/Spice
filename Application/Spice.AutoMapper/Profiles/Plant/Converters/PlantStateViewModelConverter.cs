@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Spice.Domain;
+using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 
 namespace Spice.AutoMapper.Profiles.Plant.Converters

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Domain;
+using Spice.Domain.Plants;
+using Spice.Persistence.Configurations;
 using System.Threading.Tasks;
 
 namespace Spice.Persistence
@@ -8,6 +10,7 @@ namespace Spice.Persistence
     public class SpiceContext : DbContext, IDatabaseService
     {
         public DbSet<Plant> Plants { get; set; }
+        public DbSet<Field> Fields { get; set; }
 
         public SpiceContext() : base()
         {
@@ -20,6 +23,7 @@ namespace Spice.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PlantConfiguration());
+            modelBuilder.ApplyConfiguration(new FieldConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
