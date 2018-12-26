@@ -21,7 +21,7 @@ namespace Spice.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     Latitude = table.Column<double>(nullable: false),
                     Longtitude = table.Column<double>(nullable: false)

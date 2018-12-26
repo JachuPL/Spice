@@ -37,7 +37,7 @@ namespace Spice.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .IsUnicode(true);
 
                     b.HasKey("Id");
