@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
+using Spice.Application.Tests.Common.Base;
 using Spice.AutoMapper;
 using Spice.Domain;
 using Spice.Persistence;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Spice.Application.Tests.Plants
 {
-    public class CommandPlantsTests
+    internal sealed class CommandPlantsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private CommandPlants _commands;
         private SpiceContext _service;
@@ -33,13 +33,6 @@ namespace Spice.Application.Tests.Plants
         public void TearDown()
         {
             _service.Database.EnsureDeleted();
-        }
-
-        private SpiceContext SetupInMemoryDatabase()
-        {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
-            ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
-            return new SpiceContext(ctxOptionsBuilder.Options);
         }
 
         [TestCase(TestName = "Create plant throws exception if plant exists on same fields and coordinates")]
@@ -70,29 +63,6 @@ namespace Spice.Application.Tests.Plants
 
             // Then
             createPlant.Should().Throw<FieldDoesNotExistException>();
-        }
-
-        private Guid SeedDatabase(Plant plant)
-        {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                plant.Field = ctx.Fields.Find(plant.Field.Id);
-                ctx.Plants.Add(plant);
-                ctx.Save();
-
-                return plant.Id;
-            }
-        }
-
-        private Guid SeedDatabase(Field field)
-        {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                ctx.Fields.Add(field);
-                ctx.Save();
-
-                return field.Id;
-            }
         }
 
         [TestCase(TestName = "Create plant returns Guid on success")]

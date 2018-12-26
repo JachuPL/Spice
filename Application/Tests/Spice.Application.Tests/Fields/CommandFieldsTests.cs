@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Fields;
 using Spice.Application.Fields.Exceptions;
 using Spice.Application.Fields.Models;
+using Spice.Application.Tests.Common.Base;
 using Spice.AutoMapper;
 using Spice.Domain;
 using Spice.Persistence;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Spice.Application.Tests.Fields
 {
-    public class CommandFieldsTests
+    internal sealed class CommandFieldsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private CommandFields _commands;
         private SpiceContext _service;
@@ -34,13 +34,6 @@ namespace Spice.Application.Tests.Fields
             _service.Database.EnsureDeleted();
         }
 
-        private SpiceContext SetupInMemoryDatabase()
-        {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
-            ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
-            return new SpiceContext(ctxOptionsBuilder.Options);
-        }
-
         [TestCase(TestName = "Create field throws exception if field with specified name already exists")]
         public void CreateFieldThrowsExceptionOnNameConflict()
         {
@@ -54,17 +47,6 @@ namespace Spice.Application.Tests.Fields
 
             // Then
             createField.Should().Throw<FieldWithNameAlreadyExistsException>();
-        }
-
-        private Guid SeedDatabase(Field field)
-        {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                ctx.Fields.Add(field);
-                ctx.Save();
-
-                return field.Id;
-            }
         }
 
         [TestCase(TestName = "Create field returns Guid on success")]

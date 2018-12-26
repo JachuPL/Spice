@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Plants;
+using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Persistence;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Spice.Application.Tests.Plants
 {
     [TestFixture]
-    public class QueryPlantsTests
+    internal sealed class QueryPlantsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private QueryPlants _queries;
         private SpiceContext _service;
@@ -30,18 +30,12 @@ namespace Spice.Application.Tests.Plants
             _service.Database.EnsureDeleted();
         }
 
-        private SpiceContext SetupInMemoryDatabase()
-        {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
-            ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
-            return new SpiceContext(ctxOptionsBuilder.Options);
-        }
-
         [TestCase(TestName = "GetAll query on plants returns all plants")]
         public async Task GetAllReturnsAllPlants()
         {
             // Given
             SeedDatabaseForGetAllTesting();
+
             // When
             IEnumerable<Plant> plants = await _queries.GetAll();
 

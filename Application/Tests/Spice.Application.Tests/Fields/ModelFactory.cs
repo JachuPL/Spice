@@ -1,6 +1,6 @@
-﻿using System;
-using Spice.Application.Fields.Models;
+﻿using Spice.Application.Fields.Models;
 using Spice.Domain;
+using System;
 
 namespace Spice.Application.Tests.Fields
 {
