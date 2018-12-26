@@ -16,9 +16,8 @@ namespace Spice.ViewModels.Plants.Validators
                 .MinimumLength(2).WithMessage("Minimum length of plant specimen is 2 characters.")
                 .MaximumLength(50).WithMessage("Maximum lenght of plant specimen is 50 characters.");
 
-            RuleFor(x => x.FieldName)
-                .NotEmpty().WithMessage("Field name cannot be empty.")
-                .MaximumLength(50).WithMessage("Maximum lenght of field name is 50 characters.");
+            RuleFor(x => x.FieldId)
+                .NotEmpty().WithMessage("Field name cannot be empty.");
 
             RuleFor(x => x.Planted)
                 .NotNull().WithMessage("Plant date cannot be null.");
