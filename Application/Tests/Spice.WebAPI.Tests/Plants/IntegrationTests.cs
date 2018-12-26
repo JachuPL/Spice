@@ -6,7 +6,7 @@ using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
-using Spice.Domain;
+using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Plants.Factories;

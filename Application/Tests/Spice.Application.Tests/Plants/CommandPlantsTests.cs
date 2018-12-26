@@ -6,6 +6,7 @@ using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 using System.Threading.Tasks;
 

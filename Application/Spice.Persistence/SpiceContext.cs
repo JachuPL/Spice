@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using Spice.Persistence.Configurations;
 using System.Threading.Tasks;
 

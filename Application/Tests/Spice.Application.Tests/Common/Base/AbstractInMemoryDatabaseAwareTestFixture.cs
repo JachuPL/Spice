@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Spice.AutoMapper;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using Spice.Persistence;
 using System;
 

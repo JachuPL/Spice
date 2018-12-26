@@ -1,4 +1,4 @@
-﻿namespace Spice.Domain
+﻿namespace Spice.Domain.Plants
 {
     public enum PlantState
     {

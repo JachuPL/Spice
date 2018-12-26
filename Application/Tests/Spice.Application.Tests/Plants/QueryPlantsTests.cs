@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Spice.Application.Plants;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

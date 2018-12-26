@@ -1,5 +1,6 @@
 ﻿using Spice.Application.Plants.Models;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 
 namespace Spice.Application.Tests.Plants
