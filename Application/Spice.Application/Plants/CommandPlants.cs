@@ -27,7 +27,7 @@ namespace Spice.Application.Plants
         {
             Field field = await _database.Fields.FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException();
+                throw new FieldDoesNotExistException(model.FieldId);
 
             Plant existingAtCoordinates =
                 await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
@@ -55,7 +55,7 @@ namespace Spice.Application.Plants
                 .Include(x => x.Plants)
                 .FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException();
+                throw new FieldDoesNotExistException(model.FieldId);
 
             if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);

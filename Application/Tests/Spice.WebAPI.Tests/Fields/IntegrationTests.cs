@@ -166,7 +166,7 @@ namespace Spice.WebAPI.Tests.Fields
         public async Task PutFieldReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Throws(new FieldDoesNotExistException());
+            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Throws(new FieldDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await _client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
