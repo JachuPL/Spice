@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Fields;
 using Spice.Application.Fields.Exceptions;
 using Spice.Application.Fields.Models;
 using Spice.Application.Tests.Common.Base;
-using Spice.AutoMapper;
 using Spice.Domain;
-using Spice.Persistence;
 using System;
 using System.Threading.Tasks;
 
@@ -16,22 +13,19 @@ namespace Spice.Application.Tests.Fields
     internal sealed class CommandFieldsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private CommandFields _commands;
-        private SpiceContext _service;
-        private IMapper _mapper;
 
         [SetUp]
         public void SetUp()
         {
-            _service = SetupInMemoryDatabase();
-            _service.Database.EnsureCreated();
-            _mapper = AutoMapperFactory.CreateMapper();
-            _commands = new CommandFields(_service, _mapper);
+            DatabaseContext = SetupInMemoryDatabase();
+            DatabaseContext.Database.EnsureCreated();
+            _commands = new CommandFields(DatabaseContext, Mapper);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service.Database.EnsureDeleted();
+            DatabaseContext.Database.EnsureDeleted();
         }
 
         [TestCase(TestName = "Create field throws exception if field with specified name already exists")]
@@ -120,7 +114,7 @@ namespace Spice.Application.Tests.Fields
             await _commands.Delete(fieldId);
 
             // Then
-            Field field = await _service.Fields.FindAsync(fieldId);
+            Field field = await DatabaseContext.Fields.FindAsync(fieldId);
             field.Should().BeNull();
         }
     }

@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Spice.Application.Fields;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
-using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,20 +13,19 @@ namespace Spice.Application.Tests.Fields
     internal sealed class QueryFieldsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private QueryFields _queries;
-        private SpiceContext _service;
 
         [SetUp]
         public void SetUp()
         {
-            _service = SetupInMemoryDatabase();
-            _service.Database.EnsureCreated();
-            _queries = new QueryFields(_service);
+            DatabaseContext = SetupInMemoryDatabase();
+            DatabaseContext.Database.EnsureCreated();
+            _queries = new QueryFields(DatabaseContext);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service.Database.EnsureDeleted();
+            DatabaseContext.Database.EnsureDeleted();
         }
 
         [TestCase(TestName = "GetAll query on fields returns all fields")]

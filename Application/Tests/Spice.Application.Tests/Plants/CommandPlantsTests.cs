@@ -1,14 +1,11 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
 using Spice.Application.Tests.Common.Base;
-using Spice.AutoMapper;
 using Spice.Domain;
-using Spice.Persistence;
 using System;
 using System.Threading.Tasks;
 
@@ -17,22 +14,19 @@ namespace Spice.Application.Tests.Plants
     internal sealed class CommandPlantsTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private CommandPlants _commands;
-        private SpiceContext _service;
-        private IMapper _mapper;
 
         [SetUp]
         public void SetUp()
         {
-            _service = SetupInMemoryDatabase();
-            _service.Database.EnsureCreated();
-            _mapper = AutoMapperFactory.CreateMapper();
-            _commands = new CommandPlants(_service, _mapper);
+            DatabaseContext = SetupInMemoryDatabase();
+            DatabaseContext.Database.EnsureCreated();
+            _commands = new CommandPlants(DatabaseContext, Mapper);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _service.Database.EnsureDeleted();
+            DatabaseContext.Database.EnsureDeleted();
         }
 
         [TestCase(TestName = "Create plant throws exception if plant exists on same fields and coordinates")]
@@ -159,7 +153,7 @@ namespace Spice.Application.Tests.Plants
             await _commands.Delete(id);
 
             // Then
-            Plant plant = await _service.Plants.FindAsync(id);
+            Plant plant = await DatabaseContext.Plants.FindAsync(id);
             plant.Should().BeNull();
         }
     }

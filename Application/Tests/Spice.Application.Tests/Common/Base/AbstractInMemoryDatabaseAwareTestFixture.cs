@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Spice.AutoMapper;
 using Spice.Domain;
 using Spice.Persistence;
 using System;
@@ -7,6 +9,14 @@ namespace Spice.Application.Tests.Common.Base
 {
     internal abstract class AbstractInMemoryDatabaseAwareTestFixture
     {
+        protected SpiceContext DatabaseContext { get; set; }
+        protected IMapper Mapper { get; }
+
+        protected AbstractInMemoryDatabaseAwareTestFixture()
+        {
+            Mapper = AutoMapperFactory.CreateMapper();
+        }
+
         protected SpiceContext SetupInMemoryDatabase()
         {
             var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
