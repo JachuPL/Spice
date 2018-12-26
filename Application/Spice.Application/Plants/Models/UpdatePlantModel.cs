@@ -7,7 +7,7 @@ namespace Spice.Application.Plants.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Specimen { get; set; }
+        public Guid SpeciesId { get; set; }
         public Guid FieldId { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }

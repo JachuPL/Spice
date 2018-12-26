@@ -41,10 +41,22 @@ namespace Spice.Application.Tests.Common.Base
             using (var ctx = SetupInMemoryDatabase())
             {
                 plant.Field = ctx.Fields.Find(plant.Field.Id);
+                plant.Species = ctx.Species.Find(plant.Species.Id);
                 ctx.Plants.Add(plant);
                 ctx.Save();
 
                 return plant.Id;
+            }
+        }
+
+        protected Guid SeedDatabase(Domain.Plants.Species species)
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                ctx.Species.Add(species);
+                ctx.Save();
+
+                return species.Id;
             }
         }
     }

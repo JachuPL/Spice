@@ -14,13 +14,13 @@ namespace Spice.Persistence.Configurations
             builder.HasIndex(x => x.Id);
 
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired().IsUnicode();
-            builder.Property(x => x.Specimen).HasMaxLength(50).IsRequired().IsUnicode();
             builder.Property(x => x.Row).IsRequired();
             builder.Property(x => x.Column).IsRequired();
             builder.Property(x => x.Planted).IsRequired();
             builder.Property(x => x.State).IsRequired();
 
             builder.HasOne(x => x.Field).WithMany(x => x.Plants).IsRequired();
+            builder.HasOne(x => x.Species).WithMany(x => x.Plants).IsRequired();
         }
     }
 }
