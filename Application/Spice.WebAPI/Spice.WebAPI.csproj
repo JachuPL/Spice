@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Domain\Spice.Domain\Spice.Domain.csproj" />
     <ProjectReference Include="..\Spice.Application\Spice.Application.csproj" />
     <ProjectReference Include="..\Spice.AutoMapper\Spice.AutoMapper.csproj" />
+    <ProjectReference Include="..\Spice.Persistence\Spice.Persistence.csproj" />
     <ProjectReference Include="..\Spice.ViewModels\Spice.ViewModels.csproj" />
   </ItemGroup>
 
