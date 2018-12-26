@@ -85,6 +85,10 @@ namespace Spice.WebAPI.Controllers
 
                 return Ok(_mapper.Map<FieldDetailsViewModel>(field));
             }
+            catch (FieldDoesNotExistException)
+            {
+                return NotFound();
+            }
             catch (FieldWithNameAlreadyExistsException ex)
             {
                 return Conflict(new
