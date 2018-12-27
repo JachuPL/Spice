@@ -59,5 +59,16 @@ namespace Spice.Application.Tests.Common.Base
                 return species.Id;
             }
         }
+
+        protected Guid SeedDatabase(Nutrient nutrient)
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                ctx.Nutrients.Add(nutrient);
+                ctx.Save();
+
+                return nutrient.Id;
+            }
+        }
     }
 }
