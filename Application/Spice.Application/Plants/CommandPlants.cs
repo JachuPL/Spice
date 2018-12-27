@@ -5,6 +5,7 @@ using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
+using Spice.Application.Species.Exceptions;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using System;
@@ -36,9 +37,15 @@ namespace Spice.Application.Plants
             if (existingAtCoordinates != null)
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
+            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            if (species is null)
+                throw new SpeciesDoesNotExistException(model.SpeciesId);
+
             Plant plant = _mapper.Map<Plant>(model);
             plant.Field = field;
             field.Plants.Add(plant);
+            plant.Species = species;
+            species.Plants.Add(plant);
 
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
@@ -61,8 +68,13 @@ namespace Spice.Application.Plants
             if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
+            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            if (species is null)
+                throw new SpeciesDoesNotExistException(model.SpeciesId);
+
             _mapper.Map(model, plant);
             plant.Field = field;
+            plant.Species = species;
             field.Plants.Add(plant);
 
             _database.Plants.Update(plant);

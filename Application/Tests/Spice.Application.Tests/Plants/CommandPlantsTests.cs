@@ -4,12 +4,12 @@ using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Models;
+using Spice.Application.Species.Exceptions;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using System;
 using System.Threading.Tasks;
-using Spice.Application.Species.Exceptions;
 
 namespace Spice.Application.Tests.Plants
 {
@@ -65,8 +65,9 @@ namespace Spice.Application.Tests.Plants
         public void CreatePlantThrowsExceptionIfSpeciesDoesNotExist()
         {
             // Given
-            SeedDatabase(ModelFactory.DomainModel());
-            CreatePlantModel model = ModelFactory.CreationModel();
+            Field field = Fields.ModelFactory.DomainModel();
+            Guid fieldId = SeedDatabase(field);
+            CreatePlantModel model = ModelFactory.CreationModel(fieldId);
 
             // When
             Func<Task> createPlant = async () => await _commands.Create(model);
@@ -127,7 +128,9 @@ namespace Spice.Application.Tests.Plants
             // Given
             SeedDatabase(ModelFactory.DomainModel());   // existing plant
             Guid id = SeedDatabase(ModelFactory.DomainModel());
-            UpdatePlantModel model = ModelFactory.UpdateModel(id);
+            Field field = Fields.ModelFactory.DomainModel();
+            Guid fieldId = SeedDatabase(field);
+            UpdatePlantModel model = ModelFactory.UpdateModel(id, fieldId);
 
             // When
             Func<Task> updatePlant = async () => await _commands.Update(model);
