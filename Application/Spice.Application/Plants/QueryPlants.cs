@@ -19,13 +19,15 @@ namespace Spice.Application.Plants
 
         public async Task<IEnumerable<Plant>> GetAll()
         {
-            return await _database.Plants.AsNoTracking().ToListAsync();
+            return await _database.Plants.AsNoTracking()
+                .Include(x => x.Species).ToListAsync();
         }
 
         public async Task<Plant> Get(Guid id)
         {
             return await _database.Plants
                 .Include(x => x.Field)
+                .Include(x => x.Species)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

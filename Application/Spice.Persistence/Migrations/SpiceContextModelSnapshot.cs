@@ -25,7 +25,6 @@ namespace Spice.Persistence.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .IsUnicode(true);
 
@@ -45,7 +44,7 @@ namespace Spice.Persistence.Migrations
                     b.ToTable("Fields");
                 });
 
-            modelBuilder.Entity("Spice.Domain.Plant", b =>
+            modelBuilder.Entity("Spice.Domain.Plants.Plant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -63,10 +62,7 @@ namespace Spice.Persistence.Migrations
 
                     b.Property<int>("Row");
 
-                    b.Property<string>("Specimen")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(true);
+                    b.Property<Guid>("SpeciesId");
 
                     b.Property<int>("State");
 
@@ -76,14 +72,47 @@ namespace Spice.Persistence.Migrations
 
                     b.HasIndex("Id");
 
+                    b.HasIndex("SpeciesId");
+
                     b.ToTable("Plants");
                 });
 
-            modelBuilder.Entity("Spice.Domain.Plant", b =>
+            modelBuilder.Entity("Spice.Domain.Plants.Species", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .IsUnicode(true);
+
+                    b.Property<string>("LatinName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Species");
+                });
+
+            modelBuilder.Entity("Spice.Domain.Plants.Plant", b =>
                 {
                     b.HasOne("Spice.Domain.Field", "Field")
                         .WithMany("Plants")
                         .HasForeignKey("FieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Spice.Domain.Plants.Species", "Species")
+                        .WithMany("Plants")
+                        .HasForeignKey("SpeciesId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
