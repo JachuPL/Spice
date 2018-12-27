@@ -8,6 +8,9 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
         {
             return new CreateNutrientViewModel()
             {
+                Name = "Mineral water",
+                Description = "Either tap or bottled.",
+                DosageUnits = "ml"
             };
         }
 
@@ -15,6 +18,9 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
         {
             return new CreateNutrientViewModel()
             {
+                Name = "A",
+                Description = "B",
+                DosageUnits = "C"
             };
         }
 
@@ -22,6 +28,9 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
         {
             return new UpdateNutrientViewModel()
             {
+                Name = "Mineral water",
+                Description = "Either tap or bottled.",
+                DosageUnits = "ml"
             };
         }
 
@@ -29,6 +38,9 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
         {
             return new UpdateNutrientViewModel()
             {
+                Name = "A",
+                Description = "B",
+                DosageUnits = "C"
             };
         }
     }
