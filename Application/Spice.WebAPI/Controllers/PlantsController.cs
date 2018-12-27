@@ -4,6 +4,7 @@ using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
+using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using System;
@@ -59,6 +60,13 @@ namespace Spice.WebAPI.Controllers
                 Guid plantId = await _commands.Create(createPlantModel);
                 return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
+            catch (SpeciesDoesNotExistException ex)
+            {
+                return Conflict(new
+                {
+                    Error = ex.Message
+                });
+            }
             catch (FieldDoesNotExistException ex)
             {
                 return Conflict(new
@@ -92,6 +100,13 @@ namespace Spice.WebAPI.Controllers
                     return NotFound();
 
                 return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
+            }
+            catch (SpeciesDoesNotExistException ex)
+            {
+                return Conflict(new
+                {
+                    Error = ex.Message
+                });
             }
             catch (FieldDoesNotExistException ex)
             {
