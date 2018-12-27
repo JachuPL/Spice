@@ -10,7 +10,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             return new CreatePlantViewModel()
             {
                 Name = "Pepper",
-                Specimen = "Capsicum annuum",
+                SpeciesId = Guid.NewGuid(),
                 FieldId = Guid.NewGuid(),
                 Row = 0,
                 Column = 0,
@@ -24,7 +24,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             return new CreatePlantViewModel()
             {
                 Name = string.Empty,
-                Specimen = string.Empty,
+                SpeciesId = Guid.Empty,
                 FieldId = Guid.Empty,
                 Row = 0,
                 Column = 0,
@@ -38,7 +38,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             return new UpdatePlantViewModel()
             {
                 Name = "Pepper",
-                Specimen = "Capsicum annuum",
+                SpeciesId = Guid.NewGuid(),
                 FieldId = Guid.NewGuid(),
                 Row = 0,
                 Column = 0,
@@ -52,7 +52,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
             return new UpdatePlantViewModel()
             {
                 Name = string.Empty,
-                Specimen = string.Empty,
+                SpeciesId = Guid.Empty,
                 FieldId = Guid.Empty,
                 Row = 0,
                 Column = 0,

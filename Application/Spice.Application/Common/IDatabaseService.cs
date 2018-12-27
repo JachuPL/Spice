@@ -9,6 +9,7 @@ namespace Spice.Application.Common
     {
         DbSet<Plant> Plants { get; set; }
         DbSet<Field> Fields { get; set; }
+        DbSet<Domain.Plants.Species> Species { get; set; }
 
         int Save();
 

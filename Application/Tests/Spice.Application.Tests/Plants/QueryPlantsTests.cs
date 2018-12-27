@@ -45,8 +45,9 @@ namespace Spice.Application.Tests.Plants
         private void SeedDatabaseForGetAllTesting()
         {
             Field field = Fields.ModelFactory.DomainModel();
+            Domain.Plants.Species species = Species.ModelFactory.DomainModel();
             DatabaseContext.Plants.Add(ModelFactory.DomainModel(field));
-            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field, 0, 1));
+            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
             DatabaseContext.Save();
         }
 

@@ -40,32 +40,36 @@ Spice is all about plants. As of now, the following requests are available:
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants - returns list of all plants. Example:
 ```
 [
-  {
-    "id":"fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8",
-    "name":"Aji Lemon Drop",
-    "specimen":"Capsicum annuum L.",
-    "state":0
-  }
+    {
+        "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+        "name": "Aji Jobito",
+        "species": "Capsicum annuum",
+        "state": 2
+    }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/:guid - returns plant details by id (specified guid). Example:
 ```
-// Requested uri: api/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 
 {
-    "id": "fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8",
-    "name": "Aji Lemon Drop",
-    "specimen": "Capsicum annuum L.",
-    "field": {
-        "id": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
-        "name": "Another one",
-        "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
+    "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+    "name": "Aji Jobito",
+    "species": {
+        "id": "d7be6f24-8704-4447-f689-08d66bd60981",
+        "name": "Yellow bell pepper",
+        "latinName": "Capsicum annuum"
     },
-    "row": 0,
-    "column": 0,
-    "planted": "2018-12-09T14:30:00",
-    "state": 0
+    "field": {
+        "id": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
+        "name": "Pole, pole, łyse pole",
+        "description": "Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank."
+    },
+    "row": 1,
+    "column": 2,
+    "planted": "2018-12-09T15:00:00",
+    "state": 2
 }
 ```
 
@@ -73,34 +77,34 @@ Spice is all about plants. As of now, the following requests are available:
 ```
 {
 	"Name": "Aji Lemon Drop",
-	"Specimen": "Capsicum annuum L.",
-  "FieldId": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
+	"SpeciesId": "907083c1-5032-4a28-f688-08d66bd60981",
+	"FieldId": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
 	"Row": 0,
 	"Column": 0,
-	"Planted": "2018-12-26 11:30:00",
+	"Planted": "2018-12-09 14:30:00",
 	"State": "Healthy"
 }
 ```
-Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
+Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. The same applies if either species or field does not exist. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/:guid - updates plant data with specified id. Example:
 ```
-// Requested uri: api/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 {
-	"Name": "Rocoto Giant Red",
-	"Specimen": "Capsicum annuum L.",
-  "FieldId": "a96b848c-68f1-4f0f-3756-08d66b4f8d34",
+	"Name": "Aji Jobito",
+	"SpeciesId": "d7be6f24-8704-4447-f689-08d66bd60981",
+	"FieldId": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
 	"Row": 1,
-	"Column": 0,
-	"Planted": "2018-12-26 11:30:00",
-	"State": "Harvested"
+	"Column": 2,
+	"Planted": "2018-12-09 15:00:00",
+	"State": "Fruiting"
 }
 ```
-Note that if a plant is found growing on specified field, row and column this operation will result in Conflict.
+Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. The same applies if either species or field does not exist.
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/:guid - deletes plant with specified id. Example:
 ```
-// Requested uri: api/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 // Returns 204 No Content
 ```
 Note that once a plant is deleted it is not possible to restore it!
@@ -125,20 +129,20 @@ Not all plants grow on fields - some are raised using hydroponics or just in a p
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields/:guid - returns field details by id (specified guid). Example:
 ```
-// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
+// Requested uri: api/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5
 
 {
-    "id": "c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+    "id": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
     "name": "Field, field, endless field",
-    "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.",
+    "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
     "latitude": 50.9657062,
     "longtitude": 22.3966112,
     "plants": [
         {
-            "id": "3f53a293-4da6-4d1a-0c57-08d66b4a591d",
-            "name": "Aji Lemon Drop",
-            "specimen": "Capsicum annuum L.",
-            "state": 0
+            "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+            "name": "Aji Jobito",
+            "species": "Capsicum annuum",
+            "state": 2
         }
     ]
 }
@@ -174,3 +178,75 @@ Note that if a field with specified name already exists this operation will resu
 // Returns 204 No Content
 ```
 Note that once a field is deleted it is not possible to restore it!
+
+### Species
+You can also group your plants into species. This might come in handy in the future - you could track which species use higher amount of nutrients, need more sun, or are more prone to pests. For now, you can make such API calls:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species - returns list of all species. Example:
+```
+[
+    {
+        "id": "907083c1-5032-4a28-f688-08d66bd60981",
+        "name": "Spicy pepper",
+        "latinName": "Capsicum baccatum"
+    },
+    {
+        "id": "d7be6f24-8704-4447-f689-08d66bd60981",
+        "name": "Yellow bell pepper",
+        "latinName": "Capsicum annuum"
+    },
+    {
+        "id": "b329ee44-084f-48a4-f68a-08d66bd60981",
+        "name": "Green bell pepper",
+        "latinName": "Capsicum annuum"
+    }
+]
+```
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/:guid - returns species details by id (specified guid). Example:
+```
+// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+
+{
+    "id": "d7be6f24-8704-4447-f689-08d66bd60981",
+    "name": "Yellow bell pepper",
+    "latinName": "Capsicum annuum",
+    "description": "Not spicy at all. Widely used in hungarian cuisine.",
+    "plants": [
+        {
+            "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+            "name": "Aji Jobito",
+            "species": "Capsicum annuum",
+            "state": 2
+        }
+    ]
+}
+```
+
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/species - adds new species with specified data. Example:
+```
+{
+	"Name": "Green bell pepper",
+	"LatinName": "Capsicum annuum",
+	"Description": "Not spicy at all. Widely used in hungarian cuisine."
+}
+```
+Note that if a species with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
+
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/species/:guid - updates species data with specified id. Example:
+```
+// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+
+{
+	"Name": "Spicy pepper",
+	"LatinName": "Capsicum baccatum",
+	"Description": "To get rid of spice drink a glass of milk or eat a spoon of butter.",
+}
+```
+Note that if a species with specified name already exists this operation will result in Conflict.
+
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/species/:guid - deletes species with specified id. Example:
+```
+// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+// Returns 204 No Content
+```
+Note that once a species is deleted it is not possible to restore it and all underlying plants!

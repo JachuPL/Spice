@@ -7,12 +7,12 @@ namespace Spice.Application.Tests.Plants
 {
     public static class ModelFactory
     {
-        public static CreatePlantModel CreationModel(Guid? fieldId = null)
+        public static CreatePlantModel CreationModel(Guid? fieldId = null, Guid? speciesId = null)
         {
             return new CreatePlantModel()
             {
                 Name = "Rocoto Giant Red",
-                Specimen = "Capsicum annuum",
+                SpeciesId = speciesId ?? Guid.NewGuid(),
                 FieldId = fieldId ?? Guid.NewGuid(),
                 Column = 0,
                 Row = 0,
@@ -21,13 +21,13 @@ namespace Spice.Application.Tests.Plants
             };
         }
 
-        public static UpdatePlantModel UpdateModel(Guid? id = null, Guid? fieldId = null)
+        public static UpdatePlantModel UpdateModel(Guid? id = null, Guid? fieldId = null, Guid? speciesId = null)
         {
             return new UpdatePlantModel()
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Rocoto Giant Red",
-                Specimen = "Capsicum annuum",
+                SpeciesId = speciesId ?? Guid.NewGuid(),
                 FieldId = fieldId ?? Guid.NewGuid(),
                 Column = 0,
                 Row = 0,
@@ -36,12 +36,12 @@ namespace Spice.Application.Tests.Plants
             };
         }
 
-        public static Plant DomainModel(Field field = null, int row = 0, int col = 0)
+        public static Plant DomainModel(Field field = null, Domain.Plants.Species species = null, int row = 0, int col = 0)
         {
             return new Plant()
             {
                 Name = "Rocoto Giant Red",
-                Specimen = "Capsicum annuum",
+                Species = species ?? Species.ModelFactory.DomainModel(),
                 Field = field ?? Fields.ModelFactory.DomainModel(),
                 Column = col,
                 Row = row,

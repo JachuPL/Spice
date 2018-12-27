@@ -1,4 +1,5 @@
 ﻿using Spice.ViewModels.Fields;
+using Spice.ViewModels.Species;
 using System;
 
 namespace Spice.ViewModels.Plants
@@ -7,7 +8,7 @@ namespace Spice.ViewModels.Plants
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Specimen { get; set; }
+        public SpeciesIndexViewModel Species { get; set; }
         public FieldIndexViewModel Field { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
