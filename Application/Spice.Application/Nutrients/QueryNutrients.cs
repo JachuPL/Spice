@@ -1,4 +1,5 @@
-﻿using Spice.Application.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Spice.Application.Common;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Domain;
 using System;
@@ -16,14 +17,14 @@ namespace Spice.Application.Nutrients
             _database = database;
         }
 
-        public Task<IEnumerable<Nutrient>> GetAll()
+        public async Task<IEnumerable<Nutrient>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _database.Nutrients.AsNoTracking().ToListAsync();
         }
 
-        public Task<Nutrient> Get(Guid id)
+        public async Task<Nutrient> Get(Guid id)
         {
-            throw new NotImplementedException();
+            return await _database.Nutrients.FindAsync(id);
         }
     }
 }

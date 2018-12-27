@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
+using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Application.Nutrients.Models;
 using Spice.Domain;
@@ -19,19 +21,40 @@ namespace Spice.Application.Nutrients
             _mapper = mapper;
         }
 
-        public Task<Guid> Create(CreateNutrientModel model)
+        public async Task<Guid> Create(CreateNutrientModel model)
         {
-            throw new NotImplementedException();
+            if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name))
+                throw new NutrientWithNameAlreadyExistsException(model.Name);
+
+            Nutrient nutrient = _mapper.Map<Nutrient>(model);
+            await _database.Nutrients.AddAsync(nutrient);
+            await _database.SaveAsync();
+            return nutrient.Id;
         }
 
-        public Task<Nutrient> Update(UpdateNutrientModel model)
+        public async Task<Nutrient> Update(UpdateNutrientModel model)
         {
-            throw new NotImplementedException();
+            Nutrient nutrient = await _database.Nutrients.FindAsync(model.Id);
+            if (nutrient is null)
+                throw new NutrientDoesNotExistException(model.Id);
+
+            if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
+                throw new NutrientWithNameAlreadyExistsException(model.Name);
+
+            _mapper.Map(model, nutrient);
+            _database.Nutrients.Update(nutrient);
+            await _database.SaveAsync();
+            return nutrient;
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Nutrient nutrient = await _database.Nutrients.FindAsync(id);
+            if (nutrient is null)
+                return;
+
+            _database.Nutrients.Remove(nutrient);
+            await _database.SaveAsync();
         }
     }
 }

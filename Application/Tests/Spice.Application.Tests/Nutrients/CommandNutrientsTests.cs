@@ -90,9 +90,10 @@ namespace Spice.Application.Tests.Nutrients
         public async Task UpdateNutrientReturnsNutrientOnSuccess()
         {
             // Given
-            Nutrient Nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "g");
+            Nutrient Nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "ml");
             Guid NutrientId = SeedDatabase(Nutrient);
             UpdateNutrientModel model = ModelFactory.UpdateModel(NutrientId);
+            model.DosageUnits = "g";
 
             // When
             Nutrient = await _commands.Update(model);
