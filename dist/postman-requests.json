@@ -276,6 +276,141 @@
 			]
 		},
 		{
+			"name": "Nutrients",
+			"item": [
+				{
+					"name": "List all nutrients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/nutrients",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"nutrients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nutrient details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/nutrients/0d68ac96-936e-4e25-c11b-08d66bf34c88",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"nutrients",
+								"0d68ac96-936e-4e25-c11b-08d66bf34c88"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create nutrient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Mineral water\",\n\t\"Description\": \"Either tap or bottled.\",\n\t\"DosageUnits\": \"ml\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/nutrients/",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"nutrients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update nutrient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Fertilizer\",\n\t\"Description\": \"Natural plant fertilizer.\",\n\t\"DosageUnits\": \"g\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/nutrients/0d68ac96-936e-4e25-c11b-08d66bf34c88",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"nutrients",
+								"0d68ac96-936e-4e25-c11b-08d66bf34c88"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete nutrients",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/nutrients/0d68ac96-936e-4e25-c11b-08d66bf34c88",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"nutrients",
+								"0d68ac96-936e-4e25-c11b-08d66bf34c88"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Species",
 			"item": [
 				{
@@ -309,13 +444,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/species/907083c1-5032-4a28-f688-08d66bd60981",
+							"raw": "{{apiUrl}}/species/d7be6f24-8704-4447-f689-08d66bd60981",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"species",
-								"907083c1-5032-4a28-f688-08d66bd60981"
+								"d7be6f24-8704-4447-f689-08d66bd60981"
 							]
 						}
 					},
@@ -435,13 +570,13 @@
 	],
 	"variable": [
 		{
-			"id": "8bb007f4-d1c3-4a64-bc07-370d2bb4e4b8",
+			"id": "5dbdf972-128a-474a-a48d-1c60d3074d5d",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "a9d21ff9-0bde-418a-9916-b3e95166320e",
+			"id": "abe06960-2372-432a-b405-e4ec92d48266",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"
