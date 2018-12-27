@@ -9,6 +9,6 @@ namespace Spice.Domain.Plants
         public string Name { get; set; }
         public string LatinName { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Plant> Plants { get; set; }
+        public List<Plant> Plants { get; set; } = new List<Plant>();
     }
 }

@@ -81,7 +81,8 @@ namespace Spice.Application.Tests.Plants
         {
             // Given
             Guid fieldId = SeedDatabase(Fields.ModelFactory.DomainModel());
-            CreatePlantModel model = ModelFactory.CreationModel(fieldId);
+            Guid speciesId = SeedDatabase(Species.ModelFactory.DomainModel());
+            CreatePlantModel model = ModelFactory.CreationModel(fieldId, speciesId);
 
             // When
             Guid id = await _commands.Create(model);
@@ -163,7 +164,7 @@ namespace Spice.Application.Tests.Plants
             Plant plant = ModelFactory.DomainModel(field, species, 13, 37);
             Guid plantId = SeedDatabase(plant);
 
-            UpdatePlantModel model = ModelFactory.UpdateModel(plantId, fieldId);
+            UpdatePlantModel model = ModelFactory.UpdateModel(plantId, fieldId, speciesId);
 
             // When
             plant = await _commands.Update(model);
