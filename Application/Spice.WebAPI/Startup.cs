@@ -10,6 +10,8 @@ using Spice.Application.Fields;
 using Spice.Application.Fields.Interfaces;
 using Spice.Application.Plants;
 using Spice.Application.Plants.Interfaces;
+using Spice.Application.Species;
+using Spice.Application.Species.Interfaces;
 using Spice.AutoMapper;
 using Spice.Persistence;
 using Spice.ViewModels.Plants.Validators;
@@ -49,6 +51,9 @@ namespace Spice.WebAPI
 
             services.AddTransient<IQueryFields, QueryFields>();
             services.AddTransient<ICommandFields, CommandFields>();
+
+            services.AddTransient<IQuerySpecies, QuerySpecies>();
+            services.AddTransient<ICommandSpecies, CommandSpecies>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

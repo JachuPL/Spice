@@ -23,7 +23,9 @@ namespace Spice.Application.Species
 
         public async Task<Domain.Plants.Species> Get(Guid id)
         {
-            return await _database.Species.FindAsync(id);
+            return await _database.Species
+                .Include(x => x.Plants)
+                .ThenInclude(x => x.Field).FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

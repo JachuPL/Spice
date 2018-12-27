@@ -26,15 +26,15 @@ namespace Spice.WebAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Species
+        // GET api/species
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SpeciesIndexViewModel>>> Get()
         {
-            IEnumerable<Species> Species = await _queries.GetAll();
-            return Ok(_mapper.Map<IEnumerable<SpeciesIndexViewModel>>(Species));
+            IEnumerable<Species> species = await _queries.GetAll();
+            return Ok(_mapper.Map<IEnumerable<SpeciesIndexViewModel>>(species));
         }
 
-        // GET api/Species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
+        // GET api/species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
         [HttpGet("{id:guid}", Name = nameof(GetSpecies))]
         public async Task<ActionResult<SpeciesDetailsViewModel>> GetSpecies(Guid id)
         {
@@ -45,7 +45,7 @@ namespace Spice.WebAPI.Controllers
             return Ok(_mapper.Map<SpeciesDetailsViewModel>(species));
         }
 
-        // POST api/Species
+        // POST api/species
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateSpeciesViewModel model)
         {
@@ -67,7 +67,7 @@ namespace Spice.WebAPI.Controllers
             }
         }
 
-        // PUT api/Species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
+        // PUT api/species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
         [HttpPut("{id:guid}")]
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdateSpeciesViewModel model)
         {
@@ -98,7 +98,7 @@ namespace Spice.WebAPI.Controllers
             }
         }
 
-        // DELETE api/Species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
+        // DELETE api/species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
         [HttpDelete("{id:guid}")]
         public async Task<NoContentResult> Delete(Guid id)
         {

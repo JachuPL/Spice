@@ -39,13 +39,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8",
+							"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8"
+								"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4"
 							]
 						}
 					},
@@ -65,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum L.\",\n\t\"FieldId\": \"c4fcb846-65a1-4c86-92fc-08d66b49d1b7\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
+							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"SpeciesId\": \"907083c1-5032-4a28-f688-08d66bd60981\",\n\t\"FieldId\": \"2694bd84-fa18-4a35-6a3e-08d66bd634b5\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
 						},
 						"url": {
 							"raw": "{{apiUrl}}/plants/",
@@ -94,16 +94,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"Specimen\": \"Capsicum annuum\",\n\t\"FieldId\": \"fd8ce8e8-1fa4-491a-ba7d-08d66b07fda8\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
+							"raw": "{\n\t\"Name\": \"Aji Jobito\",\n\t\"SpeciesId\": \"d7be6f24-8704-4447-f689-08d66bd60981\",\n\t\"FieldId\": \"2694bd84-fa18-4a35-6a3e-08d66bd634b5\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/3f53a293-4da6-4d1a-0c57-08d66b4a591d",
+							"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"3f53a293-4da6-4d1a-0c57-08d66b4a591d"
+								"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4"
 							]
 						}
 					},
@@ -174,13 +174,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+							"raw": "{{apiUrl}}/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"fields",
-								"c4fcb846-65a1-4c86-92fc-08d66b49d1b7"
+								"2694bd84-fa18-4a35-6a3e-08d66bd634b5"
 							]
 						}
 					},
@@ -232,13 +232,13 @@
 							"raw": "{\n\t\"Name\": \"Pole, pole, łyse pole\",\n\t\"Description\": \"Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
+							"raw": "{{apiUrl}}/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"fields",
-								"c4fcb846-65a1-4c86-92fc-08d66b49d1b7"
+								"2694bd84-fa18-4a35-6a3e-08d66bd634b5"
 							]
 						}
 					},
@@ -261,13 +261,148 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/fields/f7b66d8f-d00b-43c7-92fb-08d66b49d1b7",
+							"raw": "{{apiUrl}}/fields/10000000-0000-0000-0000-000000000001",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"fields",
-								"f7b66d8f-d00b-43c7-92fb-08d66b49d1b7"
+								"10000000-0000-0000-0000-000000000001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Species",
+			"item": [
+				{
+					"name": "List all species",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/species",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"species"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Species details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/species/907083c1-5032-4a28-f688-08d66bd60981",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"species",
+								"907083c1-5032-4a28-f688-08d66bd60981"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create species",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Green bell pepper\",\n\t\"LatinName\": \"Capsicum annuum\",\n\t\"Description\": \"Not spicy at all. Widely used in hungarian cuisine.\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/species/",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"species",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update species",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"Spicy pepper\",\n\t\"LatinName\": \"Capsicum baccatum\",\n\t\"Description\": \"To get rid of spice drink a glass of milk or eat a spoon of butter.\",\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/species/907083c1-5032-4a28-f688-08d66bd60981",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"species",
+								"907083c1-5032-4a28-f688-08d66bd60981"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete species",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUrl}}/species/10000000-0000-0000-0000-000000000001",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"species",
+								"10000000-0000-0000-0000-000000000001"
 							]
 						}
 					},
@@ -300,13 +435,13 @@
 	],
 	"variable": [
 		{
-			"id": "840caa90-3c7f-43ad-9291-f785cf3dd855",
+			"id": "8bb007f4-d1c3-4a64-bc07-370d2bb4e4b8",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "dc6c793f-d592-49ed-b497-0bbfb716eb9d",
+			"id": "a9d21ff9-0bde-418a-9916-b3e95166320e",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"
