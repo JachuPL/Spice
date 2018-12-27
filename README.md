@@ -177,7 +177,7 @@ Note that if a field with specified name already exists this operation will resu
 // Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
 // Returns 204 No Content
 ```
-Note that once a field is deleted it is not possible to restore it!
+Note that once a field is deleted it is not possible to restore it and all underlying plants!
 
 ### Species
 You can also group your plants into species. This might come in handy in the future - you could track which species use higher amount of nutrients, need more sun, or are more prone to pests. For now, you can make such API calls:
@@ -250,3 +250,57 @@ Note that if a species with specified name already exists this operation will re
 // Returns 204 No Content
 ```
 Note that once a species is deleted it is not possible to restore it and all underlying plants!
+
+### Nutrients
+Your plants would not survive long without nutrients. With this option you can track the lifecycle of your plants. For now, you can make such API calls:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients - returns list of all nutrients. Example:
+```
+[
+    {
+        "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+        "name": "Mineral water",
+        "description": "Either tap or bottled."
+    }
+]
+```
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients/:guid - returns nutrient details by id (specified guid). Example:
+```
+// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+
+{
+    "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+    "name": "Mineral water",
+    "description": "Either tap or bottled.",
+    "dosageUnits": "ml"
+}
+```
+
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/nutrients - adds new nutrient with specified data. Example:
+```
+{
+	"Name": "Mineral water",
+	"Description": "Either tap or bottled.",
+	"DosageUnits": "ml"
+}
+```
+Note that if a species with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
+
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/nutrients/:guid - updates nutrients data with specified id. Example:
+```
+// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+
+{
+	"Name": "Fertilizer",
+	"Description": "Natural plant fertilizer.",
+	"DosageUnits": "g"
+}
+```
+Note that if a species with specified name already exists this operation will result in Conflict.
+
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/nutrients/:guid - deletes nutrients with specified id. Example:
+```
+// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+// Returns 204 No Content
+```
+Note that once a nutrient is deleted it is not possible to restore it and all underlying plants!
