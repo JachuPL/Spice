@@ -9,6 +9,7 @@ using Spice.Domain;
 using Spice.Domain.Plants;
 using System;
 using System.Threading.Tasks;
+using Spice.Application.Species.Exceptions;
 
 namespace Spice.Application.Tests.Plants
 {
@@ -60,6 +61,20 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<FieldDoesNotExistException>();
         }
 
+        [TestCase(TestName = "Create plant throws exception if species with specified id does not exist")]
+        public void CreatePlantThrowsExceptionIfSpeciesDoesNotExist()
+        {
+            // Given
+            SeedDatabase(ModelFactory.DomainModel());
+            CreatePlantModel model = ModelFactory.CreationModel();
+
+            // When
+            Func<Task> createPlant = async () => await _commands.Create(model);
+
+            // Then
+            createPlant.Should().Throw<SpeciesDoesNotExistException>();
+        }
+
         [TestCase(TestName = "Create plant returns Guid on success")]
         public async Task CreatePlantReturnsGuidOnSuccess()
         {
@@ -104,6 +119,21 @@ namespace Spice.Application.Tests.Plants
 
             // Then
             updatePlant.Should().Throw<FieldDoesNotExistException>();
+        }
+
+        [TestCase(TestName = "Update plant throws exception if species with specified id does not exist")]
+        public void UpdatePlantThrowsExceptionIfSpeciesDoesNotExist()
+        {
+            // Given
+            SeedDatabase(ModelFactory.DomainModel());   // existing plant
+            Guid id = SeedDatabase(ModelFactory.DomainModel());
+            UpdatePlantModel model = ModelFactory.UpdateModel(id);
+
+            // When
+            Func<Task> updatePlant = async () => await _commands.Update(model);
+
+            // Then
+            updatePlant.Should().Throw<SpeciesDoesNotExistException>();
         }
 
         [TestCase(TestName = "Update plant returns null if plant does not exist")]
