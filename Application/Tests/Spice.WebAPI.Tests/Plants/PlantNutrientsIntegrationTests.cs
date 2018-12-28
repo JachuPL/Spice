@@ -217,7 +217,7 @@ namespace Spice.WebAPI.Tests.Plants
                 .Throws(new NutrientApplicationDateBeforePlantDateException());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -287,10 +287,10 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetSumOfAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(A<Guid>.Ignored));
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(Guid.NewGuid()));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -305,7 +305,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
