@@ -1,4 +1,4 @@
-﻿namespace Spice.WebAPI.Tests.Plants.Factories.Plant
+﻿namespace Spice.WebAPI.Tests.Plants.Factories.Plants
 {
     public static class EndPointFactory
     {

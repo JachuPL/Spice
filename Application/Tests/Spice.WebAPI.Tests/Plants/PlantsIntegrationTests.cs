@@ -10,7 +10,7 @@ using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
-using Spice.WebAPI.Tests.Plants.Factories.Plant;
+using Spice.WebAPI.Tests.Plants.Factories.Plants;
 using System;
 using System.Collections.Generic;
 using System.Net;
