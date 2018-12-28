@@ -8,9 +8,9 @@ namespace Spice.Application.Plants.Interfaces
 {
     public interface IQueryPlantNutrients
     {
-        Task<IEnumerable<AdministeredNutrient>> GetAll();
+        Task<IEnumerable<AdministeredNutrient>> GetByPlant(Guid id);
 
-        Task<AdministeredNutrient> Get(Guid id);
+        Task<AdministeredNutrient> Get(Guid plantId, Guid id);
 
         Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Sum(Guid plantId);
     }

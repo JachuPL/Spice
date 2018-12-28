@@ -11,6 +11,6 @@ namespace Spice.Application.Plants.Interfaces
 
         Task<AdministeredNutrient> Update(UpdateAdministeredNutrientModel model);
 
-        Task Delete(Guid id);
+        Task Delete(Guid plantId, Guid id);
     }
 }

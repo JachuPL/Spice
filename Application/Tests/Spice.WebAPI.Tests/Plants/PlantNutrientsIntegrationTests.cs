@@ -2,11 +2,10 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Fields.Exceptions;
+using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
-using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants.AdministeredNutrients;
 using Spice.WebAPI.Tests.Common;
@@ -45,7 +44,7 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetListReturnsPlantNutrientssAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<AdministeredNutrient>>());
+            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredNutrient>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
@@ -53,14 +52,14 @@ namespace Spice.WebAPI.Tests.Plants
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.GetAll()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET single administered plant nutrient returns \"Not Found\" and correct content type if plant does not exist")]
         public async Task GetAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -68,14 +67,14 @@ namespace Spice.WebAPI.Tests.Plants
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET single administered plant nutrient returns \"Not Found\" and correct content type if administered plant nutrient does not exist")]
         public async Task GetAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfAdministeredPlantNutrientDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -83,14 +82,14 @@ namespace Spice.WebAPI.Tests.Plants
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET single administered plant nutrient returns \"OK\" and correct content type")]
         public async Task GetAdministeredPlantNutrientReturnsAdministeredPlantNutrientAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<AdministeredNutrient>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(A.Fake<AdministeredNutrient>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -98,7 +97,7 @@ namespace Spice.WebAPI.Tests.Plants
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if plant by id does not exist")]
@@ -106,7 +105,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new PlantExistsAtCoordinatesException(0, 0));
+                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -122,7 +121,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -138,7 +137,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(new NutrientApplicationDateBeforePlantDateException());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -183,7 +182,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -199,10 +198,26 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
+                .Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            A.CallTo(() => _fakeCommand.Update(A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if administration date is earlier than planting date")]
+        public async Task PutAdministeredPlantNutrientReturnsConflictIfAdministrationDateIsEarlierThanPlantingDate()
+        {
+            // Given
+            A.CallTo(() => _fakeCommand.Update(A<UpdateAdministeredNutrientModel>.Ignored))
+                .Throws(new NutrientApplicationDateBeforePlantDateException());
+
+            // When
+            var response = await Client.PutAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -258,21 +273,21 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task DeleteAdministeredPlantReturnsNoContentAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);
+            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.CompletedTask);
 
             // When
             var response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
-            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if plant by id was not found")]
         public async Task GetSumOfAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(A<Guid>.Ignored));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
