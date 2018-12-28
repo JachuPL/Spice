@@ -1,63 +1,34 @@
-﻿using Spice.ViewModels.Plants;
-using System;
+﻿using Spice.ViewModels.Plants.AdministeredNutrients;
 
 namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
 {
     internal static class ViewModelFactory
     {
-        public static CreatePlantViewModel CreateValidCreationModel()
+        public static CreateAdministeredNutrientViewModel CreateValidCreationModel()
         {
-            return new CreatePlantViewModel()
+            return new CreateAdministeredNutrientViewModel()
             {
-                Name = "Pepper",
-                SpeciesId = Guid.NewGuid(),
-                FieldId = Guid.NewGuid(),
-                Row = 0,
-                Column = 0,
-                Planted = DateTime.Now,
-                State = PlantStateViewModel.Healthy
             };
         }
 
-        public static CreatePlantViewModel CreateInvalidCreationModel()
+        public static CreateAdministeredNutrientViewModel CreateInvalidCreationModel()
         {
-            return new CreatePlantViewModel()
+            return new CreateAdministeredNutrientViewModel()
             {
-                Name = string.Empty,
-                SpeciesId = Guid.Empty,
-                FieldId = Guid.Empty,
-                Row = 0,
-                Column = 0,
-                Planted = DateTime.Now,
-                State = (PlantStateViewModel)999
             };
         }
 
-        public static UpdatePlantViewModel CreateValidUpdateModel()
+        public static UpdateAdministeredNutrientViewModel CreateValidUpdateModel()
         {
-            return new UpdatePlantViewModel()
+            return new UpdateAdministeredNutrientViewModel()
             {
-                Name = "Pepper",
-                SpeciesId = Guid.NewGuid(),
-                FieldId = Guid.NewGuid(),
-                Row = 0,
-                Column = 0,
-                Planted = DateTime.Now,
-                State = PlantStateViewModel.Healthy
             };
         }
 
-        public static UpdatePlantViewModel CreateInvalidUpdateModel()
+        public static UpdateAdministeredNutrientViewModel CreateInvalidUpdateModel()
         {
-            return new UpdatePlantViewModel()
+            return new UpdateAdministeredNutrientViewModel()
             {
-                Name = string.Empty,
-                SpeciesId = Guid.Empty,
-                FieldId = Guid.Empty,
-                Row = 0,
-                Column = 0,
-                Planted = DateTime.Now,
-                State = (PlantStateViewModel)999
             };
         }
     }

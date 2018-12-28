@@ -8,7 +8,7 @@ using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants;
+using Spice.ViewModels.Plants.AdministeredNutrients;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Plants.Factories.Nutrients;
 using System;
@@ -168,7 +168,7 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task PostNewAdministeredPlantNutrientReturnsBadRequestAndCorrectContentType()
         {
             // Given
-            CreatePlantViewModel model = ViewModelFactory.CreateInvalidCreationModel();
+            CreateAdministeredNutrientViewModel model = ViewModelFactory.CreateInvalidCreationModel();
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
@@ -244,7 +244,7 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task PutAdministeredPlantNutrientReturnsBadRequestAndCorrectContentType()
         {
             // Given
-            UpdatePlantViewModel model = ViewModelFactory.CreateInvalidUpdateModel();
+            UpdateAdministeredNutrientViewModel model = ViewModelFactory.CreateInvalidUpdateModel();
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
