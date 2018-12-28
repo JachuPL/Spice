@@ -20,7 +20,8 @@ namespace Spice.AutoMapper.Profiles.Nutrients
             CreateMap<UpdateNutrientModel, Domain.Nutrient>();
 
             CreateMap<Domain.Nutrient, NutrientIndexViewModel>();
-            CreateMap<Domain.Nutrient, NutrientDetailsViewModel>();
+            CreateMap<Domain.Nutrient, NutrientDetailsModel>();
+            CreateMap<NutrientDetailsModel, NutrientDetailsViewModel>();
         }
     }
 }

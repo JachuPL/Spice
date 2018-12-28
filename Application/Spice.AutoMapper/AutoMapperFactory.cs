@@ -18,6 +18,7 @@ namespace Spice.AutoMapper
                 cfg.AddProfile<FieldProfile>();
                 cfg.AddProfile<SpeciesProfile>();
                 cfg.AddProfile<NutrientProfile>();
+                cfg.AddProfile<PlantNutrientProfile>();
             });
         }
 

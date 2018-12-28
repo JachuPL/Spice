@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Nutrients;
+using Spice.Application.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using System;
@@ -19,7 +20,7 @@ namespace Spice.Application.Tests.Nutrients
         {
             DatabaseContext = SetupInMemoryDatabase();
             DatabaseContext.Database.EnsureCreated();
-            _queries = new QueryNutrients(DatabaseContext);
+            _queries = new QueryNutrients(DatabaseContext, Mapper);
         }
 
         [TearDown]
@@ -57,7 +58,7 @@ namespace Spice.Application.Tests.Nutrients
         public async Task GetNutrientReturnsNullWhenNotFound()
         {
             // When
-            Nutrient Nutrient = await _queries.Get(Guid.NewGuid());
+            NutrientDetailsModel Nutrient = await _queries.Get(Guid.NewGuid());
 
             // Then
             Nutrient.Should().BeNull();
@@ -70,7 +71,7 @@ namespace Spice.Application.Tests.Nutrients
             Guid NutrientId = SeedDatabaseForGetByIdTesting();
 
             // When
-            Nutrient Nutrient = await _queries.Get(NutrientId);
+            NutrientDetailsModel Nutrient = await _queries.Get(NutrientId);
 
             // Then
             Nutrient.Should().NotBeNull();
