@@ -70,5 +70,18 @@ namespace Spice.Application.Tests.Common.Base
                 return nutrient.Id;
             }
         }
+
+        protected Guid SeedDatabase(AdministeredNutrient administeredNutrient)
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                administeredNutrient.Plant = ctx.Plants.Find(administeredNutrient.Plant.Id);
+                administeredNutrient.Nutrient = ctx.Nutrients.Find(administeredNutrient.Nutrient.Id);
+                ctx.AdministeredNutrients.Add(administeredNutrient);
+                ctx.Save();
+
+                return administeredNutrient.Id;
+            }
+        }
     }
 }

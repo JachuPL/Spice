@@ -4,7 +4,7 @@ using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 
-namespace Spice.Domain.Tests
+namespace Spice.Domain.Tests.Plants
 {
     [TestFixture]
     internal sealed class SpeciesTests

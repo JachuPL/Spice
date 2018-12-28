@@ -7,9 +7,9 @@ namespace Spice.Application.Plants.Interfaces
 {
     public interface ICommandPlantNutrients
     {
-        Task<Guid> Create(CreateAdministeredNutrientModel model);
+        Task<Guid> Create(Guid plantId, CreateAdministeredNutrientModel model);
 
-        Task<AdministeredNutrient> Update(UpdateAdministeredNutrientModel model);
+        Task<AdministeredNutrient> Update(Guid plantId, UpdateAdministeredNutrientModel model);
 
         Task Delete(Guid plantId, Guid id);
     }

@@ -17,10 +17,12 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<CreateAdministeredNutrientModel, AdministeredNutrient>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty))
-                .ForMember(x => x.Nutrient, opt => opt.Ignore());
+                .ForMember(x => x.Nutrient, opt => opt.Ignore())
+                .ForMember(x => x.Plant, opt => opt.Ignore());
 
             CreateMap<UpdateAdministeredNutrientModel, AdministeredNutrient>()
-                .ForMember(x => x.Nutrient, opt => opt.Ignore());
+                .ForMember(x => x.Nutrient, opt => opt.Ignore())
+                .ForMember(x => x.Plant, opt => opt.Ignore());
 
             CreateMap<AdministeredNutrient, AdministeredNutrientsIndexViewModel>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Nutrient.Name))
