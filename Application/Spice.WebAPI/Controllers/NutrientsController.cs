@@ -38,11 +38,11 @@ namespace Spice.WebAPI.Controllers
         [HttpGet("{id:guid}", Name = nameof(GetNutrient))]
         public async Task<ActionResult<NutrientDetailsViewModel>> GetNutrient(Guid id)
         {
-            Nutrient Nutrient = await _queries.Get(id);
-            if (Nutrient is null)
+            NutrientDetailsModel nutrient = await _queries.Get(id);
+            if (nutrient is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<NutrientDetailsViewModel>(Nutrient));
+            return Ok(nutrient);
         }
 
         // POST api/nutrients
