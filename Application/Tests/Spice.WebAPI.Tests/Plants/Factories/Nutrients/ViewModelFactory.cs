@@ -1,4 +1,5 @@
 ﻿using Spice.ViewModels.Plants.AdministeredNutrients;
+using System;
 
 namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
 {
@@ -8,6 +9,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
         {
             return new CreateAdministeredNutrientViewModel()
             {
+                Date = DateTime.Now.AddHours(-1),
+                NutrientId = Guid.NewGuid(),
+                Amount = 0.75
             };
         }
 
@@ -15,6 +19,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
         {
             return new CreateAdministeredNutrientViewModel()
             {
+                Date = DateTime.Now.AddHours(-1),
+                NutrientId = Guid.Empty,
+                Amount = -0.01
             };
         }
 
@@ -22,6 +29,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
         {
             return new UpdateAdministeredNutrientViewModel()
             {
+                Date = DateTime.Now.AddHours(1),
+                NutrientId = Guid.NewGuid(),
+                Amount = 0.75
             };
         }
 
@@ -29,6 +39,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
         {
             return new UpdateAdministeredNutrientViewModel()
             {
+                Date = DateTime.Now.AddHours(1),
+                NutrientId = Guid.NewGuid(),
+                Amount = -0.01
             };
         }
     }
