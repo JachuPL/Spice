@@ -7,22 +7,22 @@ namespace Spice.Application.Tests.Plants.Nutrients
 {
     public static class ModelFactory
     {
-        public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null)
+        public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null, DateTime? administeredDate = null)
         {
             return new CreateAdministeredNutrientModel()
             {
-                Date = DateTime.Now,
+                Date = administeredDate ?? DateTime.Now,
                 NutrientId = nutrientId ?? Guid.NewGuid(),
                 Amount = 1.0
             };
         }
 
-        public static UpdateAdministeredNutrientModel UpdateModel(Guid? id = null, Guid? nutrientId = null)
+        public static UpdateAdministeredNutrientModel UpdateModel(Guid? id = null, Guid? nutrientId = null, DateTime? administeredDate = null)
         {
             return new UpdateAdministeredNutrientModel()
             {
                 Id = id ?? Guid.NewGuid(),
-                Date = DateTime.Now,
+                Date = administeredDate ?? DateTime.Now,
                 NutrientId = nutrientId ?? Guid.NewGuid(),
                 Amount = 1.0
             };
