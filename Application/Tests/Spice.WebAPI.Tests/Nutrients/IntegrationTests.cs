@@ -58,7 +58,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task GetNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<NutrientDetailsModel>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -73,7 +73,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task GetNutrientReturnsNutrientAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Nutrient>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<NutrientDetailsModel>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());

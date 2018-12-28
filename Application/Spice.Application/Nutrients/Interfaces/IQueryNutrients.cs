@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spice.Application.Nutrients.Models;
 
 namespace Spice.Application.Nutrients.Interfaces
 {
@@ -9,6 +10,6 @@ namespace Spice.Application.Nutrients.Interfaces
     {
         Task<IEnumerable<Nutrient>> GetAll();
 
-        Task<Nutrient> Get(Guid id);
+        Task<NutrientDetailsModel> Get(Guid id);
     }
 }
