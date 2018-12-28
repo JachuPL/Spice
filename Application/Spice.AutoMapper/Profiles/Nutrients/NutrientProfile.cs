@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Spice.Application.Nutrients.Models;
+using Spice.Domain;
 using Spice.ViewModels.Nutrients;
 using System;
 
@@ -14,10 +15,12 @@ namespace Spice.AutoMapper.Profiles.Nutrients
             CreateMap<UpdateNutrientViewModel, UpdateNutrientModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty));
 
-            CreateMap<CreateNutrientModel, Domain.Nutrient>()
-                .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty));
+            CreateMap<CreateNutrientModel, Nutrient>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty))
+                .ForMember(x => x.AdministeredToPlants, opt => opt.Ignore());
 
-            CreateMap<UpdateNutrientModel, Domain.Nutrient>();
+            CreateMap<UpdateNutrientModel, Nutrient>()
+                .ForMember(x => x.AdministeredToPlants, opt => opt.Ignore());
 
             CreateMap<Domain.Nutrient, NutrientIndexViewModel>();
             CreateMap<Domain.Nutrient, NutrientDetailsModel>();
