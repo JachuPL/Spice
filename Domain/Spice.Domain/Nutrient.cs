@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Spice.Domain.Plants;
+using System;
+using System.Collections.Generic;
 
 namespace Spice.Domain
 {
@@ -8,5 +10,6 @@ namespace Spice.Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public string DosageUnits { get; set; }
+        public ICollection<AdministeredNutrient> AdministeredToPlants { get; set; } = new List<AdministeredNutrient>();
     }
 }
