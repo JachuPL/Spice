@@ -133,13 +133,13 @@ namespace Spice.WebAPI.Controllers.Plants
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/sum
         [HttpGet("sum")]
-        public async Task<ActionResult<AdministeredPlantNutrientsSummaryViewModel>> GetSummary([FromRoute] Guid plantId)
+        public async Task<ActionResult<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>> GetSummary([FromRoute] Guid plantId)
         {
             try
             {
                 IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrient = await _queries.Sum(plantId);
 
-                return Ok(_mapper.Map<AdministeredPlantNutrientsSummaryViewModel>(administeredNutrient));
+                return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
             }
             catch (PlantDoesNotExistException)
             {
