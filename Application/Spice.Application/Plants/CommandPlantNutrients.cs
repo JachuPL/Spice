@@ -19,12 +19,12 @@ namespace Spice.Application.Plants
             _mapper = mapper;
         }
 
-        public Task<Guid> Create(CreateAdministeredNutrientModel model)
+        public Task<Guid> Create(Guid plantId, CreateAdministeredNutrientModel model)
         {
             throw new NotImplementedException();
         }
 
-        public Task<AdministeredNutrient> Update(UpdateAdministeredNutrientModel model)
+        public Task<AdministeredNutrient> Update(Guid plantId, UpdateAdministeredNutrientModel model)
         {
             throw new NotImplementedException();
         }

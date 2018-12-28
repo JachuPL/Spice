@@ -56,7 +56,7 @@ namespace Spice.WebAPI.Controllers.Plants
             try
             {
                 CreateAdministeredNutrientModel createAdministeredNutrientModel = _mapper.Map<CreateAdministeredNutrientModel>(model);
-                Guid nutrientId = await _commands.Create(createAdministeredNutrientModel);
+                Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
                 return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
             }
             catch (PlantDoesNotExistException ex)
@@ -94,7 +94,7 @@ namespace Spice.WebAPI.Controllers.Plants
                 UpdateAdministeredNutrientModel updateAdministeredNutrientModel = _mapper.Map<UpdateAdministeredNutrientModel>(model);
                 updateAdministeredNutrientModel.Id = id;
 
-                AdministeredNutrient administeredNutrient = await _commands.Update(updateAdministeredNutrientModel);
+                AdministeredNutrient administeredNutrient = await _commands.Update(plantId, updateAdministeredNutrientModel);
                 if (administeredNutrient is null)
                     return NotFound();
 
