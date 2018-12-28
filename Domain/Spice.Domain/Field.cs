@@ -11,6 +11,6 @@ namespace Spice.Domain
         public string Description { get; set; }
         public double Latitude { get; set; }
         public double Longtitude { get; set; }
-        public List<Plant> Plants { get; set; } = new List<Plant>();
+        public ICollection<Plant> Plants { get; set; } = new List<Plant>();
     }
 }
