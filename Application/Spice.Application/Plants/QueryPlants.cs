@@ -28,6 +28,7 @@ namespace Spice.Application.Plants
             return await _database.Plants
                 .Include(x => x.Field)
                 .Include(x => x.Species)
+                .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
