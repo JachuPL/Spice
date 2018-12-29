@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Spice.WebAPI.Controllers
+namespace Spice.WebAPI.Controllers.Plants
 {
     [Route("api/[controller]")]
     [ApiController]

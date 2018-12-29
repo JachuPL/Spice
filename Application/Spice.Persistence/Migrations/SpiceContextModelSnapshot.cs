@@ -44,6 +44,55 @@ namespace Spice.Persistence.Migrations
                     b.ToTable("Fields");
                 });
 
+            modelBuilder.Entity("Spice.Domain.Nutrient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .IsUnicode(true);
+
+                    b.Property<string>("DosageUnits")
+                        .HasMaxLength(20)
+                        .IsUnicode(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Nutrients");
+                });
+
+            modelBuilder.Entity("Spice.Domain.Plants.AdministeredNutrient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Amount");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<Guid>("NutrientId");
+
+                    b.Property<Guid>("PlantId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("NutrientId");
+
+                    b.HasIndex("PlantId");
+
+                    b.ToTable("AdministeredNutrients");
+                });
+
             modelBuilder.Entity("Spice.Domain.Plants.Plant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -101,6 +150,19 @@ namespace Spice.Persistence.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Species");
+                });
+
+            modelBuilder.Entity("Spice.Domain.Plants.AdministeredNutrient", b =>
+                {
+                    b.HasOne("Spice.Domain.Nutrient", "Nutrient")
+                        .WithMany("AdministeredToPlants")
+                        .HasForeignKey("NutrientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Spice.Domain.Plants.Plant", "Plant")
+                        .WithMany("AdministeredNutrients")
+                        .HasForeignKey("PlantId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Spice.Domain.Plants.Plant", b =>
