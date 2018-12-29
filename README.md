@@ -1,5 +1,7 @@
 # Spice <img src="images/spice-logo.png" width="48">
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e8702485367491488abeeb1ff14abb4)](https://app.codacy.com/app/JachuPL/Spice?utm_source=github.com&utm_medium=referral&utm_content=JachuPL/Spice&utm_campaign=Badge_Grade_Settings)
+
 A free and open source software to manage your garden and track plant growth.
 
 ## Installation
