@@ -145,6 +145,22 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
+        [TestCase(TestName = "PUT Nutrient returns \"Conflict\" and correct content type if nutrient was administered to any plant")]
+        public async Task PutNutrientReturnsConflictIfItWasAdministeredToAnyPlant()
+        {
+            // Given
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
+                .Throws(new NutrientAlreadyAdministeredToPlantException());
+
+            // When
+            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
         [TestCase(TestName = "PUT Nutrient returns \"Not Found\" and correct content type if nutrient was not found")]
         public async Task PutNutrientReturnsNotFoundAndCorrectContentType()
         {
