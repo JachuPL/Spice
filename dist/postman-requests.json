@@ -9,6 +9,175 @@
 			"name": "Plants",
 			"item": [
 				{
+					"name": "Administered nutrients",
+					"item": [
+						{
+							"name": "List all administered plants nutrients Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Administered plant nutrient details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients",
+										"41955905-a177-4145-bda5-08d66d666eef"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sum up all administered nutrients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/sum",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients",
+										"sum"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Administer new plant nutrient",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 500.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update administered plant nutrient",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 125.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients",
+										"41955905-a177-4145-bda5-08d66d666eef"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete administered plant nutrient",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/0d04fd7d-80b1-4808-94b9-08d66d65df5b",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"nutrients",
+										"0d04fd7d-80b1-4808-94b9-08d66d65df5b"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "List all plants",
 					"request": {
 						"method": "GET",
@@ -309,13 +478,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/nutrients/0d68ac96-936e-4e25-c11b-08d66bf34c88",
+							"raw": "{{apiUrl}}/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"nutrients",
-								"0d68ac96-936e-4e25-c11b-08d66bf34c88"
+								"25849c34-3242-4aff-27e3-08d66bfc09eb"
 							]
 						}
 					},
@@ -570,13 +739,13 @@
 	],
 	"variable": [
 		{
-			"id": "5dbdf972-128a-474a-a48d-1c60d3074d5d",
+			"id": "1b7116bb-2499-4655-a9bf-f45ab4fd9cc1",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "abe06960-2372-432a-b405-e4ec92d48266",
+			"id": "87090afd-6f14-4edc-9bd2-220abf8cd67a",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"
