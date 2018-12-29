@@ -59,6 +59,9 @@ namespace Spice.WebAPI
 
             services.AddTransient<IQueryNutrients, QueryNutrients>();
             services.AddTransient<ICommandNutrients, CommandNutrients>();
+
+            services.AddTransient<IQueryPlantNutrients, QueryPlantNutrients>();
+            services.AddTransient<ICommandPlantNutrients, CommandPlantNutrients>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
