@@ -5,6 +5,7 @@ using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 using System.Threading.Tasks;
 
@@ -84,6 +85,26 @@ namespace Spice.Application.Tests.Nutrients
 
             // Then
             updateNutrient.Should().Throw<NutrientDoesNotExistException>();
+        }
+
+        [TestCase(TestName = "Update Nutrient throws exception if nutrient was already administered to any plant")]
+        public void UpdateNutrientThrowsExceptionIfItWasAdministeredToAPlant()
+        {
+            // Given
+            Nutrient nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "ml");
+            Guid nutrientId = SeedDatabase(nutrient);
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            AdministeredNutrient administeredNutrient = Plants.Nutrients.ModelFactory.DomainModel(nutrient, plant);
+            Guid administeredNutrientId = SeedDatabase(administeredNutrient);
+            UpdateNutrientModel model = ModelFactory.UpdateModel(nutrientId);
+            model.DosageUnits = "g";
+
+            // When
+            Func<Task> updateNutrient = async () => await _commands.Update(model);
+
+            // Then
+            updateNutrient.Should().Throw<NutrientAlreadyAdministeredToPlantException>();
         }
 
         [TestCase(TestName = "Update Nutrient returns updated nutrient on success")]

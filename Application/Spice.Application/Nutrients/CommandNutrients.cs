@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Spice.Application.Common;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
@@ -34,9 +35,14 @@ namespace Spice.Application.Nutrients
 
         public async Task<Nutrient> Update(UpdateNutrientModel model)
         {
-            Nutrient nutrient = await _database.Nutrients.FindAsync(model.Id);
+            Nutrient nutrient = await _database.Nutrients
+                .Include(x => x.AdministeredToPlants)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (nutrient is null)
                 throw new NutrientDoesNotExistException(model.Id);
+
+            if (nutrient.AdministeredToPlants.Any())
+                throw new NutrientAlreadyAdministeredToPlantException();
 
             if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
                 throw new NutrientWithNameAlreadyExistsException(model.Name);
