@@ -26,19 +26,23 @@ namespace Spice.Application.Plants
 
         public async Task<IEnumerable<AdministeredNutrient>> GetByPlant(Guid id)
         {
-            Plant plant = await _database.Plants.Include(x => x.AdministeredNutrients)
-                .ThenInclude(x => x.Nutrient)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            Plant plant = await GetPlantById(id);
             if (plant is null)
                 throw new PlantDoesNotExistException(id);
 
             return plant.AdministeredNutrients;
         }
 
+        private async Task<Plant> GetPlantById(Guid id)
+        {
+            return await _database.Plants
+                .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<AdministeredNutrient> Get(Guid plantId, Guid id)
         {
-            Plant plant = await _database.Plants.Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
-                .FirstOrDefaultAsync(x => x.Id == plantId);
+            Plant plant = await GetPlantById(plantId);
             if (plant is null)
                 throw new PlantDoesNotExistException(id);
 
@@ -47,9 +51,7 @@ namespace Spice.Application.Plants
 
         public async Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Sum(Guid plantId)
         {
-            Plant plant = await _database.Plants
-                .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
-                .FirstOrDefaultAsync(x => x.Id == plantId);
+            Plant plant = await GetPlantById(plantId);
 
             if (plant is null)
                 throw new PlantDoesNotExistException(plantId);
