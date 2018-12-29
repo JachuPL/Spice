@@ -96,6 +96,13 @@ namespace Spice.WebAPI.Controllers
                     Error = ex.Message
                 });
             }
+            catch (NutrientAlreadyAdministeredToPlantException ex)
+            {
+                return Conflict(new
+                {
+                    Error = ex.Message
+                });
+            }
         }
 
         // DELETE api/nutrients/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
