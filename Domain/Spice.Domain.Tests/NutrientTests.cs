@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Plants;
 using System;
+using System.Collections.Generic;
 
 namespace Spice.Domain.Tests
 {
@@ -61,6 +63,20 @@ namespace Spice.Domain.Tests
 
             // Then
             nutrient.DosageUnits.Should().Be(dosageUnits);
+        }
+
+        [TestCase(TestName = "Get and Set nutritioned plants collection property works properly")]
+        public void GetAndSetAdministeredToPlantsWorksProperly()
+        {
+            // Given
+            Nutrient nutrient = new Nutrient();
+            ICollection<AdministeredNutrient> administeredNutrients = new List<AdministeredNutrient>();
+
+            // When
+            nutrient.AdministeredToPlants = administeredNutrients;
+
+            // Then
+            nutrient.AdministeredToPlants.Should().BeSameAs(administeredNutrients);
         }
     }
 }

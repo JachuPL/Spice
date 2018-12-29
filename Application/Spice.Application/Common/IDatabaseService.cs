@@ -11,6 +11,7 @@ namespace Spice.Application.Common
         DbSet<Field> Fields { get; set; }
         DbSet<Domain.Plants.Species> Species { get; set; }
         DbSet<Nutrient> Nutrients { get; set; }
+        DbSet<AdministeredNutrient> AdministeredNutrients { get; set; }
 
         int Save();
 

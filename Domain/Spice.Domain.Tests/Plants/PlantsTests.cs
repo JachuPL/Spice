@@ -2,8 +2,9 @@
 using NUnit.Framework;
 using Spice.Domain.Plants;
 using System;
+using System.Collections.Generic;
 
-namespace Spice.Domain.Tests
+namespace Spice.Domain.Tests.Plants
 {
     [TestFixture]
     internal sealed class PlantsTests
@@ -125,6 +126,20 @@ namespace Spice.Domain.Tests
 
             // Then
             plant.State.Should().Be(state);
+        }
+
+        [TestCase(TestName = "Get and Set administered nutrients collection property works properly")]
+        public void GetAndSetAdministeredNutrientsWorksProperly()
+        {
+            // Given
+            Plant plant = new Plant();
+            ICollection<AdministeredNutrient> administeredNutrients = new List<AdministeredNutrient>();
+
+            // When
+            plant.AdministeredNutrients = administeredNutrients;
+
+            // Then
+            plant.AdministeredNutrients.Should().BeSameAs(administeredNutrients);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task GetNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<NutrientDetailsModel>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -73,7 +73,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task GetNutrientReturnsNutrientAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Nutrient>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<NutrientDetailsModel>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -135,6 +135,22 @@ namespace Spice.WebAPI.Tests.Nutrients
             // Given
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
                 .Throws(new NutrientWithNameAlreadyExistsException("Nutrient A"));
+
+            // When
+            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
+        [TestCase(TestName = "PUT Nutrient returns \"Conflict\" and correct content type if nutrient was administered to any plant")]
+        public async Task PutNutrientReturnsConflictIfItWasAdministeredToAnyPlant()
+        {
+            // Given
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
+                .Throws(new NutrientAlreadyAdministeredToPlantException());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

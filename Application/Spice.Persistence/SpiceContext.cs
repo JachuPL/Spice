@@ -13,6 +13,7 @@ namespace Spice.Persistence
         public DbSet<Field> Fields { get; set; }
         public DbSet<Species> Species { get; set; }
         public DbSet<Nutrient> Nutrients { get; set; }
+        public DbSet<AdministeredNutrient> AdministeredNutrients { get; set; }
 
         public SpiceContext() : base()
         {
@@ -28,6 +29,7 @@ namespace Spice.Persistence
             modelBuilder.ApplyConfiguration(new FieldConfiguration());
             modelBuilder.ApplyConfiguration(new SpeciesConfiguration());
             modelBuilder.ApplyConfiguration(new NutrientConfiguration());
+            modelBuilder.ApplyConfiguration(new AdministeredNutrientConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
