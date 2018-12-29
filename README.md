@@ -49,7 +49,7 @@ Spice is all about plants. As of now, the following requests are available:
 ]
 ```
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/:guid - returns plant details by id (specified guid). Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid** - returns plant details by id (specified guid). Example:
 ```
 // Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 
@@ -101,7 +101,7 @@ Spice is all about plants. As of now, the following requests are available:
 ```
 Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. The same applies if either species or field does not exist. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
-* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/:guid - updates plant data with specified id. Example:
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid** - updates plant data with specified id. Example:
 ```
 // Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 
@@ -117,7 +117,7 @@ Note that if a plant is found growing on specified field, row and column this op
 ```
 Note that if a plant is found growing on specified field, row and column this operation will result in Conflict. The same applies if either species or field does not exist.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/:guid - deletes plant with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid** - deletes plant with specified id. Example:
 ```
 // Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
 // Returns 204 No Content
@@ -142,7 +142,7 @@ Not all plants grow on fields - some are raised using hydroponics or just in a p
 ]
 ```
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields/:guid - returns field details by id (specified guid). Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields/**guid** - returns field details by id (specified guid). Example:
 ```
 // Requested uri: api/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5
 
@@ -174,7 +174,7 @@ Not all plants grow on fields - some are raised using hydroponics or just in a p
 ```
 Note that if a field with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
-* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/fields/:guid - updates field data with specified id. Example:
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/fields/**guid** - updates field data with specified id. Example:
 ```
 // Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
 
@@ -187,7 +187,7 @@ Note that if a field with specified name already exists this operation will resu
 ```
 Note that if a field with specified name already exists this operation will result in Conflict.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/fields/:guid - deletes field with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/fields/**guid** - deletes field with specified id. Example:
 ```
 // Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
 // Returns 204 No Content
@@ -217,7 +217,7 @@ You can also group your plants into species. This might come in handy in the fut
 ]
 ```
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/:guid - returns species details by id (specified guid). Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/**guid** - returns species details by id (specified guid). Example:
 ```
 // Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
 
@@ -247,7 +247,7 @@ You can also group your plants into species. This might come in handy in the fut
 ```
 Note that if a species with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
-* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/species/:guid - updates species data with specified id. Example:
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/species/**guid** - updates species data with specified id. Example:
 ```
 // Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
 
@@ -259,7 +259,7 @@ Note that if a species with specified name already exists this operation will re
 ```
 Note that if a species with specified name already exists this operation will result in Conflict.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/species/:guid - deletes species with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/species/**guid** - deletes species with specified id. Example:
 ```
 // Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
 // Returns 204 No Content
@@ -279,7 +279,7 @@ Nutrients are very important in your plants growth. You can add some for further
 ]
 ```
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients/:guid - returns nutrient details by id (specified guid). Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients/**guid** - returns nutrient details by id (specified guid). Example:
 ```
 // Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
 
@@ -299,9 +299,9 @@ Nutrients are very important in your plants growth. You can add some for further
 	"DosageUnits": "ml"
 }
 ```
-Note that if a species with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
+Note that if a nutrient with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
-* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/nutrients/:guid - updates nutrients data with specified id. Example:
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/nutrients/**guid** - updates nutrients data with specified id. Example:
 ```
 // Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
 
@@ -311,9 +311,9 @@ Note that if a species with specified name already exists this operation will re
 	"DosageUnits": "g"
 }
 ```
-Note that if a species with specified name already exists this operation will result in Conflict.
+Note that if a nutrient with specified name already exists this operation will result in Conflict. **The same thing applies if a nutrient was already administered to any plant, thus you can only edit unadministered nutrients.**
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/nutrients/:guid - deletes nutrients with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/nutrients/**guid** - deletes nutrients with specified id. Example:
 ```
 // Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
 // Returns 204 No Content
@@ -322,7 +322,7 @@ Note that once a nutrient is deleted it is not possible to restore it and all un
 
 ### Plant nutrients
 Your plants would not survive long without nutrients. With this option you can track the lifecycle of your plants. For now, you can make such API calls:
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/:guid/nutrients - returns list of administered plant nutrients. Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients - returns list of administered plant nutrients. Example:
 ```
 // Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients
 
@@ -342,7 +342,7 @@ Your plants would not survive long without nutrients. With this option you can t
 ]
 ```
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/:guid/nutrients/:guid - returns administered plant nutrient details by plant id (first guid parameter) and nutrition record id (second guid parameter). Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/**guid** - returns administered plant nutrient details by plant id (first guid parameter) and nutrition record id (second guid parameter). Example:
 ```
 // Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
 
@@ -359,7 +359,7 @@ Your plants would not survive long without nutrients. With this option you can t
 }
 ```
 
-* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/:guid/nutrients - adds new plant with specified data. Example:
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/nutrients - adds new plant with specified data. Example:
 ```
 {
 	"NutrientId": "25849c34-3242-4aff-27e3-08d66bfc09eb",
@@ -369,7 +369,7 @@ Your plants would not survive long without nutrients. With this option you can t
 ```
 Note that if a plant is not found this operation will result in Conflict. The same applies if nutrient does not exist. Also, you will receive a Conflict response if specified date is earlier than plant date. Please keep in mind that response contains 'Location' header with URI to newly created resource. The date parameter is completely optional - a request processing date is used if not specified otherwise.
 
-* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/:guid/nutrients/:guid - updates nutrition record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid**/nutrients/**guid** - updates nutrition record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
 ```
 // Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
 
@@ -381,9 +381,26 @@ Note that if a plant is not found this operation will result in Conflict. The sa
 ```
 Note that if a plant is not found this operation will result in Conflict. The same applies if either nutrient or the nutrition record itself does not exist. Also, you will receive a Conflict response if specified date is earlier than plant date.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/:guid - deletes plant with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid** - deletes plant with specified id. Example:
 ```
 // Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
 // Returns 204 No Content
 ```
 Note that once a plant is deleted it is not possible to restore it!
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/sum - returns summary of nutrients administered to a plant grouped by nutrient. Example:
+```
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/sum
+
+[
+    {
+        "nutrient": {
+            "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+            "name": "Mineral water",
+            "description": "Either tap or bottled.",
+            "dosageUnits": "ml"
+        },
+        "totalAmount": 625
+    }
+]
+```
