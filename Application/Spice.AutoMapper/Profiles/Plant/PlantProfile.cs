@@ -33,7 +33,9 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<Domain.Plants.Plant, PlantIndexViewModel>()
                 .ForMember(x => x.Species, opt => opt.MapFrom(x => x.Species.LatinName));
-            CreateMap<Domain.Plants.Plant, PlantDetailsViewModel>();
+
+            CreateMap<Domain.Plants.Plant, PlantDetailsViewModel>()
+                .ForMember(x => x.Nutrients, opt => opt.MapFrom(x => x.AdministeredNutrients));
         }
     }
 }
