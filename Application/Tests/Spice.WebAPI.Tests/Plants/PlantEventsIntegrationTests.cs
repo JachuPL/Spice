@@ -130,12 +130,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date")]
-        public async Task PostNewPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDate()
+        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date or in the future")]
+        public async Task PostNewPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDateOrInTheFuture()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored))
-                .Throws(new EventOccurenceDateBeforePlantDateException());
+                .Throws(new EventOccurenceDateBeforePlantDateOrInTheFutureException());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -191,12 +191,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date")]
-        public async Task PutPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDate()
+        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date or in the future")]
+        public async Task PutPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDateOrInTheFuture()
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored))
-                .Throws(new EventOccurenceDateBeforePlantDateException());
+                .Throws(new EventOccurenceDateBeforePlantDateOrInTheFutureException());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());

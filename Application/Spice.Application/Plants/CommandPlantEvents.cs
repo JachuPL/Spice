@@ -30,7 +30,7 @@ namespace Spice.Application.Plants
                 throw new PlantDoesNotExistException(plantId);
 
             if (model.Occured < plant.Planted)
-                throw new EventOccurenceDateBeforePlantDateException();
+                throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
 
             Event @event = _mapper.Map<Event>(model);
             @event.Plant = plant;
@@ -52,7 +52,7 @@ namespace Spice.Application.Plants
                 return null;
 
             if (model.Occured < plant.Planted)
-                throw new EventOccurenceDateBeforePlantDateException();
+                throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
 
             _mapper.Map(model, @event);
             @event.Plant = plant;
