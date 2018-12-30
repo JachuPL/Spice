@@ -52,7 +52,7 @@ namespace Spice.WebAPI.Tests.Plants
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
