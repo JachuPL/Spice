@@ -237,7 +237,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT  plant event returns \"BadRequest\" and correct content type")]
+        [TestCase(TestName = "PUT  plant event returns \"Bad Request\" and correct content type")]
         public async Task PutPlantEventReturnsBadRequestAndCorrectContentType()
         {
             // Given
