@@ -1,35 +1,35 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
-using Spice.ViewModels.Nutrients.Validators;
+using Spice.ViewModels.Species.Validators;
 
 namespace Spice.WebAPI.Tests.Species.Validators
 {
     [TestFixture]
-    internal sealed class UpdateNutrientViewModelValidatorTests
+    internal sealed class UpdateSpeciesViewModelValidatorTests
     {
-        private UpdateNutrientViewModelValidator Validator;
+        private UpdateSpeciesViewModelValidator Validator;
 
         [SetUp]
         public void SetUp()
         {
-            Validator = new UpdateNutrientViewModelValidator();
+            Validator = new UpdateSpeciesViewModelValidator();
         }
 
-        [TestCase(" \n\r\t", TestName = "Validator should have error for whitespace name")]
-        [TestCase(null, TestName = "Validator should have error for null name")]
+        [TestCase(" \n\r\t", TestName = "Update Species Validator should have error for whitespace name")]
+        [TestCase(null, TestName = "Update Species Validator should have error for null name")]
         public void ValidatorShouldHaveErrorWhenNameIsIncorrect(string name)
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Name, name);
         }
 
-        [TestCase(TestName = "Validator should have error for empty name")]
+        [TestCase(TestName = "Update Species Validator should have error for empty name")]
         public void ValidatorShouldHaveErrorWhenNameIsEmpty()
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
         }
 
-        [TestCase(1, TestName = "Validator should have error for too short name")]
-        [TestCase(51, TestName = "Validator should have error for too long name")]
+        [TestCase(1, TestName = "Update Species Validator should have error for too short name")]
+        [TestCase(51, TestName = "Update Species Validator should have error for too long name")]
         public void ValidatorShouldHaveErrorWhenNameIsTooShortOrTooLong(int charCount)
         {
             string name = string.Empty;
@@ -39,26 +39,26 @@ namespace Spice.WebAPI.Tests.Species.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.Name, name);
         }
 
-        [TestCase(TestName = "Validator should not have error for correct name")]
+        [TestCase(TestName = "Update Species Validator should not have error for correct name")]
         public void ValidatorShouldNotHaveErrorWhenNameIsSpecified()
         {
             Validator.ShouldNotHaveValidationErrorFor(x => x.Name, "Capsicum annuum");
         }
 
-        [TestCase(TestName = "Validator should have error for empty description")]
+        [TestCase(TestName = "Update Species Validator should have error for empty description")]
         public void ValidatorShouldHaveErrorWhenDescriptionIsEmpty()
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
         }
 
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Validator should not have error for whitespace description")]
+        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Species Validator should not have error for whitespace description")]
         public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Description, name);
         }
 
-        [TestCase(4, TestName = "Validator should have error for too short description")]
-        [TestCase(501, TestName = "Validator should have error for too long description")]
+        [TestCase(1, TestName = "Update Species Validator should have error for too short description")]
+        [TestCase(501, TestName = "Update Species Validator should have error for too long description")]
         public void ValidatorShouldHaveErrorWhenDescriptionIsTooShortOrTooLong(int charCount)
         {
             string description = string.Empty;
@@ -68,40 +68,41 @@ namespace Spice.WebAPI.Tests.Species.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.Description, description);
         }
 
-        [TestCase(null, TestName = "Validator should not have error for null description")]
-        [TestCase("This is an example description of a Nutrient", TestName = "Validator should not have error for correct description")]
+        [TestCase(null, TestName = "Update Species Validator should not have error for null description")]
+        [TestCase("This is an example description of a Nutrient", TestName = "Update Species Validator should not have error for correct description")]
         public void ValidatorShouldNotHaveErrorWhenDescriptionIsSpecified(string value)
         {
             Validator.ShouldNotHaveValidationErrorFor(x => x.Description, value);
         }
 
-        [TestCase(TestName = "Validator should have error for empty Dosage Unit")]
-        public void ValidatorShouldHaveErrorWhenDosageUnitIsEmpty()
+        [TestCase(TestName = "Update Species Validator should have error for empty LatinName")]
+        public void ValidatorShouldHaveErrorWhenLatinNameIsEmpty()
         {
-            Validator.ShouldHaveValidationErrorFor(x => x.DosageUnits, string.Empty);
+            Validator.ShouldHaveValidationErrorFor(x => x.LatinName, string.Empty);
         }
 
-        [TestCase(null, TestName = "Validator should not have error for null Dosage Unit")]
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Validator should not have error for whitespace Dosage Unit")]
-        public void ValidatorShouldHaveErrorWhenDosageUnitIsIncorrect(string name)
+        [TestCase(null, TestName = "Update Species Validator should have error for null latin name")]
+        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Species Validator should have error for whitespace latin name")]
+        public void ValidatorShouldHaveErrorWhenLatinNameIsIncorrect(string name)
         {
-            Validator.ShouldHaveValidationErrorFor(x => x.DosageUnits, name);
+            Validator.ShouldHaveValidationErrorFor(x => x.LatinName, name);
         }
 
-        [TestCase(21, TestName = "Validator should have error for too long Dosage Unit")]
-        public void ValidatorShouldHaveErrorWhenDosageUnitIsTooShortOrTooLong(int charCount)
+        [TestCase(1, TestName = "Update Species Validator should have error for too short latin name")]
+        [TestCase(51, TestName = "Update Species Validator should have error for too long latin name")]
+        public void ValidatorShouldHaveErrorWhenLatinNameIsTooShortOrTooLong(int charCount)
         {
-            string dosageUnit = string.Empty;
+            string latinName = string.Empty;
             for (int i = 0; i < charCount; i++)
-                dosageUnit += "a";
+                latinName += "a";
 
-            Validator.ShouldHaveValidationErrorFor(x => x.DosageUnits, dosageUnit);
+            Validator.ShouldHaveValidationErrorFor(x => x.LatinName, latinName);
         }
 
-        [TestCase("milliliters", TestName = "Validator should not have error for correct Dosage Unit")]
-        public void ValidatorShouldNotHaveErrorWhenDosageUnitIsSpecified(string value)
+        [TestCase("milliliters", TestName = "Update Species Validator should not have error for correct latin name")]
+        public void ValidatorShouldNotHaveErrorWhenLatinNameIsSpecified(string value)
         {
-            Validator.ShouldNotHaveValidationErrorFor(x => x.DosageUnits, value);
+            Validator.ShouldNotHaveValidationErrorFor(x => x.LatinName, value);
         }
     }
 }
