@@ -102,7 +102,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if field by given id does not exist")]
+        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if field does not exist")]
         public async Task PostNewPlantReturnsConflictIfFieldDoesNotExistById()
         {
             // Given
@@ -118,7 +118,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if species by given id does not exist")]
+        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if species does not exist")]
         public async Task PostNewPlantReturnsConflictIfSpeciesDoesNotExistById()
         {
             // Given
@@ -179,7 +179,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if field by given id does not exist")]
+        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if field does not exist")]
         public async Task PutPlantReturnsConflictIfFieldDoesNotExistById()
         {
             // Given
@@ -195,7 +195,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if species by given id does not exist")]
+        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if species does not exist")]
         public async Task PutPlantReturnsConflictIfSpeciesDoesNotExistById()
         {
             // Given
@@ -211,7 +211,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant returns \"Not Found\" and correct content type if plant was not found")]
+        [TestCase(TestName = "PUT plant returns \"Not Found\" and correct content type if plant does not exist")]
         public async Task PutPlantReturnsNotFoundAndCorrectContentType()
         {
             // Given

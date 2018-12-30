@@ -145,7 +145,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT field returns \"Not Found\" and correct content type if field was not found")]
+        [TestCase(TestName = "PUT field returns \"Not Found\" and correct content type if field does not exist")]
         public async Task PutFieldReturnsNotFoundAndCorrectContentType()
         {
             // Given
@@ -190,7 +190,7 @@ namespace Spice.WebAPI.Tests.Fields
         }
 
         [TestCase(TestName = "DELETE field returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        public async Task DeleteFieldReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);

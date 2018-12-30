@@ -115,7 +115,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if plant by id does not exist")]
+        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if plant does not exist")]
         public async Task PostNewPlantEventReturnsConflictIfPlantDoesNotExist()
         {
             // Given
@@ -176,7 +176,7 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if plant by given id does not exist")]
+        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if plant does not exist")]
         public async Task PutPlantEventReturnsConflictIfPlantDoesNotExistById()
         {
             // Given
@@ -208,7 +208,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant event returns \"Not Found\" and correct content type if plant event was not found")]
+        [TestCase(TestName = "PUT plant event returns \"Not Found\" and correct content type if plant event does not exist")]
         public async Task PutPlantEventReturnsNotFoundAndCorrectContentType()
         {
             // Given
@@ -252,8 +252,8 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "DELETE  plant event returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        [TestCase(TestName = "DELETE plant event returns \"No Content\"")]
+        public async Task DeletePlantEventReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.CompletedTask);
@@ -266,7 +266,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of plant events returns \"Not Found\" and correct content type if plant by id was not found")]
+        [TestCase(TestName = "GET sum of plant events returns \"Not Found\" and correct content type if plant does not exist")]
         public async Task GetSumOfPlantEventReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
