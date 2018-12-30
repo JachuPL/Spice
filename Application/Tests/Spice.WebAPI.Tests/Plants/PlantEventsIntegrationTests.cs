@@ -43,13 +43,13 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetListReturnsNotFoundIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<Event>>());
+            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).Returns(Task.FromResult<IEnumerable<Event>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
@@ -130,22 +130,6 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if event by id does not exist")]
-        public async Task PostNewPlantEventReturnsConflictIfEventDoesNotExist()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored))
-                .Throws(new EventDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
         [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date")]
         public async Task PostNewPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDate()
         {
@@ -197,22 +181,6 @@ namespace Spice.WebAPI.Tests.Plants
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored))
                 .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if event by given id does not exist")]
-        public async Task PutPlantEventReturnsConflictIfEventDoesNotExistById()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored))
-                .Throws(new EventDoesNotExistException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
