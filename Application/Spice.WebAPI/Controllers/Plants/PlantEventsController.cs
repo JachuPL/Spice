@@ -68,7 +68,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateException ex)
+            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
             {
                 return Conflict(new
                 {
@@ -109,7 +109,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateException ex)
+            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
             {
                 return Conflict(new
                 {

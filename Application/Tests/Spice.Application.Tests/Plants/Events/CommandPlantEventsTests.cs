@@ -54,7 +54,22 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
 
             // Then
-            createPlant.Should().Throw<EventOccurenceDateBeforePlantDateException>();
+            createPlant.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
+        }
+
+        [TestCase(TestName = "Create plant event throws exception if occurence date is in the future")]
+        public void CreatePlantEventThrowsExceptionIfOccurenceDateIsInTheFuture()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now.AddDays(1));
+
+            // When
+            Func<Task> createPlant = async () => await _commands.Create(plantId, model);
+
+            // Then
+            createPlant.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
         }
 
         [TestCase(TestName = "Create plant event returns Guid on success")]
@@ -100,7 +115,24 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
 
             // Then
-            updateEvent.Should().Throw<EventOccurenceDateBeforePlantDateException>();
+            updateEvent.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
+        }
+
+        [TestCase(TestName = "Update plant event throws exception if occurence date is in the future")]
+        public void UpdatePlantEventThrowsExceptionIfOccurenceDateIsInTheFuture()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = ModelFactory.DomainModel(plant);
+            Guid eventId = SeedDatabase(@event);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, DateTime.Now.AddDays(1));
+
+            // When
+            Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
+
+            // Then
+            updateEvent.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
         }
 
         [TestCase(TestName = "Update plant event returns null if occured event with specified id does not exist")]
