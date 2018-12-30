@@ -74,17 +74,17 @@ namespace Spice.Application.Tests.Nutrients
             updateNutrient.Should().Throw<NutrientWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update nutrient throws exception if nutrient does not exist")]
-        public void UpdateNutrientThrowsExceptionIfNutrientDoesNotExist()
+        [TestCase(TestName = "Update nutrient returns null if nutrient does not exist")]
+        public async Task UpdateNutrientReturnsNullIfNutrientDoesNotExist()
         {
             // Given
             UpdateNutrientModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Func<Task> updateNutrient = async () => await _commands.Update(model);
+            Nutrient nutrient = await _commands.Update(model);
 
             // Then
-            updateNutrient.Should().Throw<NutrientDoesNotExistException>();
+            nutrient.Should().BeNull();
         }
 
         [TestCase(TestName = "Update nutrient throws exception if nutrient was already administered to any plant")]

@@ -165,7 +165,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task PutNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

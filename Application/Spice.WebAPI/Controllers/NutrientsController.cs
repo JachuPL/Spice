@@ -85,10 +85,6 @@ namespace Spice.WebAPI.Controllers
 
                 return Ok(_mapper.Map<NutrientDetailsViewModel>(Nutrient));
             }
-            catch (NutrientDoesNotExistException)
-            {
-                return NotFound();
-            }
             catch (NutrientWithNameAlreadyExistsException ex)
             {
                 return Conflict(new
