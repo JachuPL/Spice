@@ -11,6 +11,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
                 .Must(BeAValidValue).WithMessage("Select a valid type of event.");
 
             RuleFor(x => x.Description)
+                .Must(BeAValidDescription).WithMessage("Description cannot be build from whitespace characters only.")
                 .MinimumLength(2).WithMessage("Minimum length of event description is 2 characters.")
                 .MaximumLength(500).WithMessage("Maximum lenght of event description is 500 characters.");
 
@@ -35,6 +36,14 @@ namespace Spice.ViewModels.Plants.Events.Validators
                 default:
                     return false;
             }
+        }
+
+        private bool BeAValidDescription(string arg)
+        {
+            if (arg is null)
+                return true;
+
+            return arg.Trim().Length > 0;
         }
     }
 }
