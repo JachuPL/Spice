@@ -1,6 +1,6 @@
 ﻿namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients
 {
-    public static class EndPointFactory
+    internal static class EndPointFactory
     {
         public static string ListEndpoint() => "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients";
 
