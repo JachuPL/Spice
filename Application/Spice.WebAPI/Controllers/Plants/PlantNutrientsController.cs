@@ -7,10 +7,10 @@ using Spice.Application.Plants.Nutrients.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants.AdministeredNutrients;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spice.ViewModels.Plants.Nutrients;
 
 namespace Spice.WebAPI.Controllers.Plants
 {

@@ -1,7 +1,7 @@
 ﻿using Spice.ViewModels.Nutrients;
 using System;
 
-namespace Spice.ViewModels.Plants.AdministeredNutrients
+namespace Spice.ViewModels.Plants.Nutrients
 {
     public class AdministeredNutrientDetailsViewModel
     {

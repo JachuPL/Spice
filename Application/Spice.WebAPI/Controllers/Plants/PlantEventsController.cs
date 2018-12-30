@@ -5,10 +5,10 @@ using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spice.ViewModels.Plants.Events;
 
 namespace Spice.WebAPI.Controllers.Plants
 {

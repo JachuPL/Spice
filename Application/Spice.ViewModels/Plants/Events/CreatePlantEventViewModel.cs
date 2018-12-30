@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spice.ViewModels.Plants.OccuredEvents
+namespace Spice.ViewModels.Plants.Events
 {
     public class CreatePlantEventViewModel
     {

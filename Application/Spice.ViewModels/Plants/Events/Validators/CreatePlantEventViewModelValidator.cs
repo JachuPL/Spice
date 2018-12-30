@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using System;
 
-namespace Spice.ViewModels.Plants.OccuredEvents.Validators
+namespace Spice.ViewModels.Plants.Events.Validators
 {
-    public class UpdatePlantEventViewModelValidator : AbstractValidator<UpdatePlantEventViewModel>
+    public class CreatePlantEventViewModelValidator : AbstractValidator<CreatePlantEventViewModel>
     {
-        public UpdatePlantEventViewModelValidator()
+        public CreatePlantEventViewModelValidator()
         {
             RuleFor(x => x.Type)
                 .Must(BeAValidValue).WithMessage("Select a valid type of event.");

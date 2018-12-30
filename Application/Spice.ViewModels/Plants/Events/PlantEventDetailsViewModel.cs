@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace Spice.ViewModels.Plants.OccuredEvents
+namespace Spice.ViewModels.Plants.Events
 {
-    public class PlantEventsIndexViewModel
+    public class PlantEventDetailsViewModel
     {
         public Guid Id { get; set; }
         public EventTypeViewModel Type { get; set; }
+        public string Description { get; set; }
         public DateTime Occured { get; set; }
     }
 }

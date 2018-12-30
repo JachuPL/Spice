@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Spice.ViewModels.Plants.AdministeredNutrients.Validators
+namespace Spice.ViewModels.Plants.Nutrients.Validators
 {
     public class UpdateAdministeredNutrientViewModelValidator : AbstractValidator<UpdateAdministeredNutrientViewModel>
     {

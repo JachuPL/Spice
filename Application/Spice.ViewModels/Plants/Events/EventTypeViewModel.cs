@@ -1,4 +1,4 @@
-﻿namespace Spice.ViewModels.Plants.OccuredEvents
+﻿namespace Spice.ViewModels.Plants.Events
 {
     public enum EventTypeViewModel
     {

@@ -2,7 +2,7 @@
 using Spice.Application.Plants.Events.Models;
 using Spice.AutoMapper.Profiles.Plant.Converters;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
 using System;
 
 namespace Spice.AutoMapper.Profiles.Plant

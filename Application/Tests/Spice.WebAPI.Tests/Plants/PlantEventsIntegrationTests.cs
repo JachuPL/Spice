@@ -7,7 +7,7 @@ using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Plants.Factories.Events;
 using System;

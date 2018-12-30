@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants.AdministeredNutrients;
+using Spice.ViewModels.Plants.Nutrients;
 using System;
 
 namespace Spice.AutoMapper.Profiles.Plant

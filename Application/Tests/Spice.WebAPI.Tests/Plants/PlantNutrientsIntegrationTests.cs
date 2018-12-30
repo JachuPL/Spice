@@ -8,7 +8,7 @@ using Spice.Application.Plants.Nutrients.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants.AdministeredNutrients;
+using Spice.ViewModels.Plants.Nutrients;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Plants.Factories.Nutrients;
 using System;

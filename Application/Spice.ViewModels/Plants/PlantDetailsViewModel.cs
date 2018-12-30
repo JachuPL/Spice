@@ -1,6 +1,6 @@
 ﻿using Spice.ViewModels.Fields;
-using Spice.ViewModels.Plants.AdministeredNutrients;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Plants.Nutrients;
 using Spice.ViewModels.Species;
 using System;
 using System.Collections.Generic;
