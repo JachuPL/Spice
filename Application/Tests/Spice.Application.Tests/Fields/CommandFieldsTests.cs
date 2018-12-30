@@ -73,17 +73,17 @@ namespace Spice.Application.Tests.Fields
             updateField.Should().Throw<FieldWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update field throws exception if field does not exist")]
-        public void UpdateFieldThrowsExceptionIfFieldDoesNotExist()
+        [TestCase(TestName = "Update field returns null if field does not exist")]
+        public async Task UpdateFieldReturnsNullIfFieldDoesNotExist()
         {
             // Given
             UpdateFieldModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Func<Task> updateField = async () => await _commands.Update(model);
+            Field field = await _commands.Update(model);
 
             // Then
-            updateField.Should().Throw<FieldDoesNotExistException>();
+            field.Should().BeNull();
         }
 
         [TestCase(TestName = "Update field returns updated field on success")]
