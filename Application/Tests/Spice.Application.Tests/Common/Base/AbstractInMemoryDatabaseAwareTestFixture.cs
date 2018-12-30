@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Spice.AutoMapper;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using Spice.Persistence;
 using System;
 
@@ -81,6 +82,18 @@ namespace Spice.Application.Tests.Common.Base
                 ctx.Save();
 
                 return administeredNutrient.Id;
+            }
+        }
+
+        protected Guid SeedDatabase(Event @event)
+        {
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                @event.Plant = ctx.Plants.Find(@event.Plant.Id);
+                ctx.Events.Add(@event);
+                ctx.Save();
+
+                return @event.Id;
             }
         }
     }
