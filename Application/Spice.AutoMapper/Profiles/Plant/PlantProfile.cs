@@ -24,12 +24,14 @@ namespace Spice.AutoMapper.Profiles.Plant
                 .ForMember(x => x.Id, ex => ex.MapFrom(x => Guid.Empty))
                 .ForMember(x => x.Field, opt => opt.Ignore())
                 .ForMember(x => x.Species, opt => opt.Ignore())
-                .ForMember(x => x.AdministeredNutrients, opt => opt.Ignore());
+                .ForMember(x => x.AdministeredNutrients, opt => opt.Ignore())
+                .ForMember(x => x.Events, opt => opt.Ignore());
 
             CreateMap<UpdatePlantModel, Domain.Plants.Plant>()
                 .ForMember(x => x.Field, opt => opt.Ignore())
                 .ForMember(x => x.Species, opt => opt.Ignore())
-                .ForMember(x => x.AdministeredNutrients, opt => opt.Ignore());
+                .ForMember(x => x.AdministeredNutrients, opt => opt.Ignore())
+                .ForMember(x => x.Events, opt => opt.Ignore());
 
             CreateMap<Domain.Plants.Plant, PlantIndexViewModel>()
                 .ForMember(x => x.Species, opt => opt.MapFrom(x => x.Species.LatinName));
