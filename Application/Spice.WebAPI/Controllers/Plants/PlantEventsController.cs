@@ -103,13 +103,6 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventDoesNotExistException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
             catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
             {
                 return Conflict(new
