@@ -23,6 +23,7 @@ namespace Spice.Persistence.Configurations
             builder.HasOne(x => x.Species).WithMany(x => x.Plants).IsRequired();
 
             builder.HasMany(x => x.AdministeredNutrients).WithOne(x => x.Plant).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Events).WithOne(x => x.Plant).IsRequired().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

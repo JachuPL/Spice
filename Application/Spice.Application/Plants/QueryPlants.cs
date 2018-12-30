@@ -29,6 +29,7 @@ namespace Spice.Application.Plants
                 .Include(x => x.Field)
                 .Include(x => x.Species)
                 .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
+                .Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

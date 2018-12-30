@@ -1,5 +1,6 @@
 ﻿using Spice.ViewModels.Fields;
 using Spice.ViewModels.Plants.AdministeredNutrients;
+using Spice.ViewModels.Plants.OccuredEvents;
 using Spice.ViewModels.Species;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace Spice.ViewModels.Plants
         public DateTime Planted { get; set; }
         public PlantStateViewModel State { get; set; }
         public IEnumerable<AdministeredNutrientsIndexViewModel> Nutrients { get; set; }
+        public IEnumerable<PlantEventsIndexViewModel> Events { get; set; }
     }
 }
