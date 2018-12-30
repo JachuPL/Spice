@@ -150,7 +150,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         {
             // Given
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
-                .Throws(new NutrientAlreadyAdministeredToPlantException());
+                .Throws(new NutrientAdministeredToAPlantException());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

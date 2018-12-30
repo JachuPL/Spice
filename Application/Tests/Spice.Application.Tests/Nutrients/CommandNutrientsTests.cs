@@ -103,7 +103,7 @@ namespace Spice.Application.Tests.Nutrients
             Func<Task> updateNutrient = async () => await _commands.Update(model);
 
             // Then
-            updateNutrient.Should().Throw<NutrientAlreadyAdministeredToPlantException>();
+            updateNutrient.Should().Throw<NutrientAdministeredToAPlantException>();
         }
 
         [TestCase(TestName = "Update nutrient returns updated nutrient on success")]

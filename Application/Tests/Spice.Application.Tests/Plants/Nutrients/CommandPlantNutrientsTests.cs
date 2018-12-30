@@ -71,7 +71,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
 
             // Then
-            createPlant.Should().Throw<NutrientApplicationDateBeforePlantDateException>();
+            createPlant.Should().Throw<NutrientAdministrationDateBeforePlantDateException>();
         }
 
         [TestCase(TestName = "Create administered plant nutrition returns Guid on success")]
@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(plantId, model);
 
             // Then
-            updatePlant.Should().Throw<NutrientApplicationDateBeforePlantDateException>();
+            updatePlant.Should().Throw<NutrientAdministrationDateBeforePlantDateException>();
         }
 
         [TestCase(TestName = "Update administered plant nutrition returns null if administered nutrient does not exist")]

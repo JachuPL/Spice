@@ -92,7 +92,7 @@ namespace Spice.WebAPI.Controllers
                     Error = ex.Message
                 });
             }
-            catch (NutrientAlreadyAdministeredToPlantException ex)
+            catch (NutrientAdministeredToAPlantException ex)
             {
                 return Conflict(new
                 {

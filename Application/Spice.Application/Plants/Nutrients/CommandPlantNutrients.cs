@@ -36,7 +36,7 @@ namespace Spice.Application.Plants.Nutrients
                 throw new NutrientDoesNotExistException(model.NutrientId);
 
             if (model.Date < plant.Planted)
-                throw new NutrientApplicationDateBeforePlantDateException();
+                throw new NutrientAdministrationDateBeforePlantDateException();
 
             AdministeredNutrient administeredNutrient = _mapper.Map<AdministeredNutrient>(model);
             administeredNutrient.Plant = plant;
@@ -64,7 +64,7 @@ namespace Spice.Application.Plants.Nutrients
                 throw new NutrientDoesNotExistException(model.NutrientId);
 
             if (model.Date < plant.Planted)
-                throw new NutrientApplicationDateBeforePlantDateException();
+                throw new NutrientAdministrationDateBeforePlantDateException();
 
             _mapper.Map(model, administeredNutrient);
             administeredNutrient.Plant = plant;

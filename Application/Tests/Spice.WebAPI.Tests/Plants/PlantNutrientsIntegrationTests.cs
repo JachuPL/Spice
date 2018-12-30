@@ -156,7 +156,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientApplicationDateBeforePlantDateException());
+                .Throws(new NutrientAdministrationDateBeforePlantDateException());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -233,7 +233,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientApplicationDateBeforePlantDateException());
+                .Throws(new NutrientAdministrationDateBeforePlantDateException());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());

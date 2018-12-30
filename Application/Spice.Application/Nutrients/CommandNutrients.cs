@@ -42,7 +42,7 @@ namespace Spice.Application.Nutrients
                 return null;
 
             if (nutrient.AdministeredToPlants.Any())
-                throw new NutrientAlreadyAdministeredToPlantException();
+                throw new NutrientAdministeredToAPlantException();
 
             if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
                 throw new NutrientWithNameAlreadyExistsException(model.Name);

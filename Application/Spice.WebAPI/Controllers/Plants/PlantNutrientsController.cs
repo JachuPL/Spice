@@ -77,7 +77,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (NutrientApplicationDateBeforePlantDateException ex)
+            catch (NutrientAdministrationDateBeforePlantDateException ex)
             {
                 return Conflict(new
                 {
@@ -118,7 +118,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (NutrientApplicationDateBeforePlantDateException ex)
+            catch (NutrientAdministrationDateBeforePlantDateException ex)
             {
                 return Conflict(new
                 {
