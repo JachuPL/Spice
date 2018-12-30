@@ -146,6 +146,8 @@ namespace Spice.Application.Tests.Plants.Events
 
             // Then
             eventsFromDatabase.Should().NotBeNull();
+            eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(2);
+            eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
         }
 
         private Plant SeedDatabaseForGetEventSummaryTesting()

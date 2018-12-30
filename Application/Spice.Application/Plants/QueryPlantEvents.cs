@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
+using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
+using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Plants
@@ -20,19 +24,40 @@ namespace Spice.Application.Plants
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<Event>> GetByPlant(Guid plantId)
+        public async Task<IEnumerable<Event>> GetByPlant(Guid plantId)
         {
-            throw new NotImplementedException();
+            Plant plant = await _database.Plants.Include(x => x.Events)
+                .FirstOrDefaultAsync(x => x.Id == plantId);
+            if (plant is null)
+                throw new PlantDoesNotExistException(plantId);
+
+            return plant.Events;
         }
 
-        public Task<Event> Get(Guid plantId, Guid id)
+        public async Task<Event> Get(Guid plantId, Guid id)
         {
-            throw new NotImplementedException();
+            Plant plant = await _database.Plants.Include(x => x.Events)
+                .FirstOrDefaultAsync(x => x.Id == plantId);
+            if (plant is null)
+                throw new PlantDoesNotExistException(plantId);
+
+            return plant.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public Task<IEnumerable<OccuredPlantEventsSummaryModel>> Sum(Guid plantId)
+        public async Task<IEnumerable<OccuredPlantEventsSummaryModel>> Sum(Guid plantId)
         {
-            throw new NotImplementedException();
+            Plant plant = await _database.Plants.Include(x => x.Events)
+                .FirstOrDefaultAsync(x => x.Id == plantId);
+
+            if (plant is null)
+                throw new PlantDoesNotExistException(plantId);
+
+            return plant.Events.GroupBy(x => x.Type)
+                .Select(x => new OccuredPlantEventsSummaryModel()
+                {
+                    Type = x.Key,
+                    TotalCount = x.Sum(z => 1)
+                }).ToList();
         }
     }
 }
