@@ -1,9 +1,9 @@
-﻿using Spice.Application.Plants.Models;
+﻿using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
 using System;
 using System.Threading.Tasks;
 
-namespace Spice.Application.Plants.Interfaces
+namespace Spice.Application.Plants.Nutrients.Interfaces
 {
     public interface ICommandPlantNutrients
     {

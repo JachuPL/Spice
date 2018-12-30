@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Plants.Events.Interfaces;
+using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.OccuredEvents;
 using System;

@@ -6,7 +6,6 @@ namespace Spice.Application.Nutrients.Exceptions
     {
         public NutrientAlreadyAdministeredToPlantException() : base("Nutrient cannot be edited since it was administered to a plant.")
         {
-            
         }
     }
 }

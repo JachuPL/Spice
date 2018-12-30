@@ -1,6 +1,6 @@
 ﻿using Spice.Application.Nutrients.Models;
 
-namespace Spice.Application.Plants.Models
+namespace Spice.Application.Plants.Nutrients.Models
 {
     public class AdministeredPlantNutrientsSummaryModel
     {

@@ -1,7 +1,7 @@
 ﻿using Spice.Domain.Plants.Events;
 using System;
 
-namespace Spice.Application.Plants.Models
+namespace Spice.Application.Plants.Events.Models
 {
     public class UpdatePlantEventModel
     {

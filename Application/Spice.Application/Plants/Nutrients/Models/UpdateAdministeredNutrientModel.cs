@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spice.Application.Plants.Models
+namespace Spice.Application.Plants.Nutrients.Models
 {
     public class UpdateAdministeredNutrientModel
     {

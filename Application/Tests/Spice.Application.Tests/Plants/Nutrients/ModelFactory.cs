@@ -1,4 +1,4 @@
-﻿using Spice.Application.Plants.Models;
+﻿using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using System;

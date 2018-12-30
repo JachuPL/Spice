@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Spice.Application.Plants.Models;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants.AdministeredNutrients;
 using System;

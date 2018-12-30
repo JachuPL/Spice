@@ -1,6 +1,6 @@
 ﻿using Spice.Domain.Plants.Events;
 
-namespace Spice.Application.Plants.Models
+namespace Spice.Application.Plants.Events.Models
 {
     public class OccuredPlantEventsSummaryModel
     {

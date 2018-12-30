@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spice.Application.Plants.Exceptions
+namespace Spice.Application.Plants.Events.Exceptions
 {
     public class EventOccurenceDateBeforePlantDateOrInTheFutureException : InvalidOperationException
     {

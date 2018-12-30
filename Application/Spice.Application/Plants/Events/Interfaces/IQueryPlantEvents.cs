@@ -1,10 +1,10 @@
-﻿using Spice.Application.Plants.Models;
+﻿using Spice.Application.Plants.Events.Models;
 using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Spice.Application.Plants.Interfaces
+namespace Spice.Application.Plants.Events.Interfaces
 {
     public interface IQueryPlantEvents
     {

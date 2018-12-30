@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Models;
+using Spice.Application.Plants.Nutrients;
+using Spice.Application.Plants.Nutrients.Exceptions;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;

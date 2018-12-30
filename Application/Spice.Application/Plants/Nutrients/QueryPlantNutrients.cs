@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Nutrients.Models;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
+using Spice.Application.Plants.Nutrients.Interfaces;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Spice.Application.Plants
+namespace Spice.Application.Plants.Nutrients
 {
     public class QueryPlantNutrients : IQueryPlantNutrients
     {

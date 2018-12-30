@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
+using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Plants.Events.Interfaces;
+using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Spice.Application.Plants
+namespace Spice.Application.Plants.Events
 {
     public class CommandPlantEvents : ICommandPlantEvents
     {

@@ -1,4 +1,4 @@
-﻿using Spice.Application.Plants.Models;
+﻿using Spice.Application.Plants.Events.Models;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
