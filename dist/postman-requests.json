@@ -178,6 +178,175 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"name": "Occured events",
+					"item": [
+						{
+							"name": "List all plant events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Plant event details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events",
+										"5d34024b-1a26-4a98-2531-08d66e4e33cb"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sum up all plant events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/sum",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events",
+										"sum"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add new plant event",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Type\": \"Insects\",\n\t\"Description\": \"Spotted some Leptinotarsa decemlineata on the leaves today.\",\n\t\"Occured\": \"2018-12-30 13:00:00\",\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update plant event",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"Type\": 6,\n    \"Description\": \"Moved plant to more sunny place, right behind barn.\",\n    \"Occured\": \"2018-12-30T13:05:15\"\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events",
+										"5d34024b-1a26-4a98-2531-08d66e4e33cb"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete plant event",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/a392e095-f061-40df-2532-08d66e4e33cb",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"plants",
+										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"events",
+										"a392e095-f061-40df-2532-08d66e4e33cb"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "List all plants",
 					"request": {
 						"method": "GET",
@@ -536,13 +705,13 @@
 							"raw": "{\n\t\"Name\": \"Fertilizer\",\n\t\"Description\": \"Natural plant fertilizer.\",\n\t\"DosageUnits\": \"g\"\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/nutrients/0d68ac96-936e-4e25-c11b-08d66bf34c88",
+							"raw": "{{apiUrl}}/nutrients/c630749b-80a3-4ca0-d163-08d66d747d56",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"nutrients",
-								"0d68ac96-936e-4e25-c11b-08d66bf34c88"
+								"c630749b-80a3-4ca0-d163-08d66d747d56"
 							]
 						}
 					},
@@ -739,13 +908,13 @@
 	],
 	"variable": [
 		{
-			"id": "1b7116bb-2499-4655-a9bf-f45ab4fd9cc1",
+			"id": "9366f8cb-8793-4a2c-8e5e-0e99417402bd",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "87090afd-6f14-4edc-9bd2-220abf8cd67a",
+			"id": "8d4e176f-a99a-4c71-8e23-2fd22b0af0b8",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"

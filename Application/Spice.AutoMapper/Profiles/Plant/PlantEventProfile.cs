@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Spice.Application.Plants.Models;
+using Spice.AutoMapper.Profiles.Plant.Converters;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.OccuredEvents;
 using System;
@@ -14,6 +15,10 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<UpdatePlantEventViewModel, UpdatePlantEventModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty));
+
+            CreateMap<EventTypeViewModel, EventType>().ConvertUsing<EventTypeViewModelConverter>();
+
+            CreateMap<EventType, EventTypeViewModel>().ConvertUsing<EventTypeConverter>();
 
             CreateMap<CreatePlantEventModel, Event>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty))

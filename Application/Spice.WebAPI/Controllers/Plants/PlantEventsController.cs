@@ -68,7 +68,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateException ex)
+            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
             {
                 return Conflict(new
                 {
@@ -93,7 +93,7 @@ namespace Spice.WebAPI.Controllers.Plants
                 if (Event is null)
                     return NotFound();
 
-                return Ok(_mapper.Map<UpdatePlantEventViewModel>(Event));
+                return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
             }
             catch (PlantDoesNotExistException ex)
             {
@@ -109,7 +109,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateException ex)
+            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
             {
                 return Conflict(new
                 {
