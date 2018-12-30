@@ -2,6 +2,7 @@
 using Spice.Application.Common;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using Spice.Persistence.Configurations;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Spice.Persistence
         public DbSet<Species> Species { get; set; }
         public DbSet<Nutrient> Nutrients { get; set; }
         public DbSet<AdministeredNutrient> AdministeredNutrients { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         public SpiceContext() : base()
         {
@@ -30,6 +32,7 @@ namespace Spice.Persistence
             modelBuilder.ApplyConfiguration(new SpeciesConfiguration());
             modelBuilder.ApplyConfiguration(new NutrientConfiguration());
             modelBuilder.ApplyConfiguration(new AdministeredNutrientConfiguration());
+            modelBuilder.ApplyConfiguration(new EventConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
