@@ -1,4 +1,4 @@
-﻿using Spice.ViewModels.Plants.OccuredEvents;
+﻿using Spice.ViewModels.Plants.Events;
 using System;
 
 namespace Spice.WebAPI.Tests.Plants.Factories.Events

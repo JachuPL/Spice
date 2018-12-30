@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
 
 namespace Spice.AutoMapper.Profiles.Plant.Converters
 {

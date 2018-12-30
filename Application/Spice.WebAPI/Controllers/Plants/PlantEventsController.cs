@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Plants.Events.Interfaces;
+using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -96,13 +97,6 @@ namespace Spice.WebAPI.Controllers.Plants
                 return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
             }
             catch (PlantDoesNotExistException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (EventDoesNotExistException ex)
             {
                 return Conflict(new
                 {

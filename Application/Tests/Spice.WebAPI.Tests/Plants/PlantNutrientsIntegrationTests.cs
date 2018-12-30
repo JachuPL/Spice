@@ -4,10 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
+using Spice.Application.Plants.Nutrients.Exceptions;
+using Spice.Application.Plants.Nutrients.Interfaces;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants.AdministeredNutrients;
+using Spice.ViewModels.Plants.Nutrients;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Plants.Factories.Nutrients;
 using System;
@@ -40,8 +41,24 @@ namespace Spice.WebAPI.Tests.Plants
             Fake.ClearRecordedCalls(_fakeCommand);
         }
 
+        [TestCase(TestName = "GET list of plant nutrients returns \"Not Found\" and correct content type if plant does not exist")]
+        public async Task GetListReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
+        {
+            // Given
+            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<AdministeredNutrient>>(null));
+
+            // When
+            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
         [TestCase(TestName = "GET list of plant nutrients returns \"OK\" and correct content type")]
-        public async Task GetListReturnsPlantNutrientssAndCorrectContentType()
+        public async Task GetListReturnsPlantNutrientsAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredNutrient>>());

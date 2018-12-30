@@ -1,4 +1,4 @@
-﻿using Spice.ViewModels.Plants.AdministeredNutrients;
+﻿using Spice.ViewModels.Plants.Nutrients;
 using System;
 
 namespace Spice.WebAPI.Tests.Plants.Factories.Nutrients

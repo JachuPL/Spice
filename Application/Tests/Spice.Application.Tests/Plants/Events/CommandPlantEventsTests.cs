@@ -1,8 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Spice.Application.Plants;
+using Spice.Application.Plants.Events;
+using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;

@@ -1,8 +1,8 @@
-﻿using Spice.Domain;
+﻿using Spice.Application.Nutrients.Models;
+using Spice.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Spice.Application.Nutrients.Models;
 
 namespace Spice.Application.Nutrients.Interfaces
 {
