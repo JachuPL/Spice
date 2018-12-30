@@ -53,7 +53,7 @@ namespace Spice.WebAPI.Tests.Plants
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
