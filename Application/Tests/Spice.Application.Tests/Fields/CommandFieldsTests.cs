@@ -33,7 +33,7 @@ namespace Spice.Application.Tests.Fields
         {
             // Given
             Field existingField = ModelFactory.DomainModel();
-            Guid existingFieldId = SeedDatabase(existingField);
+            SeedDatabase(existingField);
             CreateFieldModel model = ModelFactory.CreationModel();
 
             // When
@@ -61,7 +61,7 @@ namespace Spice.Application.Tests.Fields
         {
             // Given
             Field existingField = ModelFactory.DomainModel();
-            Guid existingFieldId = SeedDatabase(existingField);
+            SeedDatabase(existingField);
             Field updatedField = ModelFactory.DomainModel("Field B");
             Guid updatedFieldId = SeedDatabase(updatedField);
             UpdateFieldModel model = ModelFactory.UpdateModel(updatedFieldId);
@@ -105,7 +105,7 @@ namespace Spice.Application.Tests.Fields
         }
 
         [TestCase(TestName = "Delete field succeeds")]
-        public async Task DeleteFieldShouldSucceed()
+        public async Task DeleteFieldSucceeds()
         {
             // Given
             Guid fieldId = SeedDatabase(ModelFactory.DomainModel("Field B", 13, 37));

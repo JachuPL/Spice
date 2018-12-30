@@ -27,17 +27,17 @@ namespace Spice.Application.Tests.Species
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "GetAll query on Species returns all Species")]
+        [TestCase(TestName = "GetAll query on species returns all species")]
         public async Task GetAllReturnsAllSpecies()
         {
             // Given
             SeedDatabaseForGetAllTesting();
 
             // When
-            IEnumerable<Domain.Plants.Species> Species = await _queries.GetAll();
+            IEnumerable<Domain.Plants.Species> species = await _queries.GetAll();
 
             // Then
-            Species.Should().NotBeNullOrEmpty();
+            species.Should().NotBeNullOrEmpty();
         }
 
         private void SeedDatabaseForGetAllTesting()
@@ -52,37 +52,40 @@ namespace Spice.Application.Tests.Species
             }
         }
 
-        [TestCase(TestName = "Get by id query on Species returns null if Species was not found")]
+        [TestCase(TestName = "Get by id query on species returns null if species does not exist")]
         public async Task GetSpeciesReturnsNullWhenNotFound()
         {
+            // Given
+            Guid speciesId = Guid.NewGuid();
+
             // When
-            Domain.Plants.Species Species = await _queries.Get(Guid.NewGuid());
+            Domain.Plants.Species species = await _queries.Get(speciesId);
 
             // Then
-            Species.Should().BeNull();
+            species.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by id query on Species returns Species if found")]
+        [TestCase(TestName = "Get by id query on species returns species if found")]
         public async Task GetSpeciesReturnsSpeciesWhenFound()
         {
             // Given
             Guid SpeciesId = SeedDatabaseForGetByIdTesting();
 
             // When
-            Domain.Plants.Species Species = await _queries.Get(SpeciesId);
+            Domain.Plants.Species species = await _queries.Get(SpeciesId);
 
             // Then
-            Species.Should().NotBeNull();
+            species.Should().NotBeNull();
         }
 
         private Guid SeedDatabaseForGetByIdTesting()
         {
             using (var ctx = SetupInMemoryDatabase())
             {
-                Domain.Plants.Species Species = ModelFactory.DomainModel();
-                ctx.Species.Add(Species);
+                Domain.Plants.Species species = ModelFactory.DomainModel();
+                ctx.Species.Add(species);
                 ctx.Save();
-                return Species.Id;
+                return species.Id;
             }
         }
     }

@@ -90,18 +90,22 @@ namespace Spice.Application.Tests.Plants.Nutrients
             administeredNutrient.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by plant id query on plant nutrients throws exception if plant was not found")]
+        [TestCase(TestName = "Get by plant id query on plant nutrients throws exception if plant does not exist")]
         public void GetByPlantThrowsExceptionIfPlantDoesNotExist()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+            Guid id = Guid.NewGuid();
+
             // When
-            Func<Task<AdministeredNutrient>> queryForData = async () => await _queries.Get(Guid.NewGuid(), Guid.NewGuid());
+            Func<Task<AdministeredNutrient>> queryForData = async () => await _queries.Get(plantId, id);
 
             // Then
             queryForData.Should().Throw<PlantDoesNotExistException>();
         }
 
         [TestCase(TestName = "Get by plant id query on plant nutrients returns plant if found")]
-        public async Task GetByPlantReturnsAdministeredNutrientsWhenFound()
+        public async Task GetByPlantReturnsAdministeredNutrients()
         {
             // Given
             Plant plant = SeedDatabaseForGetByPlantTesting();
@@ -130,8 +134,11 @@ namespace Spice.Application.Tests.Plants.Nutrients
         [TestCase(TestName = "Get summary of administered nutrients by plant id throws exception if plant does not exist")]
         public void SumAdministeredNutrientsThrowExceptionIfPlantDoesNotExist()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+
             // When
-            Func<Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>>> queryForData = async () => await _queries.Sum(Guid.NewGuid());
+            Func<Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>>> queryForData = async () => await _queries.Sum(plantId);
 
             // Then
             queryForData.Should().Throw<PlantDoesNotExistException>();

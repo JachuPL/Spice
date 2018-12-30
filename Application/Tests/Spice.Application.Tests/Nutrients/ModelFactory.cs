@@ -11,7 +11,7 @@ namespace Spice.Application.Tests.Nutrients
             return new CreateNutrientModel()
             {
                 Name = "Nutrient A",
-                Description = "Random Nutrient description",
+                Description = "Random nutrient description",
                 DosageUnits = "ml"
             };
         }
@@ -22,7 +22,7 @@ namespace Spice.Application.Tests.Nutrients
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Nutrient A",
-                Description = "Random Nutrient description",
+                Description = "Random nutrient description",
                 DosageUnits = "ml"
             };
         }
@@ -32,7 +32,7 @@ namespace Spice.Application.Tests.Nutrients
             return new Nutrient()
             {
                 Name = nutrientName,
-                Description = "Random Nutrient description",
+                Description = "Random nutrient description",
                 DosageUnits = "ml"
             };
         }

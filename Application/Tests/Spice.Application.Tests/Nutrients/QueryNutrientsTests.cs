@@ -29,17 +29,17 @@ namespace Spice.Application.Tests.Nutrients
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "GetAll query on Nutrients returns all nutrient")]
+        [TestCase(TestName = "GetAll query on nutrients returns all nutrients")]
         public async Task GetAllReturnsAllNutrients()
         {
             // Given
             SeedDatabaseForGetAllTesting();
 
             // When
-            IEnumerable<Nutrient> Nutrients = await _queries.GetAll();
+            IEnumerable<Nutrient> nutrients = await _queries.GetAll();
 
             // Then
-            Nutrients.Should().NotBeNullOrEmpty();
+            nutrients.Should().NotBeNullOrEmpty();
         }
 
         private void SeedDatabaseForGetAllTesting()
@@ -54,37 +54,40 @@ namespace Spice.Application.Tests.Nutrients
             }
         }
 
-        [TestCase(TestName = "Get by id query on Nutrients returns null if nutrient was not found")]
+        [TestCase(TestName = "Get by id query onnutrientsreturns null if nutrient does not exist")]
         public async Task GetNutrientReturnsNullWhenNotFound()
         {
+            // Given
+            Guid nutrientId = Guid.NewGuid();
+
             // When
-            NutrientDetailsModel Nutrient = await _queries.Get(Guid.NewGuid());
+            NutrientDetailsModel nutrient = await _queries.Get(nutrientId);
 
             // Then
-            Nutrient.Should().BeNull();
+            nutrient.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by id query on Nutrients returns nutrient if found")]
+        [TestCase(TestName = "Get by id query on nutrients returns nutrient if found")]
         public async Task GetNutrientReturnsNutrientWhenFound()
         {
             // Given
-            Guid NutrientId = SeedDatabaseForGetByIdTesting();
+            Guid nutrientId = SeedDatabaseForGetByIdTesting();
 
             // When
-            NutrientDetailsModel Nutrient = await _queries.Get(NutrientId);
+            NutrientDetailsModel nutrient = await _queries.Get(nutrientId);
 
             // Then
-            Nutrient.Should().NotBeNull();
+            nutrient.Should().NotBeNull();
         }
 
         private Guid SeedDatabaseForGetByIdTesting()
         {
             using (var ctx = SetupInMemoryDatabase())
             {
-                Nutrient Nutrient = Nutrients.ModelFactory.DomainModel();
-                ctx.Nutrients.Add(Nutrient);
+                Nutrient nutrient = Nutrients.ModelFactory.DomainModel();
+                ctx.Nutrients.Add(nutrient);
                 ctx.Save();
-                return Nutrient.Id;
+                return nutrient.Id;
             }
         }
     }

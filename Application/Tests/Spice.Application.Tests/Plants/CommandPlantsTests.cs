@@ -31,7 +31,7 @@ namespace Spice.Application.Tests.Plants
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create plant throws exception if plant exists on same fields and coordinates")]
+        [TestCase(TestName = "Create plant throws exception if plant exists on same field and coordinates")]
         public void CreatePlantThrowsExceptionIfPlantExistsAtCoordinates()
         {
             // Given
@@ -47,7 +47,7 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<PlantExistsAtCoordinatesException>();
         }
 
-        [TestCase(TestName = "Create plant throws exception if field with specified id does not exist")]
+        [TestCase(TestName = "Create plant throws exception if field does not exist")]
         public void CreatePlantThrowsExceptionIfFieldDoesNotExist()
         {
             // Given
@@ -61,7 +61,7 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<FieldDoesNotExistException>();
         }
 
-        [TestCase(TestName = "Create plant throws exception if species with specified id does not exist")]
+        [TestCase(TestName = "Create plant throws exception if species does not exist")]
         public void CreatePlantThrowsExceptionIfSpeciesDoesNotExist()
         {
             // Given
@@ -108,7 +108,7 @@ namespace Spice.Application.Tests.Plants
             updatePlant.Should().Throw<PlantExistsAtCoordinatesException>();
         }
 
-        [TestCase(TestName = "Update plant throws exception if field with specified id does not exist")]
+        [TestCase(TestName = "Update plant throws exception if field does not exist")]
         public void UpdatePlantThrowsExceptionIfFieldDoesNotExist()
         {
             // Given
@@ -123,7 +123,7 @@ namespace Spice.Application.Tests.Plants
             updatePlant.Should().Throw<FieldDoesNotExistException>();
         }
 
-        [TestCase(TestName = "Update plant throws exception if species with specified id does not exist")]
+        [TestCase(TestName = "Update plant throws exception if species does not exist")]
         public void UpdatePlantThrowsExceptionIfSpeciesDoesNotExist()
         {
             // Given
@@ -181,7 +181,7 @@ namespace Spice.Application.Tests.Plants
         }
 
         [TestCase(TestName = "Delete plant succeeds")]
-        public async Task DeletePlantShouldSucceed()
+        public async Task DeletePlantSucceeds()
         {
             // Given
             Guid id = SeedDatabase(ModelFactory.DomainModel());

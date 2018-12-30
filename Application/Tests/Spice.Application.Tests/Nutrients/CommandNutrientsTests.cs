@@ -29,12 +29,12 @@ namespace Spice.Application.Tests.Nutrients
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create Nutrient throws exception if nutrient with specified name already exists")]
+        [TestCase(TestName = "Create nutrient throws exception if nutrient with specified name already exists")]
         public void CreateNutrientThrowsExceptionOnNameConflict()
         {
             // Given
             Nutrient existingNutrient = ModelFactory.DomainModel();
-            Guid existingNutrientId = SeedDatabase(existingNutrient);
+            SeedDatabase(existingNutrient);
             CreateNutrientModel model = ModelFactory.CreationModel();
 
             // When
@@ -44,7 +44,7 @@ namespace Spice.Application.Tests.Nutrients
             createNutrient.Should().Throw<NutrientWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Create Nutrient returns Guid on success")]
+        [TestCase(TestName = "Create nutrient returns Guid on success")]
         public async Task CreateNutrientReturnsGuidOnSuccess()
         {
             // Given
@@ -57,12 +57,12 @@ namespace Spice.Application.Tests.Nutrients
             NutrientId.Should().NotBe(Guid.Empty);
         }
 
-        [TestCase(TestName = "Update Nutrient throws exception if nutrient with specified name already exists")]
+        [TestCase(TestName = "Update nutrient throws exception if nutrient with specified name already exists")]
         public void UpdateNutrientThrowsExceptionOnNameConflict()
         {
             // Given
             Nutrient existingNutrient = ModelFactory.DomainModel();
-            Guid existingNutrientId = SeedDatabase(existingNutrient);
+            SeedDatabase(existingNutrient);
             Nutrient updatedNutrient = ModelFactory.DomainModel("Nutrient B");
             Guid updatedNutrientId = SeedDatabase(updatedNutrient);
             UpdateNutrientModel model = ModelFactory.UpdateModel(updatedNutrientId);
@@ -74,7 +74,7 @@ namespace Spice.Application.Tests.Nutrients
             updateNutrient.Should().Throw<NutrientWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update Nutrient throws exception if nutrient does not exist")]
+        [TestCase(TestName = "Update nutrient throws exception if nutrient does not exist")]
         public void UpdateNutrientThrowsExceptionIfNutrientDoesNotExist()
         {
             // Given
@@ -87,18 +87,17 @@ namespace Spice.Application.Tests.Nutrients
             updateNutrient.Should().Throw<NutrientDoesNotExistException>();
         }
 
-        [TestCase(TestName = "Update Nutrient throws exception if nutrient was already administered to any plant")]
-        public void UpdateNutrientThrowsExceptionIfItWasAdministeredToAPlant()
+        [TestCase(TestName = "Update nutrient throws exception if nutrient was already administered to any plant")]
+        public void UpdateNutrientThrowsExceptionIfItWasAdministeredToAnyPlant()
         {
             // Given
-            Nutrient nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "ml");
+            Nutrient nutrient = ModelFactory.DomainModel("Nutrient B");
             Guid nutrientId = SeedDatabase(nutrient);
             Plant plant = Plants.ModelFactory.DomainModel();
-            Guid plantId = SeedDatabase(plant);
+            SeedDatabase(plant);
             AdministeredNutrient administeredNutrient = Plants.Nutrients.ModelFactory.DomainModel(nutrient, plant);
-            Guid administeredNutrientId = SeedDatabase(administeredNutrient);
+            SeedDatabase(administeredNutrient);
             UpdateNutrientModel model = ModelFactory.UpdateModel(nutrientId);
-            model.DosageUnits = "g";
 
             // When
             Func<Task> updateNutrient = async () => await _commands.Update(model);
@@ -107,36 +106,36 @@ namespace Spice.Application.Tests.Nutrients
             updateNutrient.Should().Throw<NutrientAlreadyAdministeredToPlantException>();
         }
 
-        [TestCase(TestName = "Update Nutrient returns updated nutrient on success")]
+        [TestCase(TestName = "Update nutrient returns updated nutrient on success")]
         public async Task UpdateNutrientReturnsNutrientOnSuccess()
         {
             // Given
-            Nutrient Nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "ml");
-            Guid NutrientId = SeedDatabase(Nutrient);
-            UpdateNutrientModel model = ModelFactory.UpdateModel(NutrientId);
+            Nutrient nutrient = ModelFactory.DomainModel("Nutrient B", dosageUnits: "ml");
+            Guid nutrientId = SeedDatabase(nutrient);
+            UpdateNutrientModel model = ModelFactory.UpdateModel(nutrientId);
             model.DosageUnits = "g";
 
             // When
-            Nutrient = await _commands.Update(model);
+            nutrient = await _commands.Update(model);
 
             // Then
-            Nutrient.Should().NotBeNull();
-            Nutrient.Name.Should().Be("Nutrient A");
-            Nutrient.DosageUnits.Should().Be("g");
+            nutrient.Should().NotBeNull();
+            nutrient.Name.Should().Be("Nutrient A");
+            nutrient.DosageUnits.Should().Be("g");
         }
 
-        [TestCase(TestName = "Delete Nutrient succeeds")]
-        public async Task DeleteNutrientShouldSucceed()
+        [TestCase(TestName = "Delete nutrient succeeds")]
+        public async Task DeleteNutrientSucceeds()
         {
             // Given
-            Guid NutrientId = SeedDatabase(ModelFactory.DomainModel("Nutrient B", dosageUnits: "g"));
+            Guid nutrientId = SeedDatabase(ModelFactory.DomainModel("Nutrient B", dosageUnits: "g"));
 
             // When
-            await _commands.Delete(NutrientId);
+            await _commands.Delete(nutrientId);
 
             // Then
-            Nutrient Nutrient = await DatabaseContext.Nutrients.FindAsync(NutrientId);
-            Nutrient.Should().BeNull();
+            Nutrient nutrient = await DatabaseContext.Nutrients.FindAsync(nutrientId);
+            nutrient.Should().BeNull();
         }
     }
 }
