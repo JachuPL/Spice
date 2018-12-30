@@ -1,4 +1,5 @@
 ﻿using Spice.ViewModels.Plants.OccuredEvents;
+using System;
 
 namespace Spice.WebAPI.Tests.Plants.Factories.Events
 {
@@ -8,6 +9,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Events
         {
             return new CreatePlantEventViewModel()
             {
+                Type = EventTypeViewModel.UnderWatering,
+                Description = "This plant quickly absorbs water and needs to be watered more often from now on.",
+                Occured = DateTime.Now.AddDays(-1)
             };
         }
 
@@ -15,6 +19,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Events
         {
             return new CreatePlantEventViewModel()
             {
+                Type = (EventTypeViewModel)999,
+                Description = "A",
+                Occured = DateTime.Now.AddDays(1)
             };
         }
 
@@ -22,6 +29,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Events
         {
             return new UpdatePlantEventViewModel()
             {
+                Type = EventTypeViewModel.UnderWatering,
+                Description = "This plant quickly absorbs water and needs to be watered more often from now on.",
+                Occured = DateTime.Now.AddDays(-1)
             };
         }
 
@@ -29,6 +39,9 @@ namespace Spice.WebAPI.Tests.Plants.Factories.Events
         {
             return new UpdatePlantEventViewModel()
             {
+                Type = (EventTypeViewModel)999,
+                Description = "A",
+                Occured = DateTime.Now.AddDays(1)
             };
         }
     }
