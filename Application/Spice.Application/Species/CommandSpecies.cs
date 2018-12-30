@@ -22,7 +22,7 @@ namespace Spice.Application.Species
 
         public async Task<Guid> Create(CreateSpeciesModel model)
         {
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name))
+            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName))
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
 
             Domain.Plants.Species species = _mapper.Map<Domain.Plants.Species>(model);
@@ -35,9 +35,9 @@ namespace Spice.Application.Species
         {
             Domain.Plants.Species species = await _database.Species.FindAsync(model.Id);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.Id);
+                return null;
 
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
+            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName && x.Id != model.Id))
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
 
             _mapper.Map(model, species);

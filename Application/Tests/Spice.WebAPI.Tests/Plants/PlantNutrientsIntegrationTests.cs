@@ -52,8 +52,8 @@ namespace Spice.WebAPI.Tests.Plants
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
@@ -72,11 +72,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.GetByPlant(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET single administered plant nutrient returns \"Not Found\" and correct content type if plant does not exist")]
+        [TestCase(TestName = "GET administered plant nutrient returns \"Not Found\" and correct content type if plant does not exist")]
         public async Task GetAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored))
+                .Returns(Task.FromResult<AdministeredNutrient>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -87,11 +88,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET single administered plant nutrient returns \"Not Found\" and correct content type if administered plant nutrient does not exist")]
-        public async Task GetAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfAdministeredPlantNutrientDoesNotExist()
+        [TestCase(TestName = "GET administered plant nutrient returns \"Not Found\" and correct content type if nutrition info does not exist")]
+        public async Task GetAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfNutritionInfoDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.FromResult<AdministeredNutrient>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored))
+                .Returns(Task.FromResult<AdministeredNutrient>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -102,7 +104,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET single administered plant nutrient returns \"OK\" and correct content type")]
+        [TestCase(TestName = "GET administered plant nutrient returns \"OK\" and correct content type")]
         public async Task GetAdministeredPlantNutrientReturnsAdministeredPlantNutrientAndCorrectContentType()
         {
             // Given
@@ -117,7 +119,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if plant by id does not exist")]
+        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if plant does not exist")]
         public async Task PostNewAdministeredPlantNutrientReturnsConflictIfPlantDoesNotExist()
         {
             // Given
@@ -133,7 +135,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if nutrient by id does not exist")]
+        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if nutrient does not exist")]
         public async Task PostNewAdministeredPlantNutrientReturnsConflictIfNutrientDoesNotExist()
         {
             // Given
@@ -194,7 +196,7 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if plant by given id does not exist")]
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if plant does not exist")]
         public async Task PutAdministeredPlantNutrientReturnsConflictIfPlantDoesNotExistById()
         {
             // Given
@@ -210,7 +212,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if nutrient by given id does not exist")]
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if nutrient does not exist")]
         public async Task PutAdministeredPlantNutrientReturnsConflictIfNutrientDoesNotExistById()
         {
             // Given
@@ -242,7 +244,7 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Not Found\" and correct content type if administered plant nutrient was not found")]
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Not Found\" and correct content type if administered plant nutrient does not exist")]
         public async Task PutAdministeredPlantNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
@@ -287,7 +289,7 @@ namespace Spice.WebAPI.Tests.Plants
         }
 
         [TestCase(TestName = "DELETE administered plant nutrient returns \"No Content\"")]
-        public async Task DeleteAdministeredPlantReturnsNoContentAndCorrectContentType()
+        public async Task DeleteAdministeredPlantNutrientReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).Returns(Task.CompletedTask);
@@ -300,8 +302,8 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if plant by id was not found")]
-        public async Task GetSumOfAdministeredPlantNutrientReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
+        [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if plant does not exist")]
+        public async Task GetSumOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(Guid.NewGuid()));
@@ -316,7 +318,7 @@ namespace Spice.WebAPI.Tests.Plants
         }
 
         [TestCase(TestName = "GET sum of administered plant nutrients returns \"OK\" and correct content type")]
-        public async Task GetSumOfAdministeredPlantNutrientReturnsOKAndCorrectContentType()
+        public async Task GetSumOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());

@@ -39,7 +39,7 @@ namespace Spice.Application.Nutrients
                 .Include(x => x.AdministeredToPlants)
                 .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (nutrient is null)
-                throw new NutrientDoesNotExistException(model.Id);
+                return null;
 
             if (nutrient.AdministeredToPlants.Any())
                 throw new NutrientAlreadyAdministeredToPlantException();

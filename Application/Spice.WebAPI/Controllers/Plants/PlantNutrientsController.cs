@@ -33,6 +33,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult<IEnumerable<AdministeredNutrientsIndexViewModel>>> Get([FromRoute] Guid plantId)
         {
             IEnumerable<AdministeredNutrient> administeredNutrients = await _queries.GetByPlant(plantId);
+            if (administeredNutrients is null)
+                return NotFound();
+
             return Ok(_mapper.Map<IEnumerable<AdministeredNutrientsIndexViewModel>>(administeredNutrients));
         }
 

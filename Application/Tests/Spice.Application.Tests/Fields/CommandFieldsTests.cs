@@ -33,7 +33,7 @@ namespace Spice.Application.Tests.Fields
         {
             // Given
             Field existingField = ModelFactory.DomainModel();
-            Guid existingFieldId = SeedDatabase(existingField);
+            SeedDatabase(existingField);
             CreateFieldModel model = ModelFactory.CreationModel();
 
             // When
@@ -61,7 +61,7 @@ namespace Spice.Application.Tests.Fields
         {
             // Given
             Field existingField = ModelFactory.DomainModel();
-            Guid existingFieldId = SeedDatabase(existingField);
+            SeedDatabase(existingField);
             Field updatedField = ModelFactory.DomainModel("Field B");
             Guid updatedFieldId = SeedDatabase(updatedField);
             UpdateFieldModel model = ModelFactory.UpdateModel(updatedFieldId);
@@ -73,17 +73,17 @@ namespace Spice.Application.Tests.Fields
             updateField.Should().Throw<FieldWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update field throws exception if field does not exist")]
-        public void UpdateFieldThrowsExceptionIfFieldDoesNotExist()
+        [TestCase(TestName = "Update field returns null if field does not exist")]
+        public async Task UpdateFieldReturnsNullIfFieldDoesNotExist()
         {
             // Given
             UpdateFieldModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Func<Task> updateField = async () => await _commands.Update(model);
+            Field field = await _commands.Update(model);
 
             // Then
-            updateField.Should().Throw<FieldDoesNotExistException>();
+            field.Should().BeNull();
         }
 
         [TestCase(TestName = "Update field returns updated field on success")]
@@ -105,7 +105,7 @@ namespace Spice.Application.Tests.Fields
         }
 
         [TestCase(TestName = "Delete field succeeds")]
-        public async Task DeleteFieldShouldSucceed()
+        public async Task DeleteFieldSucceeds()
         {
             // Given
             Guid fieldId = SeedDatabase(ModelFactory.DomainModel("Field B", 13, 37));

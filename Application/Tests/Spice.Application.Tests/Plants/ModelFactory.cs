@@ -5,7 +5,7 @@ using System;
 
 namespace Spice.Application.Tests.Plants
 {
-    public static class ModelFactory
+    internal static class ModelFactory
     {
         public static CreatePlantModel CreationModel(Guid? fieldId = null, Guid? speciesId = null)
         {

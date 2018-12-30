@@ -4,6 +4,7 @@ using Spice.Application.Plants;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -51,17 +52,20 @@ namespace Spice.Application.Tests.Plants
             DatabaseContext.Save();
         }
 
-        [TestCase(TestName = "Get by id query on plants returns null if plant was not found")]
+        [TestCase(TestName = "Get by id query on plants returns null if plant does not exist")]
         public async Task GetPlantReturnsNullWhenNotFound()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+
             // When
-            Plant plant = await _queries.Get(Guid.NewGuid());
+            Plant plant = await _queries.Get(plantId);
 
             // Then
             plant.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by id query on plants returns plant if found")]
+        [TestCase(TestName = "Get by id query on plants returns plant with nutrition info, field, species and event records")]
         public async Task GetPlantReturnsPlantWhenFound()
         {
             // Given
@@ -72,6 +76,10 @@ namespace Spice.Application.Tests.Plants
 
             // Then
             plant.Should().NotBeNull();
+            plant.Field.Should().NotBeNull();
+            plant.Species.Should().NotBeNull();
+            plant.AdministeredNutrients.Should().NotBeNullOrEmpty();
+            plant.Events.Should().NotBeNullOrEmpty();
         }
 
         private Guid SeedDatabaseForGetByIdTesting()
@@ -79,9 +87,24 @@ namespace Spice.Application.Tests.Plants
             using (var ctx = SetupInMemoryDatabase())
             {
                 Field field = Fields.ModelFactory.DomainModel();
-                Plant plant = ModelFactory.DomainModel(field);
-                ctx.Plants.Add(plant);
                 ctx.Fields.Add(field);
+
+                Domain.Plants.Species species = Species.ModelFactory.DomainModel();
+                ctx.Species.Add(species);
+
+                Plant plant = ModelFactory.DomainModel(field, species);
+
+                Nutrient nutrient = Tests.Nutrients.ModelFactory.DomainModel();
+                ctx.Nutrients.Add(nutrient);
+
+                AdministeredNutrient administeredNutrient = Nutrients.ModelFactory.DomainModel(nutrient, plant);
+                plant.AdministeredNutrients.Add(administeredNutrient);
+                ctx.AdministeredNutrients.Add(administeredNutrient);
+
+                Event @event = Events.ModelFactory.DomainModel(plant);
+                plant.Events.Add(@event);
+                ctx.Events.Add(@event);
+                ctx.Plants.Add(plant);
                 ctx.Save();
                 return plant.Id;
             }

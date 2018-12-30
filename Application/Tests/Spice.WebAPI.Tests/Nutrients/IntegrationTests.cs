@@ -161,11 +161,11 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT Nutrient returns \"Not Found\" and correct content type if nutrient was not found")]
+        [TestCase(TestName = "PUT Nutrient returns \"Not Found\" and correct content type if nutrient does not exist")]
         public async Task PutNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -206,7 +206,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         }
 
         [TestCase(TestName = "DELETE Nutrient returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        public async Task DeleteNutrientReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommands.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);

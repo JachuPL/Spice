@@ -30,7 +30,7 @@ namespace Spice.Application.Tests.Plants.Events
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create plant event throws exception if plant with specified id does not exist")]
+        [TestCase(TestName = "Create plant event throws exception if plant does not exist")]
         public void CreatePlantEventThrowsExceptionIfPlantDoesNotExist()
         {
             // Given
@@ -89,7 +89,7 @@ namespace Spice.Application.Tests.Plants.Events
             id.Should().NotBe(Guid.Empty);
         }
 
-        [TestCase(TestName = "Update plant event throws exception if plant with specified id does not exist")]
+        [TestCase(TestName = "Update plant event throws exception if plant does not exist")]
         public void UpdatePlantEventThrowsExceptionIfPlantDoesNotExist()
         {
             // Given
@@ -136,7 +136,7 @@ namespace Spice.Application.Tests.Plants.Events
             updateEvent.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
         }
 
-        [TestCase(TestName = "Update plant event returns null if occured event with specified id does not exist")]
+        [TestCase(TestName = "Update plant event returns null if occured event does not exist")]
         public async Task UpdatePlantEventReturnsNullIfEventDoesNotExist()
         {
             // Given
@@ -172,7 +172,7 @@ namespace Spice.Application.Tests.Plants.Events
         }
 
         [TestCase(TestName = "Delete plant event succeeds")]
-        public async Task DeletePlantEventShouldSucceed()
+        public async Task DeletePlantEventSucceeds()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
