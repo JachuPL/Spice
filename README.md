@@ -2,6 +2,10 @@
 
 A free and open source software to manage your garden and track plant growth.
 
+##### Current status
+[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) ![version](https://img.shields.io/badge/version-1.3.0-blue.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e5522f3724747c29e17bb479f3088f0)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
+
+
 ## Installation
 ### Configuring database connection
 By default this application targets your MSSQLLocalDB instance. If you don't have one, you can change connection string in appsettings.json file to target any instance of Microsoft SQL Server. Just change the value of `DefaultConnection`. Alternatively, you can add a new key to this dictionary that contains your custom connection string and reference it in Startup.cs:34.
@@ -82,6 +86,18 @@ Spice is all about plants. As of now, the following requests are available:
             "name": "Mineral water",
             "amount": "500 ml",
             "date": "2019-12-09T14:30:00"
+        }
+    ],
+    "events": [
+        {
+            "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
+            "type": 6,
+            "occured": "2018-12-30T13:05:15"
+        },
+        {
+            "id": "0dca2f37-c0b5-428d-4f3a-08d66e4fa2b2",
+            "type": 0,
+            "occured": "2018-12-30T13:00:00"
         }
     ]
 }
@@ -359,7 +375,7 @@ Your plants would not survive long without nutrients. With this option you can t
 }
 ```
 
-* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/nutrients - adds new plant with specified data. Example:
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/nutrients - adds new nutrition record with specified data. Example:
 ```
 {
 	"NutrientId": "25849c34-3242-4aff-27e3-08d66bfc09eb",
@@ -381,12 +397,12 @@ Note that if a plant is not found this operation will result in Conflict. The sa
 ```
 Note that if a plant is not found this operation will result in Conflict. The same applies if either nutrient or the nutrition record itself does not exist. Also, you will receive a Conflict response if specified date is earlier than plant date.
 
-* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid** - deletes plant with specified id. Example:
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid**/nutrients/**guid** - deletes nutrition record with specified id (second guid parameter) from plant with specified id (first guid parameter). Example:
 ```
 // Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
 // Returns 204 No Content
 ```
-Note that once a plant is deleted it is not possible to restore it!
+Note that once a nutrition record is deleted it is not possible to restore it!
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/sum - returns summary of nutrients administered to a plant grouped by nutrient. Example:
 ```
@@ -404,3 +420,79 @@ Note that once a plant is deleted it is not possible to restore it!
     }
 ]
 ```
+
+### Plant events
+There's a lot happening during your plant lifecycle. With this option you can track all the events that occur. For now, you can make such API calls:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events - returns list of plant events. Example:
+```
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events
+
+[
+    {
+        "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
+        "type": 6,
+        "occured": "2018-12-30T12:59:07.1700099"
+    },
+    {
+        "id": "a392e095-f061-40df-2532-08d66e4e33cb",
+        "type": 0,
+        "occured": "2018-12-30T13:00:00"
+    }
+]
+```
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/**guid** - returns plant event details by plant id (first guid parameter) and event record id (second guid parameter). Example:
+```
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb
+
+{
+    "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
+    "type": 6,
+    "description": "Moved plant to more sunny place.",
+    "occured": "2018-12-30T12:59:07.1700099"
+}
+```
+
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/events - adds new event with specified data. Example:
+```
+{
+	"Type": "Insects",
+	"Description": "Spotted some Leptinotarsa decemlineata on the leaves today.",
+	"Occured": "2018-12-30 13:00:00",
+}
+```
+Note that if a plant is not found this operation will result in Conflict. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future. Please keep in mind that response contains 'Location' header with URI to newly created resource. The occurence date parameter is completely optional - a request processing date is used if not specified otherwise.
+
+* ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid**/events/**guid** - updates event record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
+```
+// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/41955905-a177-4145-bda5-08d66d666eef
+
+{
+    "Type": "Moving",
+    "Description": "Moved plant to more sunny place, right behind barn.",
+    "Occured": "2018-12-30T13:05:15"
+}
+```
+Note that if a plant is not found this operation will result in Conflict. The same applies if event record does not exist. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future.
+
+* ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid**/events/**guid** - deletes event record with specified id (second guid parameter) from plant with specified id (first guid parameter). Example:
+```
+// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/a392e095-f061-40df-2532-08d66e4e33cb
+// Returns 204 No Content
+```
+Note that once an event record is deleted it is not possible to restore it!
+
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/sum - returns summary of events occured to a plant grouped by event type. Example:
+```
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/sum
+
+[
+    {
+        "type": 6,
+        "totalCount": 1
+    },
+    {
+        "type": 0,
+        "totalCount": 2
+    }
+]

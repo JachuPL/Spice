@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spice.Domain.Plants.Events;
+using System;
 using System.Collections.Generic;
 
 namespace Spice.Domain.Plants
@@ -14,5 +15,6 @@ namespace Spice.Domain.Plants
         public DateTime Planted { get; set; }
         public PlantState State { get; set; }
         public ICollection<AdministeredNutrient> AdministeredNutrients { get; set; } = new List<AdministeredNutrient>();
+        public ICollection<Event> Events { get; set; } = new List<Event>();
     }
 }
