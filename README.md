@@ -2,6 +2,10 @@
 
 A free and open source software to manage your garden and track plant growth.
 
+##### Current status
+[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) ![version](https://img.shields.io/badge/version-1.3.0-blue.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e5522f3724747c29e17bb479f3088f0)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
+
+
 ## Installation
 ### Configuring database connection
 By default this application targets your MSSQLLocalDB instance. If you don't have one, you can change connection string in appsettings.json file to target any instance of Microsoft SQL Server. Just change the value of `DefaultConnection`. Alternatively, you can add a new key to this dictionary that contains your custom connection string and reference it in Startup.cs:34.
