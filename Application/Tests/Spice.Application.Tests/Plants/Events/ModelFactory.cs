@@ -5,7 +5,7 @@ using System;
 
 namespace Spice.Application.Tests.Plants.Events
 {
-    public static class ModelFactory
+    internal static class ModelFactory
     {
         public static CreatePlantEventModel CreationModel(DateTime? occurenceDate = null)
         {

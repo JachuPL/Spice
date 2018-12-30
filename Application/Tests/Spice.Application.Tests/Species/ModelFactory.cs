@@ -3,7 +3,7 @@ using System;
 
 namespace Spice.Application.Tests.Species
 {
-    public class ModelFactory
+    internal static class ModelFactory
     {
         public static Domain.Plants.Species DomainModel(string speciesName = "Pepper")
         {

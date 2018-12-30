@@ -4,7 +4,7 @@ using System;
 
 namespace Spice.Application.Tests.Nutrients
 {
-    public static class ModelFactory
+    internal static class ModelFactory
     {
         public static CreateNutrientModel CreationModel()
         {
