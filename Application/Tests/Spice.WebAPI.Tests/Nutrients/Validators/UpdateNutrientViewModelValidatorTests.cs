@@ -51,7 +51,6 @@ namespace Spice.WebAPI.Tests.Nutrients.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
         }
 
-        [TestCase(null, TestName = "Validator should not have error for null description")]
         [TestCase(" \n\r\t\r\n\r\n", TestName = "Validator should not have error for whitespace description")]
         public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
         {
@@ -69,6 +68,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.Description, description);
         }
 
+        [TestCase(null, TestName = "Validator should not have error for null description")]
         [TestCase("This is an example description of a Nutrient", TestName = "Validator should not have error for correct description")]
         public void ValidatorShouldNotHaveErrorWhenDescriptionIsSpecified(string value)
         {
