@@ -148,7 +148,8 @@ namespace Spice.WebAPI.Tests.Species
         public async Task PutSpeciesReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored))
+                .Returns(Task.FromResult<Domain.Plants.Species>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

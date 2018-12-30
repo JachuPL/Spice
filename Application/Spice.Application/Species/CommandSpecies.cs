@@ -35,7 +35,7 @@ namespace Spice.Application.Species
         {
             Domain.Plants.Species species = await _database.Species.FindAsync(model.Id);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.Id);
+                return null;
 
             if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);

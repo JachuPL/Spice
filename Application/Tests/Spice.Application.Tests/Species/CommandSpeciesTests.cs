@@ -73,17 +73,17 @@ namespace Spice.Application.Tests.Species
             updateSpecies.Should().Throw<SpeciesWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update species throws exception if species does not exist")]
-        public void UpdateSpeciesThrowsExceptionIfSpeciesDoesNotExist()
+        [TestCase(TestName = "Update species returns null if species does not exist")]
+        public async Task UpdateSpeciesReturnsNullIfSpeciesDoesNotExist()
         {
             // Given
             UpdateSpeciesModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Func<Task> updateSpecies = async () => await _commands.Update(model);
+            Domain.Plants.Species species = await _commands.Update(model);
 
             // Then
-            updateSpecies.Should().Throw<SpeciesDoesNotExistException>();
+            species.Should().BeNull();
         }
 
         [TestCase(TestName = "Update species returns updated species on success")]
