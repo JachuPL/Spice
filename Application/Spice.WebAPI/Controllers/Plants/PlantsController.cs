@@ -4,6 +4,7 @@ using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Domain.Plants;
+using Spice.ViewModels.Common;
 using Spice.ViewModels.Plants;
 using System;
 using System.Collections.Generic;
@@ -60,17 +61,11 @@ namespace Spice.WebAPI.Controllers.Plants
             }
             catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return NotFound(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -94,17 +89,11 @@ namespace Spice.WebAPI.Controllers.Plants
             }
             catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return NotFound(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
