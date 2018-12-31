@@ -33,6 +33,9 @@ namespace Spice.Application.Plants.Events
             if (model.Occured < plant.Planted || DateTime.Now < model.Occured)
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
 
+            if (model.Type.IsCreationRestricted())
+                throw new EventTypeIsCreationRestrictedException(model.Type);
+
             Event @event = _mapper.Map<Event>(model);
             @event.Plant = plant;
             await _database.Events.AddAsync(@event);

@@ -11,5 +11,10 @@ namespace Spice.Domain.Plants.Events
         {
             return !UnchangeableTypes.Contains(type);
         }
+
+        public static bool IsCreationRestricted(this EventType type)
+        {
+            return UnchangeableTypes.Contains(type);
+        }
     }
 }

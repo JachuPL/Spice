@@ -73,6 +73,21 @@ namespace Spice.Application.Tests.Plants.Events
             createPlant.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
         }
 
+        [TestCase(TestName = "Create plant event throws exception if event type is restricted to automatic creation only")]
+        public void CreatePlantEventThrowsExceptionIfTypeIsRestricted()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now, EventType.Start);
+
+            // When
+            Func<Task> createPlant = async () => await _commands.Create(plantId, model);
+
+            // Then
+            createPlant.Should().Throw<EventTypeIsCreationRestrictedException>();
+        }
+
         [TestCase(TestName = "Create plant event returns Guid on success")]
         public async Task CreatePlantEventReturnsGuidOnSuccess()
         {
