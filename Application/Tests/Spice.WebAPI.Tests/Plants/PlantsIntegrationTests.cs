@@ -2,8 +2,8 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Fields.Exceptions;
-using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
@@ -86,12 +86,11 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if plant exists at specific coordinates")]
-        public async Task PostNewPlantReturnsConflictIfPlantExistsAtSpecificCoordinates()
+        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewPlantReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new PlantExistsAtCoordinatesException(0, 0));
+            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -163,12 +162,11 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if other plant at specified coordinates already exists")]
-        public async Task PutPlantReturnsConflictIfNewCoordinatesConflictWithExistingPlant()
+        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutPlantReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new PlantExistsAtCoordinatesException(0, 0));
+            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

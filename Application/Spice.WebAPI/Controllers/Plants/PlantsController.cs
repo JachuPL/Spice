@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Fields.Exceptions;
-using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
@@ -74,7 +74,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (PlantExistsAtCoordinatesException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {
@@ -115,7 +115,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (PlantExistsAtCoordinatesException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {
