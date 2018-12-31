@@ -50,7 +50,7 @@ namespace Spice.Application.Tests.Common.Base
             }
         }
 
-        protected Guid SeedDatabase(Domain.Plants.Species species)
+        protected Guid SeedDatabase(Domain.Species species)
         {
             using (var ctx = SetupInMemoryDatabase())
             {

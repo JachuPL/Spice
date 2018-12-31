@@ -5,7 +5,7 @@ namespace Spice.Application.Species.Exceptions
 {
     public class SpeciesNotFoundException : ResourceNotFoundException
     {
-        public SpeciesNotFoundException(Guid id) : base(typeof(Domain.Plants.Species), id)
+        public SpeciesNotFoundException(Guid id) : base(typeof(Domain.Species), id)
         {
         }
     }

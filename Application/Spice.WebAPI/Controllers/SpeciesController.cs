@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
-using Spice.Domain.Plants;
+using Spice.Domain;
 using Spice.ViewModels.Common;
 using Spice.ViewModels.Species;
 using System;

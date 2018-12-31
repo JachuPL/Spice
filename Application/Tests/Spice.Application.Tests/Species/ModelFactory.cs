@@ -5,9 +5,9 @@ namespace Spice.Application.Tests.Species
 {
     internal static class ModelFactory
     {
-        public static Domain.Plants.Species DomainModel(string speciesName = "Pepper")
+        public static Domain.Species DomainModel(string speciesName = "Pepper")
         {
-            return new Domain.Plants.Species()
+            return new Domain.Species()
             {
                 Name = speciesName,
                 LatinName = "Capsicum annuum",

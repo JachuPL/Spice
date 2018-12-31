@@ -34,7 +34,7 @@ namespace Spice.Application.Tests.Species
             SeedDatabaseForGetAllTesting();
 
             // When
-            IEnumerable<Domain.Plants.Species> species = await _queries.GetAll();
+            IEnumerable<Domain.Species> species = await _queries.GetAll();
 
             // Then
             species.Should().NotBeNullOrEmpty();
@@ -59,7 +59,7 @@ namespace Spice.Application.Tests.Species
             Guid speciesId = Guid.NewGuid();
 
             // When
-            Domain.Plants.Species species = await _queries.Get(speciesId);
+            Domain.Species species = await _queries.Get(speciesId);
 
             // Then
             species.Should().BeNull();
@@ -72,7 +72,7 @@ namespace Spice.Application.Tests.Species
             Guid SpeciesId = SeedDatabaseForGetByIdTesting();
 
             // When
-            Domain.Plants.Species species = await _queries.Get(SpeciesId);
+            Domain.Species species = await _queries.Get(SpeciesId);
 
             // Then
             species.Should().NotBeNull();
@@ -82,7 +82,7 @@ namespace Spice.Application.Tests.Species
         {
             using (var ctx = SetupInMemoryDatabase())
             {
-                Domain.Plants.Species species = ModelFactory.DomainModel();
+                Domain.Species species = ModelFactory.DomainModel();
                 ctx.Species.Add(species);
                 ctx.Save();
                 return species.Id;

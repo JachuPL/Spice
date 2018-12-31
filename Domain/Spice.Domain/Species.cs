@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Spice.Domain.Plants;
+using System;
 using System.Collections.Generic;
 
-namespace Spice.Domain.Plants
+namespace Spice.Domain
 {
     public class Species
     {

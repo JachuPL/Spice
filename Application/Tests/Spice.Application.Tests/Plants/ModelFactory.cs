@@ -36,7 +36,7 @@ namespace Spice.Application.Tests.Plants
             };
         }
 
-        public static Plant DomainModel(Field field = null, Domain.Plants.Species species = null, int row = 0, int col = 0)
+        public static Plant DomainModel(Field field = null, Domain.Species species = null, int row = 0, int col = 0)
         {
             return new Plant()
             {

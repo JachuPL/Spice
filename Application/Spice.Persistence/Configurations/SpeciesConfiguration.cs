@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Spice.Domain.Plants;
+using Spice.Domain;
 
 namespace Spice.Persistence.Configurations
 {

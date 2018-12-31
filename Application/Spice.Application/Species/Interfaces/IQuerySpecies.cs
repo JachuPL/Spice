@@ -6,8 +6,8 @@ namespace Spice.Application.Species.Interfaces
 {
     public interface IQuerySpecies
     {
-        Task<IEnumerable<Domain.Plants.Species>> GetAll();
+        Task<IEnumerable<Domain.Species>> GetAll();
 
-        Task<Domain.Plants.Species> Get(Guid id);
+        Task<Domain.Species> Get(Guid id);
     }
 }
