@@ -51,8 +51,8 @@ namespace Spice.WebAPI.Tests.Plants.Validators
         [TestCase(PlantStateViewModel.Flowering, TestName = "Update Plant Validator should not have error for Flowering state")]
         [TestCase(PlantStateViewModel.Fruiting, TestName = "Update Plant Validator should not have error for Fruiting state")]
         [TestCase(PlantStateViewModel.Harvested, TestName = "Update Plant Validator should not have error for Harvested state")]
-        [TestCase(PlantStateViewModel.Sick, TestName = "Update Plant Validator should have not error for Sick state")]
-        public void ValidatorShouldHaveErrorWhenStateIsInvalid(PlantStateViewModel value)
+        [TestCase(PlantStateViewModel.Sick, TestName = "Update Plant Validator should not have error for Sick state")]
+        public void ValidatorShouldNotHaveErrorWhenStateIsValid(PlantStateViewModel value)
         {
             Validator.ShouldNotHaveValidationErrorFor(x => x.State, value);
         }
