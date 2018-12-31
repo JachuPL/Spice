@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Common.Exceptions;
-using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
-using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using System;
@@ -60,16 +58,9 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid plantId = await _commands.Create(createPlantModel);
                 return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
-            catch (SpeciesNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (FieldNotFoundException ex)
-            {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
@@ -101,16 +92,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
             }
-            catch (SpeciesNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (FieldNotFoundException ex)
-            {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
