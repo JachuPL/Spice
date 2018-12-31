@@ -22,10 +22,10 @@ namespace Spice.WebAPI.Tests.Plants.Validators
         [TestCase(EventTypeViewModel.Fungi, TestName = "Update Plant Event Validator should not have error for Fungi type")]
         [TestCase(EventTypeViewModel.Growth, TestName = "Update Plant Event Validator should not have error for Growth type")]
         [TestCase(EventTypeViewModel.Insects, TestName = "Update Plant Event Validator should not have error for Insects type")]
-        [TestCase(EventTypeViewModel.Moving, TestName = "Update Plant Event Validator should have not error for Moving type")]
-        [TestCase(EventTypeViewModel.Pests, TestName = "Update Plant Event Validator should have not error for Pests type")]
-        [TestCase(EventTypeViewModel.UnderWatering, TestName = "Update Plant Event Validator should have not error for Underwatering type")]
-        public void ValidatorShouldHaveErrorWhenTypeIsInvalid(EventTypeViewModel value)
+        [TestCase(EventTypeViewModel.Moving, TestName = "Update Plant Event Validator should not have error for Moving type")]
+        [TestCase(EventTypeViewModel.Pests, TestName = "Update Plant Event Validator should not have error for Pests type")]
+        [TestCase(EventTypeViewModel.UnderWatering, TestName = "Update Plant Event Validator should not have error for Underwatering type")]
+        public void ValidatorShouldNotHaveErrorWhenTypeIsValid(EventTypeViewModel value)
         {
             Validator.ShouldNotHaveValidationErrorFor(x => x.Type, value);
         }

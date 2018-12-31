@@ -51,7 +51,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
         }
 
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Nutrient Validator should not have error for whitespace description")]
+        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Nutrient Validator should have error for whitespace description")]
         public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Description, name);
@@ -81,8 +81,8 @@ namespace Spice.WebAPI.Tests.Nutrients.Validators
             Validator.ShouldHaveValidationErrorFor(x => x.DosageUnits, string.Empty);
         }
 
-        [TestCase(null, TestName = "Update Nutrient Validator should not have error for null Dosage Unit")]
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Nutrient Validator should not have error for whitespace Dosage Unit")]
+        [TestCase(null, TestName = "Update Nutrient Validator should have error for null Dosage Unit")]
+        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Nutrient Validator should have error for whitespace Dosage Unit")]
         public void ValidatorShouldHaveErrorWhenDosageUnitIsIncorrect(string name)
         {
             Validator.ShouldHaveValidationErrorFor(x => x.DosageUnits, name);

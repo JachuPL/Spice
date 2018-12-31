@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Spice.ViewModels.Fields.Validators;
 
-namespace Spice.WebAPI.Tests.Nutrients.Validators
+namespace Spice.WebAPI.Tests.Fields.Validators
 {
     [TestFixture]
     internal sealed class UpdateFieldViewModelValidatorTests
