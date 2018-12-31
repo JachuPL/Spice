@@ -136,6 +136,47 @@ namespace Spice.Application.Tests.Plants.Events
             updateEvent.Should().Throw<EventOccurenceDateBeforePlantDateOrInTheFutureException>();
         }
 
+        [TestCase(TestName = "Update plant event throws exception if changed event type to the one that is automatically created")]
+        public void UpdatePlantEventThrowsExceptionIfEventTypeWasChangedToAutomaticallyCreated()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = ModelFactory.DomainModel(plant);
+            Guid eventId = SeedDatabase(@event);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+
+            // When
+            Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
+
+            // Then
+            updateEvent.Should().Throw<EventTypeChangedToIllegalException>();
+        }
+
+        [TestCase(TestName = "Update plant event throws exception if changed event type from the one that is automatically created")]
+        public void UpdatePlantEventThrowsExceptionIfEventTypeWasChangedFromAutomaticallyCreated()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Event startEvent = new Event()
+            {
+                Description = "Start event",
+                Plant = plant,
+                Type = EventType.Start,
+                Occured = DateTime.Now
+            };
+            plant.Events.Add(startEvent);
+            Guid plantId = SeedDatabase(plant);
+            Guid eventId = startEvent.Id;
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Fungi);
+
+            // When
+            Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
+
+            // Then
+            updateEvent.Should().Throw<EventTypeChangedFromIllegalException>();
+        }
+
         [TestCase(TestName = "Update plant event returns null if occured event does not exist")]
         public async Task UpdatePlantEventReturnsNullIfEventDoesNotExist()
         {
@@ -151,8 +192,28 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Should().BeNull();
         }
 
-        [TestCase(TestName = "Update plant event returns updated plant event on success")]
-        public async Task UpdatePlantEventReturnsEventOnSuccess()
+        [TestCase(TestName = "Update plant event with the same event type returns updated plant event on success")]
+        public async Task UpdatePlantEventWithSameTypeReturnsEventOnSuccess()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = ModelFactory.DomainModel(plant, type: EventType.Start);
+            Guid eventId = SeedDatabase(@event);
+
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+
+            // When
+            @event = await _commands.Update(plantId, model);
+
+            // Then
+            @event.Should().NotBeNull();
+            @event.Id.Should().Be(eventId);
+            @event.Plant.Id.Should().Be(plant.Id);
+        }
+
+        [TestCase(TestName = "Update plant event with different event types returns updated plant event on success")]
+        public async Task UpdatePlantEventWithDifferentTypeReturnsEventOnSuccess()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
