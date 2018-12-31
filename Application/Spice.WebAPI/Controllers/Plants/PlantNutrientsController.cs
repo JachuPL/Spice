@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Common.Exceptions;
-using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
@@ -63,16 +61,9 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
                 return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
             }
-            catch (PlantNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientNotFoundException ex)
-            {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
@@ -104,16 +95,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<UpdateAdministeredNutrientViewModel>(administeredNutrient));
             }
-            catch (PlantNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientNotFoundException ex)
-            {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
@@ -145,9 +129,12 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
             }
-            catch (PlantNotFoundException)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Error = ex.Message
+                });
             }
         }
     }
