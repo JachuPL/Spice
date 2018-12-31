@@ -33,6 +33,9 @@ namespace Spice.Application.Plants.Events
             if (model.Occured < plant.Planted || DateTime.Now < model.Occured)
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
 
+            if (model.Type.IsCreationRestricted())
+                throw new EventTypeIsCreationRestrictedException(model.Type);
+
             Event @event = _mapper.Map<Event>(model);
             @event.Plant = plant;
             await _database.Events.AddAsync(@event);
@@ -47,13 +50,21 @@ namespace Spice.Application.Plants.Events
             if (plant is null)
                 throw new PlantNotFoundException(plantId);
 
-            Event @event =
-                plant.Events.FirstOrDefault(x => x.Id == model.Id);
+            Event @event = plant.Events.FirstOrDefault(x => x.Id == model.Id);
             if (@event is null)
                 return null;
 
             if (model.Occured < plant.Planted || DateTime.Now < model.Occured)
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
+
+            if (@event.Type != model.Type)
+            {
+                if (!@event.Type.IsChangeable())
+                    throw new EventTypeChangedFromIllegalException(@event.Type);
+
+                if (!model.Type.IsChangeable())
+                    throw new EventTypeChangedToIllegalException(model.Type);
+            }
 
             _mapper.Map(model, @event);
             @event.Plant = plant;

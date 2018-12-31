@@ -34,6 +34,12 @@ namespace Spice.AutoMapper.Profiles.Plant.Converters
                 case EventType.UnderWatering:
                     return EventTypeViewModel.UnderWatering;
 
+                case EventType.Start:
+                    return EventTypeViewModel.Start;
+
+                case EventType.Nutrition:
+                    return EventTypeViewModel.Nutrition;
+
                 default:
                     return EventTypeViewModel.Insects;
             }

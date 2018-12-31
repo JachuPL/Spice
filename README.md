@@ -459,9 +459,10 @@ There's a lot happening during your plant lifecycle. With this option you can tr
 	"Type": "Insects",
 	"Description": "Spotted some Leptinotarsa decemlineata on the leaves today.",
 	"Occured": "2018-12-30 13:00:00",
+    "CreateEvent": true
 }
 ```
-Note that if a plant is not found this operation will result in Conflict. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future. Please keep in mind that response contains 'Location' header with URI to newly created resource. The occurence date parameter is completely optional - a request processing date is used if not specified otherwise.
+Note that if a plant is not found this operation will result in Conflict. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future. Please keep in mind that response contains 'Location' header with URI to newly created resource. The occurence date parameter is completely optional - a request processing date is used if not specified otherwise. The other optional parameter is 'CreateEvent' - if it is not specified, default value is false.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid**/events/**guid** - updates event record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
 ```

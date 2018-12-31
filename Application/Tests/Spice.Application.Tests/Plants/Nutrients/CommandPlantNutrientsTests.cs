@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Plants.Exceptions;
@@ -8,6 +9,7 @@ using Spice.Application.Plants.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Threading.Tasks;
 
@@ -74,21 +76,42 @@ namespace Spice.Application.Tests.Plants.Nutrients
             createPlant.Should().Throw<NutrientAdministrationDateBeforePlantDateException>();
         }
 
-        [TestCase(TestName = "Create administered plant nutrition returns Guid on success")]
-        public async Task CreateAdministeredNutrientReturnsGuidOnSuccess()
+        [TestCase(TestName = "Create administered plant nutrition returns Guid on success and creates event if user wants it")]
+        public async Task CreateAdministeredNutrientReturnsGuidOnSuccessAndCreatesEvent()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             plant.Planted = DateTime.Now.AddDays(-1);
             Guid plantId = SeedDatabase(plant);
             Guid nutrientId = SeedDatabase(Tests.Nutrients.ModelFactory.DomainModel());
-            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId);
+            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId, createEvent: true);
 
             // When
             Guid id = await _commands.Create(plantId, model);
+            plant = await DatabaseContext.Plants.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == plantId);
 
             // Then
             id.Should().NotBe(Guid.Empty);
+            plant.Events.Should().Contain(x => x.Type == EventType.Nutrition);
+        }
+
+        [TestCase(TestName = "Create administered plant nutrition returns Guid on success and does not create event if user does not want it")]
+        public async Task CreateAdministeredNutrientReturnsGuidOnSuccessAndDoesNotCreateEvent()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            plant.Planted = DateTime.Now.AddDays(-1);
+            Guid plantId = SeedDatabase(plant);
+            Guid nutrientId = SeedDatabase(Tests.Nutrients.ModelFactory.DomainModel());
+            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId, createEvent: false);
+
+            // When
+            Guid id = await _commands.Create(plantId, model);
+            plant = await DatabaseContext.Plants.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == plantId);
+
+            // Then
+            id.Should().NotBe(Guid.Empty);
+            plant.Events.Should().NotContain(x => x.Type == EventType.Nutrition);
         }
 
         [TestCase(TestName = "Update administered plant nutrition throws exception if plant does not exist")]

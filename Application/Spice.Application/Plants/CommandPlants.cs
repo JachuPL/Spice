@@ -8,6 +8,7 @@ using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +48,15 @@ namespace Spice.Application.Plants
             plant.Species = species;
             species.Plants.Add(plant);
 
+            Event @event = new Event()
+            {
+                Plant = plant,
+                Type = EventType.Start,
+                Description = $"{plant.Name} was planted on field {plant.Field.Name}. (Generated automatically)",
+                Occured = DateTime.Now
+            };
+            plant.Events.Add(@event);
+
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
 
@@ -55,7 +65,9 @@ namespace Spice.Application.Plants
 
         public async Task<Plant> Update(UpdatePlantModel model)
         {
-            Plant plant = await _database.Plants.FindAsync(model.Id);
+            Plant plant = await _database.Plants
+                .Include(x => x.Field)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (plant is null)
                 return null;
 
@@ -73,10 +85,20 @@ namespace Spice.Application.Plants
                 throw new SpeciesNotFoundException(model.SpeciesId);
 
             _mapper.Map(model, plant);
+            if (plant.Field.Id != field.Id)
+            {
+                Event @event = new Event()
+                {
+                    Plant = plant,
+                    Type = EventType.Moving,
+                    Occured = DateTime.Now,
+                    Description = $"{plant.Name} was moved to field {field.Name}. (Generated automatically)"
+                };
+                plant.Events.Add(@event);
+            }
             plant.Field = field;
             plant.Species = species;
             field.Plants.Add(plant);
-
             _database.Plants.Update(plant);
             await _database.SaveAsync();
 

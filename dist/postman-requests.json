@@ -96,7 +96,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 500.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n}"
+									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 500.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n\t\"CreateEvent\": true\n}"
 								},
 								"url": {
 									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients",
@@ -213,7 +213,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb",
+									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/bfa3f1f0-c154-4220-611f-08d66f17f8dc",
 									"host": [
 										"{{apiUrl}}"
 									],
@@ -221,7 +221,7 @@
 										"plants",
 										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
 										"events",
-										"5d34024b-1a26-4a98-2531-08d66e4e33cb"
+										"bfa3f1f0-c154-4220-611f-08d66f17f8dc"
 									]
 								}
 							},
@@ -908,13 +908,13 @@
 	],
 	"variable": [
 		{
-			"id": "9366f8cb-8793-4a2c-8e5e-0e99417402bd",
+			"id": "6397f085-3033-4397-bb97-564dec368cc0",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "8d4e176f-a99a-4c71-8e23-2fd22b0af0b8",
+			"id": "a4d28779-2246-4c49-afe4-7ff765ac2f16",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"
