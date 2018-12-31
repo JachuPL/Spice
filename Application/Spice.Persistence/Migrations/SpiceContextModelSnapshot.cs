@@ -54,6 +54,7 @@ namespace Spice.Persistence.Migrations
                         .IsUnicode(true);
 
                     b.Property<string>("DosageUnits")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(true);
 
@@ -99,7 +100,6 @@ namespace Spice.Persistence.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .IsUnicode(true);
 

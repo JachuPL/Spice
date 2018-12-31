@@ -1,6 +1,6 @@
 ﻿namespace Spice.WebAPI.Tests.Fields.Factories
 {
-    public static class EndPointFactory
+    internal static class EndPointFactory
     {
         public static string ListEndpoint() => "/api/fields";
 

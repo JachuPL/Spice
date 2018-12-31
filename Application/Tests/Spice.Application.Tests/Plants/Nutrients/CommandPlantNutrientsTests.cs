@@ -1,12 +1,15 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Models;
+using Spice.Application.Plants.Nutrients;
+using Spice.Application.Plants.Nutrients.Exceptions;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Threading.Tasks;
 
@@ -30,7 +33,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create administered plant nutrition throws exception if plant with specified id does not exist")]
+        [TestCase(TestName = "Create administered plant nutrition throws exception if plant does not exist")]
         public void CreateAdministeredNutrientThrowsExceptionIfPlantDoesNotExist()
         {
             // Given
@@ -40,10 +43,10 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(Guid.NewGuid(), model);
 
             // Then
-            createPlant.Should().Throw<PlantDoesNotExistException>();
+            createPlant.Should().Throw<PlantNotFoundException>();
         }
 
-        [TestCase(TestName = "Create administered plant nutrition throws exception if nutrient with specified id does not exist")]
+        [TestCase(TestName = "Create administered plant nutrition throws exception if nutrient does not exist")]
         public void CreateAdministeredNutrientThrowsExceptionIfNutrientDoesNotExist()
         {
             // Given
@@ -54,7 +57,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
 
             // Then
-            createPlant.Should().Throw<NutrientDoesNotExistException>();
+            createPlant.Should().Throw<NutrientNotFoundException>();
         }
 
         [TestCase(TestName = "Create administered plant nutrition throws exception if administration date is earlier than plant date")]
@@ -70,27 +73,48 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
 
             // Then
-            createPlant.Should().Throw<NutrientApplicationDateBeforePlantDateException>();
+            createPlant.Should().Throw<NutrientAdministrationDateBeforePlantDateException>();
         }
 
-        [TestCase(TestName = "Create administered plant nutrition returns Guid on success")]
-        public async Task CreateAdministeredNutrientReturnsGuidOnSuccess()
+        [TestCase(TestName = "Create administered plant nutrition returns Guid on success and creates event if user wants it")]
+        public async Task CreateAdministeredNutrientReturnsGuidOnSuccessAndCreatesEvent()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             plant.Planted = DateTime.Now.AddDays(-1);
             Guid plantId = SeedDatabase(plant);
             Guid nutrientId = SeedDatabase(Tests.Nutrients.ModelFactory.DomainModel());
-            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId);
+            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId, createEvent: true);
 
             // When
             Guid id = await _commands.Create(plantId, model);
+            plant = await DatabaseContext.Plants.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == plantId);
 
             // Then
             id.Should().NotBe(Guid.Empty);
+            plant.Events.Should().Contain(x => x.Type == EventType.Nutrition);
         }
 
-        [TestCase(TestName = "Update administered plant nutrition throws exception if plant with specified id does not exist")]
+        [TestCase(TestName = "Create administered plant nutrition returns Guid on success and does not create event if user does not want it")]
+        public async Task CreateAdministeredNutrientReturnsGuidOnSuccessAndDoesNotCreateEvent()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            plant.Planted = DateTime.Now.AddDays(-1);
+            Guid plantId = SeedDatabase(plant);
+            Guid nutrientId = SeedDatabase(Tests.Nutrients.ModelFactory.DomainModel());
+            CreateAdministeredNutrientModel model = ModelFactory.CreationModel(nutrientId, createEvent: false);
+
+            // When
+            Guid id = await _commands.Create(plantId, model);
+            plant = await DatabaseContext.Plants.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == plantId);
+
+            // Then
+            id.Should().NotBe(Guid.Empty);
+            plant.Events.Should().NotContain(x => x.Type == EventType.Nutrition);
+        }
+
+        [TestCase(TestName = "Update administered plant nutrition throws exception if plant does not exist")]
         public void UpdateAdministeredNutrientThrowsExceptionIfPlantDoesNotExist()
         {
             // Given
@@ -100,10 +124,10 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(Guid.NewGuid(), model);
 
             // Then
-            updatePlant.Should().Throw<PlantDoesNotExistException>();
+            updatePlant.Should().Throw<PlantNotFoundException>();
         }
 
-        [TestCase(TestName = "Update administered plant nutrition throws exception if nutrient with specified id does not exist")]
+        [TestCase(TestName = "Update administered plant nutrition throws exception if nutrient does not exist")]
         public void UpdateAdministeredNutrientThrowsExceptionIfNutrientDoesNotExist()
         {
             // Given
@@ -117,7 +141,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(plantId, model);
 
             // Then
-            updatePlant.Should().Throw<NutrientDoesNotExistException>();
+            updatePlant.Should().Throw<NutrientNotFoundException>();
         }
 
         [TestCase(TestName = "Update administered plant nutrition throws exception if administration date is earlier than plant date")]
@@ -136,10 +160,10 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(plantId, model);
 
             // Then
-            updatePlant.Should().Throw<NutrientApplicationDateBeforePlantDateException>();
+            updatePlant.Should().Throw<NutrientAdministrationDateBeforePlantDateException>();
         }
 
-        [TestCase(TestName = "Update administered plant nutrition returns null if administered nutrient with specified id does not exist")]
+        [TestCase(TestName = "Update administered plant nutrition returns null if administered nutrient does not exist")]
         public async Task UpdateAdministeredNutrientReturnsNullIfAdministeredNutrientDoesNotExist()
         {
             // Given
@@ -178,7 +202,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
         }
 
         [TestCase(TestName = "Delete administered plant nutrient succeeds")]
-        public async Task DeletePlantShouldSucceed()
+        public async Task DeleteAdministeredNutrientSucceeds()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();

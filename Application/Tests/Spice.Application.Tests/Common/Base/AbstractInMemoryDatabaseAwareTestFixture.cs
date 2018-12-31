@@ -28,73 +28,50 @@ namespace Spice.Application.Tests.Common.Base
 
         protected Guid SeedDatabase(Field field)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                ctx.Fields.Add(field);
-                ctx.Save();
+            DatabaseContext.Fields.Add(field);
+            DatabaseContext.Save();
 
-                return field.Id;
-            }
+            return field.Id;
         }
 
         protected Guid SeedDatabase(Plant plant)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                plant.Field = ctx.Fields.Find(plant.Field.Id);
-                plant.Species = ctx.Species.Find(plant.Species.Id);
-                ctx.Plants.Add(plant);
-                ctx.Save();
+            DatabaseContext.Plants.Add(plant);
+            DatabaseContext.Save();
 
-                return plant.Id;
-            }
+            return plant.Id;
         }
 
-        protected Guid SeedDatabase(Domain.Plants.Species species)
+        protected Guid SeedDatabase(Domain.Species species)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                ctx.Species.Add(species);
-                ctx.Save();
+            DatabaseContext.Species.Add(species);
+            DatabaseContext.Save();
 
-                return species.Id;
-            }
+            return species.Id;
         }
 
         protected Guid SeedDatabase(Nutrient nutrient)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                ctx.Nutrients.Add(nutrient);
-                ctx.Save();
+            DatabaseContext.Nutrients.Add(nutrient);
+            DatabaseContext.Save();
 
-                return nutrient.Id;
-            }
+            return nutrient.Id;
         }
 
         protected Guid SeedDatabase(AdministeredNutrient administeredNutrient)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                administeredNutrient.Plant = ctx.Plants.Find(administeredNutrient.Plant.Id);
-                administeredNutrient.Nutrient = ctx.Nutrients.Find(administeredNutrient.Nutrient.Id);
-                ctx.AdministeredNutrients.Add(administeredNutrient);
-                ctx.Save();
+            DatabaseContext.AdministeredNutrients.Add(administeredNutrient);
+            DatabaseContext.Save();
 
-                return administeredNutrient.Id;
-            }
+            return administeredNutrient.Id;
         }
 
         protected Guid SeedDatabase(Event @event)
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                @event.Plant = ctx.Plants.Find(@event.Plant.Id);
-                ctx.Events.Add(@event);
-                ctx.Save();
+            DatabaseContext.Events.Add(@event);
+            DatabaseContext.Save();
 
-                return @event.Id;
-            }
+            return @event.Id;
         }
     }
 }

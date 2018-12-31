@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Species.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
 using Spice.ViewModels.Species;
@@ -38,11 +38,11 @@ namespace Spice.WebAPI.Tests.Species
             Fake.ClearRecordedCalls(_fakeCommand);
         }
 
-        [TestCase(TestName = "GET list of Species returns \"OK\" and correct content type")]
+        [TestCase(TestName = "GET list of species returns \"OK\" and correct content type")]
         public async Task GetListReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Domain.Plants.Species>>());
+            A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Domain.Species>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
@@ -53,11 +53,11 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.GetAll()).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET single Species returns \"Not Found\" and correct content type")]
+        [TestCase(TestName = "GET single species returns \"Not Found\" and correct content type")]
         public async Task GetSpeciesReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Domain.Plants.Species>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Domain.Species>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -68,11 +68,11 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET single Species returns \"OK\" and correct content type")]
+        [TestCase(TestName = "GET single species returns \"OK\" and correct content type")]
         public async Task GetSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Plants.Species>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -83,12 +83,11 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST Species returns \"Conflict\" and correct content type if Species with specified name or latin name exists")]
-        public async Task PostNewSpeciesReturnsConflictIfSpeciesExistsWithSpecifiedNameOrLatinName()
+        [TestCase(TestName = "POST species returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewSpeciesReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored))
-                .Throws(new SpeciesWithNameAlreadyExistsException("Species A"));
+            A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -99,7 +98,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST Species returns \"Created\" and sets Location header")]
+        [TestCase(TestName = "POST species returns \"Created\" and sets Location header")]
         public async Task PostNewSpeciesReturnsCreatedAndCorrectContentType()
         {
             // Given
@@ -114,7 +113,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST Species returns \"Bad Request\" and correct content type for incorrect data")]
+        [TestCase(TestName = "POST species returns \"Bad Request\" and correct content type for incorrect data")]
         public async Task PostNewSpeciesReturnsBadRequestAndCorrectContentType()
         {
             // Given
@@ -128,12 +127,11 @@ namespace Spice.WebAPI.Tests.Species
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT Species returns \"Conflict\" and correct content type if other Species with specified name or latin name already exists")]
-        public async Task PutSpeciesReturnsConflictIfNewNameConflictsWithExistingSpeciesNameOrLatinName()
+        [TestCase(TestName = "PUT species returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutSpeciesReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored))
-                .Throws(new SpeciesWithNameAlreadyExistsException("Species A"));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -144,11 +142,12 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT Species returns \"Not Found\" and correct content type if Species was not found")]
+        [TestCase(TestName = "PUT species returns \"Not Found\" and correct content type if species does not exist")]
         public async Task PutSpeciesReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored))
+                .Returns(Task.FromResult<Domain.Species>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -159,11 +158,11 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT Species returns \"OK\" and correct content type")]
+        [TestCase(TestName = "PUT species returns \"OK\" and correct content type")]
         public async Task PutSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Plants.Species>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -174,7 +173,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT Species returns \"BadRequest\" and correct content type")]
+        [TestCase(TestName = "PUT species returns \"BadRequest\" and correct content type")]
         public async Task PutSpeciesReturnsBadRequestAndCorrectContentType()
         {
             // Given
@@ -188,8 +187,8 @@ namespace Spice.WebAPI.Tests.Species
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "DELETE Species returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        [TestCase(TestName = "DELETE species returns \"No Content\"")]
+        public async Task DeleteSpeciesReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);

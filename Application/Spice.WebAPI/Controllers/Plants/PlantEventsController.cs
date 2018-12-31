@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
+using Spice.Application.Common.Exceptions;
+using Spice.Application.Plants.Events.Interfaces;
+using Spice.Application.Plants.Events.Models;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Common;
+using Spice.ViewModels.Plants.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -61,19 +62,13 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid eventId = await _commands.Create(plantId, createEventModel);
                 return CreatedAtRoute(nameof(GetEvent), new { plantId = plantId, id = eventId }, null);
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -95,26 +90,13 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (EventDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -130,16 +112,11 @@ namespace Spice.WebAPI.Controllers.Plants
         [HttpGet("sum")]
         public async Task<ActionResult<IEnumerable<OccuredPlantEventsSummaryModel>>> GetSummary([FromRoute] Guid plantId)
         {
-            try
-            {
-                IEnumerable<OccuredPlantEventsSummaryModel> Event = await _queries.Sum(plantId);
-
-                return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(Event));
-            }
-            catch (PlantDoesNotExistException)
-            {
+            IEnumerable<OccuredPlantEventsSummaryModel> events = await _queries.Sum(plantId);
+            if (events is null)
                 return NotFound();
-            }
+
+            return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(events));
         }
     }
 }

@@ -8,6 +8,7 @@ using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Spice.Application.Plants
         {
             Field field = await _database.Fields.FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException(model.FieldId);
+                throw new FieldNotFoundException(model.FieldId);
 
             Plant existingAtCoordinates =
                 await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
@@ -37,15 +38,24 @@ namespace Spice.Application.Plants
             if (existingAtCoordinates != null)
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
-            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.SpeciesId);
+                throw new SpeciesNotFoundException(model.SpeciesId);
 
             Plant plant = _mapper.Map<Plant>(model);
             plant.Field = field;
             field.Plants.Add(plant);
             plant.Species = species;
             species.Plants.Add(plant);
+
+            Event @event = new Event()
+            {
+                Plant = plant,
+                Type = EventType.Start,
+                Description = $"{plant.Name} was planted on field {plant.Field.Name}. (Generated automatically)",
+                Occured = DateTime.Now
+            };
+            plant.Events.Add(@event);
 
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
@@ -55,7 +65,9 @@ namespace Spice.Application.Plants
 
         public async Task<Plant> Update(UpdatePlantModel model)
         {
-            Plant plant = await _database.Plants.FindAsync(model.Id);
+            Plant plant = await _database.Plants
+                .Include(x => x.Field)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (plant is null)
                 return null;
 
@@ -63,20 +75,30 @@ namespace Spice.Application.Plants
                 .Include(x => x.Plants)
                 .FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException(model.FieldId);
+                throw new FieldNotFoundException(model.FieldId);
 
             if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
-            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.SpeciesId);
+                throw new SpeciesNotFoundException(model.SpeciesId);
 
             _mapper.Map(model, plant);
+            if (plant.Field.Id != field.Id)
+            {
+                Event @event = new Event()
+                {
+                    Plant = plant,
+                    Type = EventType.Moving,
+                    Occured = DateTime.Now,
+                    Description = $"{plant.Name} was moved to field {field.Name}. (Generated automatically)"
+                };
+                plant.Events.Add(@event);
+            }
             plant.Field = field;
             plant.Species = species;
             field.Plants.Add(plant);
-
             _database.Plants.Update(plant);
             await _database.SaveAsync();
 

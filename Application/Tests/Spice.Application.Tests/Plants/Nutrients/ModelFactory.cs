@@ -1,19 +1,20 @@
-﻿using Spice.Application.Plants.Models;
+﻿using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using System;
 
 namespace Spice.Application.Tests.Plants.Nutrients
 {
-    public static class ModelFactory
+    internal static class ModelFactory
     {
-        public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null, DateTime? administeredDate = null)
+        public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null, DateTime? administeredDate = null, bool createEvent = false)
         {
             return new CreateAdministeredNutrientModel()
             {
                 Date = administeredDate ?? DateTime.Now,
                 NutrientId = nutrientId ?? Guid.NewGuid(),
-                Amount = 1.0
+                Amount = 1.0,
+                CreateEvent = createEvent
             };
         }
 

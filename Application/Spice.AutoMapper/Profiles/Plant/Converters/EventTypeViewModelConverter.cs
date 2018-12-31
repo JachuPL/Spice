@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Spice.Domain.Plants.Events;
-using Spice.ViewModels.Plants.OccuredEvents;
+using Spice.ViewModels.Plants.Events;
 
 namespace Spice.AutoMapper.Profiles.Plant.Converters
 {
@@ -33,6 +33,12 @@ namespace Spice.AutoMapper.Profiles.Plant.Converters
 
                 case EventTypeViewModel.UnderWatering:
                     return EventType.UnderWatering;
+
+                case EventTypeViewModel.Start:
+                    return EventType.Start;
+
+                case EventTypeViewModel.Nutrition:
+                    return EventType.Nutrition;
 
                 default:
                     return EventType.Insects;

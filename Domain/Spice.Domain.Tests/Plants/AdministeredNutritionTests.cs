@@ -23,7 +23,7 @@ namespace Spice.Domain.Tests.Plants
         }
 
         [TestCase(TestName = "Get and Set administered nutrition Plant property works properly")]
-        public void GetAndSetNameWorksProperly()
+        public void GetAndSetPlantWorksProperly()
         {
             // Given
             AdministeredNutrient administeredNutrient = new AdministeredNutrient();
@@ -37,7 +37,7 @@ namespace Spice.Domain.Tests.Plants
         }
 
         [TestCase(TestName = "Get and Set administered nutrition nutrient property works properly")]
-        public void GetAndSetSpeciesWorksProperly()
+        public void GetAndSetNutrientWorksProperly()
         {
             // Given
             AdministeredNutrient administeredNutrient = new AdministeredNutrient();
@@ -51,7 +51,7 @@ namespace Spice.Domain.Tests.Plants
         }
 
         [TestCase(TestName = "Get and Set administered nutrition Amount property works properly")]
-        public void GetAndSetFieldWorksProperly()
+        public void GetAndSetAmountWorksProperly()
         {
             // Given
             AdministeredNutrient administeredNutrient = new AdministeredNutrient();
@@ -65,7 +65,7 @@ namespace Spice.Domain.Tests.Plants
         }
 
         [TestCase(TestName = "Get and Set administered nutrition Date property works properly")]
-        public void GetAndSetRowWorksProperly()
+        public void GetAndSetDateWorksProperly()
         {
             // Given
             AdministeredNutrient administeredNutrient = new AdministeredNutrient();

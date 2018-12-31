@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Fields.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Fields.Interfaces;
 using Spice.Application.Fields.Models;
 using Spice.Domain;
@@ -84,15 +84,15 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST field returns \"Conflict\" and correct content type if field with specified name exists")]
-        public async Task PostNewFieldReturnsConflictIfFieldExistsWithSpecifiedName()
+        [TestCase(TestName = "POST field returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewFieldReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreateFieldModel>.Ignored))
-                .Throws(new FieldWithNameAlreadyExistsException("Field A"));
+            A.CallTo(() => _fakeCommand.Create(A<CreateFieldModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+                ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -129,12 +129,11 @@ namespace Spice.WebAPI.Tests.Fields
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT field returns \"Conflict\" and correct content type if other field with specified name already exists")]
-        public async Task PutFieldReturnsConflictIfNewNameConflictsWithExistingFieldName()
+        [TestCase(TestName = "PUT field returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutFieldReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored))
-                .Throws(new FieldWithNameAlreadyExistsException("Field A"));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -145,11 +144,11 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT field returns \"Not Found\" and correct content type if field was not found")]
+        [TestCase(TestName = "PUT field returns \"Not Found\" and correct content type if field does not exist")]
         public async Task PutFieldReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Returns(Task.FromResult<Field>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -190,7 +189,7 @@ namespace Spice.WebAPI.Tests.Fields
         }
 
         [TestCase(TestName = "DELETE field returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        public async Task DeleteFieldReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);

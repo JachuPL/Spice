@@ -5,7 +5,7 @@ using Spice.AutoMapper;
 namespace Spice.Application.Tests.Common
 {
     [TestFixture]
-    public class AutoMapperTests
+    internal sealed class AutoMapperTests
     {
         [TestCase(TestName = "AutoMapper configuration is valid")]
         public void ConfigurationIsValid()

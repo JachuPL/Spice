@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Interfaces;
-using Spice.Application.Plants.Models;
+using Spice.Application.Common.Exceptions;
+using Spice.Application.Plants.Nutrients.Interfaces;
+using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
-using Spice.ViewModels.Plants.AdministeredNutrients;
+using Spice.ViewModels.Common;
+using Spice.ViewModels.Plants.Nutrients;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,6 +32,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult<IEnumerable<AdministeredNutrientsIndexViewModel>>> Get([FromRoute] Guid plantId)
         {
             IEnumerable<AdministeredNutrient> administeredNutrients = await _queries.GetByPlant(plantId);
+            if (administeredNutrients is null)
+                return NotFound();
+
             return Ok(_mapper.Map<IEnumerable<AdministeredNutrientsIndexViewModel>>(administeredNutrients));
         }
 
@@ -59,26 +62,13 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
                 return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientApplicationDateBeforePlantDateException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -100,26 +90,13 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<UpdateAdministeredNutrientViewModel>(administeredNutrient));
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientApplicationDateBeforePlantDateException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -135,16 +112,11 @@ namespace Spice.WebAPI.Controllers.Plants
         [HttpGet("sum")]
         public async Task<ActionResult<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>> GetSummary([FromRoute] Guid plantId)
         {
-            try
-            {
-                IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrient = await _queries.Sum(plantId);
-
-                return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
-            }
-            catch (PlantDoesNotExistException)
-            {
+            IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrients = await _queries.Sum(plantId);
+            if (administeredNutrients is null)
                 return NotFound();
-            }
+
+            return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrients));
         }
     }
 }

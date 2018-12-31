@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Spice.Application.Fields;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
+using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -53,17 +54,20 @@ namespace Spice.Application.Tests.Fields
             }
         }
 
-        [TestCase(TestName = "Get by id query on fields returns null if field was not found")]
+        [TestCase(TestName = "Get by id query on fields returns null if field does not exist")]
         public async Task GetFieldReturnsNullWhenNotFound()
         {
+            // Given
+            Guid fieldId = Guid.NewGuid();
+
             // When
-            Field field = await _queries.Get(Guid.NewGuid());
+            Field field = await _queries.Get(fieldId);
 
             // Then
             field.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by id query on fields returns field if found")]
+        [TestCase(TestName = "Get by id query on fields returns field and plants growing there")]
         public async Task GetFieldReturnsFieldWhenFound()
         {
             // Given
@@ -74,6 +78,7 @@ namespace Spice.Application.Tests.Fields
 
             // Then
             field.Should().NotBeNull();
+            field.Plants.Should().NotBeNullOrEmpty();
         }
 
         private Guid SeedDatabaseForGetByIdTesting()
@@ -81,7 +86,9 @@ namespace Spice.Application.Tests.Fields
             using (var ctx = SetupInMemoryDatabase())
             {
                 Field field = ModelFactory.DomainModel();
+                Plant plant = Plants.ModelFactory.DomainModel(field);
                 ctx.Fields.Add(field);
+                ctx.Plants.Add(plant);
                 ctx.Save();
                 return field.Id;
             }

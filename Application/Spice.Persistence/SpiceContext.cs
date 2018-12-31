@@ -4,6 +4,7 @@ using Spice.Domain;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using Spice.Persistence.Configurations;
+using Spice.Persistence.Configurations.Plants;
 using System.Threading.Tasks;
 
 namespace Spice.Persistence
