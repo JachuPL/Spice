@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Spice.ViewModels.Plants.Nutrients.Validators;
 
-namespace Spice.WebAPI.Tests.Plants.Validators
+namespace Spice.WebAPI.Tests.Plants.Nutrients.Validators
 {
     [TestFixture]
     internal sealed class CreateAdministeredNutrientViewModelValidatorTests

@@ -8,7 +8,7 @@ using Spice.Application.Plants.Models;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
-using Spice.WebAPI.Tests.Plants.Factories.Plants;
+using Spice.WebAPI.Tests.Plants.Factories;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Spice.WebAPI.Tests.Plants
 {
     [TestFixture]
-    internal sealed class PlantsIntegrationTests : AbstractIntegrationTestsBaseFixture
+    internal sealed class IntegrationTests : AbstractIntegrationTestsBaseFixture
     {
         private IQueryPlants _fakeQuery;
         private ICommandPlants _fakeCommand;
