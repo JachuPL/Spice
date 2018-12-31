@@ -32,6 +32,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
         [TestCase(-1, TestName = "Update Plant Event Validator should have error for negative numeric value as type")]
         [TestCase(999, TestName = "Update Plant Event Validator should have error for any other numeric value as type")]
         [TestCase(EventTypeViewModel.Moving, TestName = "Update Plant Event Validator should have error for Moving type")]
+        [TestCase(EventTypeViewModel.Start, TestName = "Update Plant Event Validator should have error for Start type")]
         public void ValidatorShouldHaveErrorWhenTypeIsInvalid(EventTypeViewModel value)
         {
             Validator.ShouldHaveValidationErrorFor(x => x.Type, value);
