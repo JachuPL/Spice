@@ -2,9 +2,9 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Nutrients.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
@@ -151,12 +151,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if administration date is earlier than planting date")]
-        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfAdministrationDateIsEarlierThanPlantingDate()
+        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientAdministrationDateBeforePlantDateException());
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -228,12 +228,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if administration date is earlier than planting date")]
-        public async Task PutAdministeredPlantNutrientReturnsConflictIfAdministrationDateIsEarlierThanPlantingDate()
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutAdministeredPlantNutrientReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientAdministrationDateBeforePlantDateException());
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());

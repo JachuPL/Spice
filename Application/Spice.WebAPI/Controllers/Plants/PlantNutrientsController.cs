@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Nutrients.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
@@ -77,7 +77,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (NutrientAdministrationDateBeforePlantDateException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {
@@ -118,7 +118,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (NutrientAdministrationDateBeforePlantDateException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {
