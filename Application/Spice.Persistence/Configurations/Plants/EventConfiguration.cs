@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Spice.Domain.Plants.Events;
 
-namespace Spice.Persistence.Configurations
+namespace Spice.Persistence.Configurations.Plants
 {
     internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
     {
