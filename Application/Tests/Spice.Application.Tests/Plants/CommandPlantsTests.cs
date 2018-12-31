@@ -157,14 +157,14 @@ namespace Spice.Application.Tests.Plants
         public async Task UpdatePlantReturnsPlantOnSuccess()
         {
             // Given
-            Field field = Fields.ModelFactory.DomainModel();
-            Guid fieldId = SeedDatabase(field);
-            Domain.Species species = Species.ModelFactory.DomainModel();
-            Guid speciesId = SeedDatabase(species);
-            Plant plant = ModelFactory.DomainModel(field, species, 13, 37);
+            Field newField = Fields.ModelFactory.DomainModel();
+            Guid newFieldId = SeedDatabase(newField);
+            Domain.Species newSpecies = Species.ModelFactory.DomainModel();
+            Guid newSpeciesId = SeedDatabase(newSpecies);
+            Plant plant = ModelFactory.DomainModel(row: 13, col: 37);
             Guid plantId = SeedDatabase(plant);
 
-            UpdatePlantModel model = ModelFactory.UpdateModel(plantId, fieldId, speciesId);
+            UpdatePlantModel model = ModelFactory.UpdateModel(plantId, newFieldId, newSpeciesId);
 
             // When
             plant = await _commands.Update(model);
@@ -173,11 +173,13 @@ namespace Spice.Application.Tests.Plants
             plant.Should().NotBeNull();
             plant.Id.Should().Be(plantId);
             plant.Name.Should().Contain("Red");
-            plant.Field.Should().NotBeNull();
+            plant.Field.Should().Be(newField);
+            plant.Species.Should().Be(newSpecies);
             plant.Column.Should().Be(0);
             plant.Row.Should().Be(0);
             plant.Planted.Day.Should().Be(DateTime.Now.Day);
             plant.State.Should().Be(PlantState.Healthy);
+            plant.Events.Should().NotBeNullOrEmpty();
         }
 
         [TestCase(TestName = "Delete plant succeeds")]
