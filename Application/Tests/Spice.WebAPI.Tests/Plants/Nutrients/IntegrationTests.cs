@@ -256,14 +256,15 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         public async Task GetSumOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(A.Fake<ResourceNotFoundException>());
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<AdministeredPlantNutrientsSummaryModel>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 

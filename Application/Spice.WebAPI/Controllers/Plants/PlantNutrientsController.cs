@@ -112,16 +112,11 @@ namespace Spice.WebAPI.Controllers.Plants
         [HttpGet("sum")]
         public async Task<ActionResult<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>> GetSummary([FromRoute] Guid plantId)
         {
-            try
-            {
-                IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrient = await _queries.Sum(plantId);
+            IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrients = await _queries.Sum(plantId);
+            if (administeredNutrients is null)
+                return NotFound();
 
-                return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
-            }
-            catch (Exception ex) when (ex is ResourceNotFoundException)
-            {
-                return NotFound(new ErrorViewModel(ex));
-            }
+            return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrients));
         }
     }
 }
