@@ -74,7 +74,7 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task<IEnumerable<Event>>> queryEvents = async () => await _queries.GetByPlant(plantId);
 
             // Then
-            queryEvents.Should().Throw<PlantDoesNotExistException>();
+            queryEvents.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get by plant id query on plant events returns null if event has not occured on plant")]
@@ -101,7 +101,7 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task<Event>> queryForData = async () => await _queries.Get(plantId, id);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            queryForData.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get by plant id query on plant events returns plant event if found")]
@@ -142,7 +142,7 @@ namespace Spice.Application.Tests.Plants.Events
                 await _queries.Sum(plantId);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            queryForData.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]

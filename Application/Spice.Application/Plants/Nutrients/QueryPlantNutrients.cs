@@ -28,7 +28,7 @@ namespace Spice.Application.Plants.Nutrients
         {
             Plant plant = await GetPlantById(id);
             if (plant is null)
-                throw new PlantDoesNotExistException(id);
+                throw new PlantNotFoundException(id);
 
             return plant.AdministeredNutrients;
         }
@@ -44,7 +44,7 @@ namespace Spice.Application.Plants.Nutrients
         {
             Plant plant = await GetPlantById(plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(id);
+                throw new PlantNotFoundException(id);
 
             return plant.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
@@ -54,7 +54,7 @@ namespace Spice.Application.Plants.Nutrients
             Plant plant = await GetPlantById(plantId);
 
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             return plant.AdministeredNutrients.GroupBy(x => x.Nutrient)
                 .Select(x => new AdministeredPlantNutrientsSummaryModel()

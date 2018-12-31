@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Fields.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Fields.Interfaces;
 using Spice.Application.Fields.Models;
 using Spice.Domain;
+using Spice.ViewModels.Common;
 using Spice.ViewModels.Fields;
 using System;
 using System.Collections.Generic;
@@ -58,12 +59,9 @@ namespace Spice.WebAPI.Controllers
                 Guid fieldId = await _commands.Create(createFieldModel);
                 return CreatedAtRoute(nameof(GetField), new { id = fieldId }, null);
             }
-            catch (FieldWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -85,12 +83,9 @@ namespace Spice.WebAPI.Controllers
 
                 return Ok(_mapper.Map<FieldDetailsViewModel>(field));
             }
-            catch (FieldWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 

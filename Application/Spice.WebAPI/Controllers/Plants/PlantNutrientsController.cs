@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Nutrients.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
+using Spice.ViewModels.Common;
 using Spice.ViewModels.Plants.Nutrients;
 using System;
 using System.Collections.Generic;
@@ -63,26 +62,13 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
                 return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientAdministrationDateBeforePlantDateException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -104,26 +90,13 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<UpdateAdministeredNutrientViewModel>(administeredNutrient));
             }
-            catch (PlantDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return NotFound(new ErrorViewModel(ex));
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientAdministrationDateBeforePlantDateException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -145,9 +118,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
             }
-            catch (PlantDoesNotExistException)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return NotFound();
+                return NotFound(new ErrorViewModel(ex));
             }
         }
     }

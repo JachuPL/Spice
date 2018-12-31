@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Species.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
 using Spice.Domain.Plants;
+using Spice.ViewModels.Common;
 using Spice.ViewModels.Species;
 using System;
 using System.Collections.Generic;
@@ -58,12 +59,9 @@ namespace Spice.WebAPI.Controllers
                 Guid speciesId = await _commands.Create(createSpeciesModel);
                 return CreatedAtRoute(nameof(GetSpecies), new { id = speciesId }, null);
             }
-            catch (SpeciesWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -85,12 +83,9 @@ namespace Spice.WebAPI.Controllers
 
                 return Ok(_mapper.Map<SpeciesDetailsViewModel>(species));
             }
-            catch (SpeciesWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 

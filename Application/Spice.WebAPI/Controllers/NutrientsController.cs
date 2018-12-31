@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Nutrients.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Application.Nutrients.Models;
 using Spice.Domain;
+using Spice.ViewModels.Common;
 using Spice.ViewModels.Nutrients;
 using System;
 using System.Collections.Generic;
@@ -58,12 +59,9 @@ namespace Spice.WebAPI.Controllers
                 Guid NutrientId = await _commands.Create(createNutrientModel);
                 return CreatedAtRoute(nameof(GetNutrient), new { id = NutrientId }, null);
             }
-            catch (NutrientWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 
@@ -85,19 +83,9 @@ namespace Spice.WebAPI.Controllers
 
                 return Ok(_mapper.Map<NutrientDetailsViewModel>(Nutrient));
             }
-            catch (NutrientWithNameAlreadyExistsException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
-            }
-            catch (NutrientAdministeredToAPlantException ex)
-            {
-                return Conflict(new
-                {
-                    Error = ex.Message
-                });
+                return Conflict(new ErrorViewModel(ex));
             }
         }
 

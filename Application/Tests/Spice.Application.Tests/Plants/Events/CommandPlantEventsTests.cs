@@ -40,7 +40,7 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task> createPlant = async () => await _commands.Create(Guid.NewGuid(), model);
 
             // Then
-            createPlant.Should().Throw<PlantDoesNotExistException>();
+            createPlant.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Create plant event throws exception if occurence date is earlier than plant date")]
@@ -99,7 +99,7 @@ namespace Spice.Application.Tests.Plants.Events
             Func<Task> updateEvent = async () => await _commands.Update(Guid.NewGuid(), model);
 
             // Then
-            updateEvent.Should().Throw<PlantDoesNotExistException>();
+            updateEvent.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Update plant event throws exception if occurence date is earlier than plant date")]

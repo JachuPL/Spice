@@ -29,11 +29,11 @@ namespace Spice.Application.Plants.Nutrients
         {
             Plant plant = await _database.Plants.FindAsync(plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             Nutrient nutrient = await _database.Nutrients.FindAsync(model.NutrientId);
             if (nutrient is null)
-                throw new NutrientDoesNotExistException(model.NutrientId);
+                throw new NutrientNotFoundException(model.NutrientId);
 
             if (model.Date < plant.Planted)
                 throw new NutrientAdministrationDateBeforePlantDateException();
@@ -52,7 +52,7 @@ namespace Spice.Application.Plants.Nutrients
                 .Include(x => x.AdministeredNutrients)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             AdministeredNutrient administeredNutrient =
                 plant.AdministeredNutrients.FirstOrDefault(x => x.Id == model.Id);
@@ -61,7 +61,7 @@ namespace Spice.Application.Plants.Nutrients
 
             Nutrient nutrient = await _database.Nutrients.FindAsync(model.NutrientId);
             if (nutrient is null)
-                throw new NutrientDoesNotExistException(model.NutrientId);
+                throw new NutrientNotFoundException(model.NutrientId);
 
             if (model.Date < plant.Planted)
                 throw new NutrientAdministrationDateBeforePlantDateException();

@@ -2,9 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Nutrients.Exceptions;
-using Spice.Application.Plants.Exceptions;
-using Spice.Application.Plants.Nutrients.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
@@ -119,44 +117,28 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if plant does not exist")]
-        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfPlantDoesNotExist()
+        [TestCase(TestName = "POST administered plant nutrient returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task PostNewAdministeredPlantNutrientReturnsNotFoundIfResourceNotFoundExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+                .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if nutrient does not exist")]
-        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfNutrientDoesNotExist()
+        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "POST administered plant nutrient returns \"Conflict\" and correct content type if administration date is earlier than planting date")]
-        public async Task PostNewAdministeredPlantNutrientReturnsConflictIfAdministrationDateIsEarlierThanPlantingDate()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientAdministrationDateBeforePlantDateException());
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -196,50 +178,18 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if plant does not exist")]
-        public async Task PutAdministeredPlantNutrientReturnsConflictIfPlantDoesNotExistById()
+        [TestCase(TestName = "PUT administered plant nutrient returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task PutAdministeredPlantNutrientReturnsNotFoundIfResourceNotFoundExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+                .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if nutrient does not exist")]
-        public async Task PutAdministeredPlantNutrientReturnsConflictIfNutrientDoesNotExistById()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "PUT administered plant nutrient returns \"Conflict\" and correct content type if administration date is earlier than planting date")]
-        public async Task PutAdministeredPlantNutrientReturnsConflictIfAdministrationDateIsEarlierThanPlantingDate()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored))
-                .Throws(new NutrientAdministrationDateBeforePlantDateException());
-
-            // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdateAdministeredNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
@@ -302,18 +252,18 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if plant does not exist")]
-        public async Task GetSumOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
+        [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task GetSumOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(A.Fake<ResourceNotFoundException>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 

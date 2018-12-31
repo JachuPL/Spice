@@ -2,11 +2,9 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Fields.Exceptions;
-using Spice.Application.Plants.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
-using Spice.Application.Species.Exceptions;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
@@ -86,12 +84,11 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if plant exists at specific coordinates")]
-        public async Task PostNewPlantReturnsConflictIfPlantExistsAtSpecificCoordinates()
+        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewPlantReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new PlantExistsAtCoordinatesException(0, 0));
+            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -102,34 +99,18 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if field does not exist")]
-        public async Task PostNewPlantReturnsConflictIfFieldDoesNotExistById()
+        [TestCase(TestName = "POST plant returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task PostNewPlantReturnsNotFoundIfResourceNotFoundExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "POST plant returns \"Conflict\" and correct content type if species does not exist")]
-        public async Task PostNewPlantReturnsConflictIfSpeciesDoesNotExistById()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
@@ -163,12 +144,11 @@ namespace Spice.WebAPI.Tests.Plants
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if other plant at specified coordinates already exists")]
-        public async Task PutPlantReturnsConflictIfNewCoordinatesConflictWithExistingPlant()
+        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutPlantReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new PlantExistsAtCoordinatesException(0, 0));
+            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -179,34 +159,18 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if field does not exist")]
-        public async Task PutPlantReturnsConflictIfFieldDoesNotExistById()
+        [TestCase(TestName = "PUT plant returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task PutPlantReturnsNotFoundIfResourceNotFoundExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "PUT plant returns \"Conflict\" and correct content type if species does not exist")]
-        public async Task PutPlantReturnsConflictIfSpeciesDoesNotExistById()
-        {
-            // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
-
-            // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
