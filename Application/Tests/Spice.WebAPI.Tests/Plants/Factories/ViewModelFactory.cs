@@ -1,7 +1,7 @@
 ﻿using Spice.ViewModels.Plants;
 using System;
 
-namespace Spice.WebAPI.Tests.Plants.Factories.Plants
+namespace Spice.WebAPI.Tests.Plants.Factories
 {
     internal static class ViewModelFactory
     {

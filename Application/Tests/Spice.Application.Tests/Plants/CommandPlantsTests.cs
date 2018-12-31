@@ -159,7 +159,7 @@ namespace Spice.Application.Tests.Plants
             // Given
             Field field = Fields.ModelFactory.DomainModel();
             Guid fieldId = SeedDatabase(field);
-            Domain.Plants.Species species = Species.ModelFactory.DomainModel();
+            Domain.Species species = Species.ModelFactory.DomainModel();
             Guid speciesId = SeedDatabase(species);
             Plant plant = ModelFactory.DomainModel(field, species, 13, 37);
             Guid plantId = SeedDatabase(plant);

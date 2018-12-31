@@ -4,7 +4,7 @@ using Spice.ViewModels.Plants.Events;
 using Spice.ViewModels.Plants.Events.Validators;
 using System;
 
-namespace Spice.WebAPI.Tests.Plants.Validators
+namespace Spice.WebAPI.Tests.Plants.Events.Validators
 {
     [TestFixture]
     internal sealed class UpdatePlantEventViewModelValidatorTests

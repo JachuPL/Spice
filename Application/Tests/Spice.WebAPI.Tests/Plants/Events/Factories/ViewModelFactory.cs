@@ -1,7 +1,7 @@
 ﻿using Spice.ViewModels.Plants.Events;
 using System;
 
-namespace Spice.WebAPI.Tests.Plants.Factories.Events
+namespace Spice.WebAPI.Tests.Plants.Events.Factories
 {
     internal static class ViewModelFactory
     {

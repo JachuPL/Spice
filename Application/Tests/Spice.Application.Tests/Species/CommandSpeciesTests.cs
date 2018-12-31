@@ -32,7 +32,7 @@ namespace Spice.Application.Tests.Species
         public void CreateSpeciesThrowsExceptionOnNameConflict()
         {
             // Given
-            Domain.Plants.Species existingSpecies = ModelFactory.DomainModel();
+            Domain.Species existingSpecies = ModelFactory.DomainModel();
             SeedDatabase(existingSpecies);
             CreateSpeciesModel model = ModelFactory.CreationModel();
 
@@ -60,9 +60,9 @@ namespace Spice.Application.Tests.Species
         public void UpdateSpeciesThrowsExceptionOnNameConflict()
         {
             // Given
-            Domain.Plants.Species existingSpecies = ModelFactory.DomainModel();
+            Domain.Species existingSpecies = ModelFactory.DomainModel();
             SeedDatabase(existingSpecies);
-            Domain.Plants.Species updatedSpecies = ModelFactory.DomainModel("Species B");
+            Domain.Species updatedSpecies = ModelFactory.DomainModel("Species B");
             Guid updatedSpeciesId = SeedDatabase(updatedSpecies);
             UpdateSpeciesModel model = ModelFactory.UpdateModel(updatedSpeciesId);
 
@@ -80,7 +80,7 @@ namespace Spice.Application.Tests.Species
             UpdateSpeciesModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Domain.Plants.Species species = await _commands.Update(model);
+            Domain.Species species = await _commands.Update(model);
 
             // Then
             species.Should().BeNull();
@@ -90,7 +90,7 @@ namespace Spice.Application.Tests.Species
         public async Task UpdateSpeciesReturnsSpeciesOnSuccess()
         {
             // Given
-            Domain.Plants.Species species = ModelFactory.DomainModel("Basil");
+            Domain.Species species = ModelFactory.DomainModel("Basil");
             Guid speciesId = SeedDatabase(species);
             UpdateSpeciesModel model = ModelFactory.UpdateModel(speciesId);
 
@@ -112,7 +112,7 @@ namespace Spice.Application.Tests.Species
             await _commands.Delete(speciesId);
 
             // Then
-            Domain.Plants.Species species = await DatabaseContext.Species.FindAsync(speciesId);
+            Domain.Species species = await DatabaseContext.Species.FindAsync(speciesId);
             species.Should().BeNull();
         }
     }

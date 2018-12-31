@@ -42,7 +42,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task GetListReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Domain.Plants.Species>>());
+            A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Domain.Species>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
@@ -57,7 +57,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task GetSpeciesReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Domain.Plants.Species>(null));
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Domain.Species>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -72,7 +72,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task GetSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Plants.Species>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -147,7 +147,7 @@ namespace Spice.WebAPI.Tests.Species
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored))
-                .Returns(Task.FromResult<Domain.Plants.Species>(null));
+                .Returns(Task.FromResult<Domain.Species>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -162,7 +162,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task PutSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Plants.Species>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

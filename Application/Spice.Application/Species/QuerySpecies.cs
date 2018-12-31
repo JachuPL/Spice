@@ -16,12 +16,12 @@ namespace Spice.Application.Species
             _database = database;
         }
 
-        public async Task<IEnumerable<Domain.Plants.Species>> GetAll()
+        public async Task<IEnumerable<Domain.Species>> GetAll()
         {
             return await _database.Species.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Domain.Plants.Species> Get(Guid id)
+        public async Task<Domain.Species> Get(Guid id)
         {
             return await _database.Species
                 .Include(x => x.Plants)
