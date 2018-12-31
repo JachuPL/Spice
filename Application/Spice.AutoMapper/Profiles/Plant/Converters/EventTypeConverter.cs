@@ -37,6 +37,9 @@ namespace Spice.AutoMapper.Profiles.Plant.Converters
                 case EventType.Start:
                     return EventTypeViewModel.Start;
 
+                case EventType.Nutrition:
+                    return EventTypeViewModel.Nutrition;
+
                 default:
                     return EventTypeViewModel.Insects;
             }

@@ -30,6 +30,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
                 case EventTypeViewModel.OverWatering:
                 case EventTypeViewModel.Pests:
                 case EventTypeViewModel.UnderWatering:
+                case EventTypeViewModel.Nutrition:
                     return true;
 
                 default:

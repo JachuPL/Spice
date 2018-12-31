@@ -10,6 +10,7 @@
         OverWatering,
         Moving,
         Growth,
-        Start
+        Start,
+        Nutrition
     }
 }

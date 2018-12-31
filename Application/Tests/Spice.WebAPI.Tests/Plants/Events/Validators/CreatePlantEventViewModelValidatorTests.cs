@@ -24,6 +24,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
         [TestCase(EventTypeViewModel.Insects, TestName = "Create Plant Event Validator should not have error for Insects type")]
         [TestCase(EventTypeViewModel.Pests, TestName = "Create Plant Event Validator should not have error for Pests type")]
         [TestCase(EventTypeViewModel.UnderWatering, TestName = "Create Plant Event Validator should not have error for Underwatering type")]
+        [TestCase(EventTypeViewModel.Nutrition, TestName = "Create Plant Event Validator should not have error for Nutrition type")]
         public void ValidatorShouldNotHaveErrorWhenTypeIsValid(EventTypeViewModel value)
         {
             Validator.ShouldNotHaveValidationErrorFor(x => x.Type, value);
