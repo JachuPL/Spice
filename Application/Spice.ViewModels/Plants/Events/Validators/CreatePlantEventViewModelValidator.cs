@@ -27,7 +27,6 @@ namespace Spice.ViewModels.Plants.Events.Validators
                 case EventTypeViewModel.Fungi:
                 case EventTypeViewModel.Growth:
                 case EventTypeViewModel.Insects:
-                case EventTypeViewModel.Moving:
                 case EventTypeViewModel.OverWatering:
                 case EventTypeViewModel.Pests:
                 case EventTypeViewModel.UnderWatering:
