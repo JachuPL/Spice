@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
@@ -69,7 +69,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {
@@ -103,7 +103,7 @@ namespace Spice.WebAPI.Controllers.Plants
                     Error = ex.Message
                 });
             }
-            catch (EventOccurenceDateBeforePlantDateOrInTheFutureException ex)
+            catch (Exception ex) when (ex is ResourceStateException)
             {
                 return Conflict(new
                 {

@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Plants.Events.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Exceptions;
@@ -131,12 +131,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date or in the future")]
-        public async Task PostNewPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDateOrInTheFuture()
+        [TestCase(TestName = "POST plant event returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewPlantEventReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored))
-                .Throws(new EventOccurenceDateBeforePlantDateOrInTheFutureException());
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -192,12 +192,12 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if occurence date is earlier than planting date or in the future")]
-        public async Task PutPlantEventReturnsConflictIfOccurenceDateIsEarlierThanPlantingDateOrInTheFuture()
+        [TestCase(TestName = "PUT plant event returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutPlantEventReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored))
-                .Throws(new EventOccurenceDateBeforePlantDateOrInTheFutureException());
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidCreationModel());
