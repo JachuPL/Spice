@@ -269,14 +269,15 @@ namespace Spice.WebAPI.Tests.Plants.Events
         public async Task GetSumOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(A.Fake<ResourceNotFoundException>());
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<OccuredPlantEventsSummaryModel>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
