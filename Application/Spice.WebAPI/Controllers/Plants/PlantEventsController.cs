@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
-using Spice.Application.Plants.Exceptions;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.Events;
 using System;
@@ -62,9 +61,9 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid eventId = await _commands.Create(plantId, createEventModel);
                 return CreatedAtRoute(nameof(GetEvent), new { plantId = plantId, id = eventId }, null);
             }
-            catch (PlantNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
@@ -96,9 +95,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
             }
-            catch (PlantNotFoundException ex)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return Conflict(new
+                return NotFound(new
                 {
                     Error = ex.Message
                 });
@@ -130,9 +129,12 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(Event));
             }
-            catch (PlantNotFoundException)
+            catch (Exception ex) when (ex is ResourceNotFoundException)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Error = ex.Message
+                });
             }
         }
     }
