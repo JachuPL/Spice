@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Spice.Application.Fields.Exceptions;
 using Spice.Application.Plants;
@@ -76,7 +77,7 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<SpeciesNotFoundException>();
         }
 
-        [TestCase(TestName = "Create plant returns Guid on success")]
+        [TestCase(TestName = "Create plant creates event and returns Guid on success")]
         public async Task CreatePlantReturnsGuidOnSuccess()
         {
             // Given
@@ -86,9 +87,12 @@ namespace Spice.Application.Tests.Plants
 
             // When
             Guid id = await _commands.Create(model);
+            Plant createdPlant =
+                await DatabaseContext.Plants.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == id);
 
             // Then
             id.Should().NotBe(Guid.Empty);
+            createdPlant.Events.Should().NotBeNullOrEmpty();
         }
 
         [TestCase(TestName = "Update plant throws exception if plant exists on same fields and coordinates")]

@@ -48,6 +48,15 @@ namespace Spice.Application.Plants
             plant.Species = species;
             species.Plants.Add(plant);
 
+            Event @event = new Event()
+            {
+                Plant = plant,
+                Type = EventType.Start,
+                Description = $"{plant.Name} was planted on field {plant.Field.Name}. (Generated automatically)",
+                Occured = DateTime.Now
+            };
+            plant.Events.Add(@event);
+
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
 
