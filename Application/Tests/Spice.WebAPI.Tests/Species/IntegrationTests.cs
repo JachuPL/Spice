@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Species.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
 using Spice.ViewModels.Species;
@@ -83,12 +83,11 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST species returns \"Conflict\" and correct content type if species with specified name or latin name exists")]
-        public async Task PostNewSpeciesReturnsConflictIfSpeciesExistsWithSpecifiedNameOrLatinName()
+        [TestCase(TestName = "POST species returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewSpeciesReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored))
-                .Throws(new SpeciesWithNameAlreadyExistsException("Species A"));
+            A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -128,12 +127,11 @@ namespace Spice.WebAPI.Tests.Species
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT species returns \"Conflict\" and correct content type if species with name or latin name already exists")]
-        public async Task PutSpeciesReturnsConflictIfNewNameConflictsWithExistingSpeciesNameOrLatinName()
+        [TestCase(TestName = "PUT species returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutSpeciesReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored))
-                .Throws(new SpeciesWithNameAlreadyExistsException("Species A"));
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
