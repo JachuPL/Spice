@@ -8,6 +8,7 @@ using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,6 +43,20 @@ namespace Spice.Application.Plants.Nutrients
             administeredNutrient.Plant = plant;
             administeredNutrient.Nutrient = nutrient;
             await _database.AdministeredNutrients.AddAsync(administeredNutrient);
+
+            if (model.CreateEvent)
+            {
+                Event @event = new Event()
+                {
+                    Plant = plant,
+                    Type = EventType.Nutrition,
+                    Description = $"Given {model.Amount} {nutrient.DosageUnits} of {nutrient.Name} to {plant.Name}. (Generated automatically)",
+                    Occured = model.Date
+                };
+                plant.Events.Add(@event);
+                _database.Plants.Update(plant);
+            }
+
             await _database.SaveAsync();
             return administeredNutrient.Id;
         }
