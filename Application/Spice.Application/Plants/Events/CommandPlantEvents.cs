@@ -28,7 +28,7 @@ namespace Spice.Application.Plants.Events
         {
             Plant plant = await _database.Plants.FindAsync(plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             if (model.Occured < plant.Planted || DateTime.Now < model.Occured)
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
@@ -45,7 +45,7 @@ namespace Spice.Application.Plants.Events
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             Event @event =
                 plant.Events.FirstOrDefault(x => x.Id == model.Id);

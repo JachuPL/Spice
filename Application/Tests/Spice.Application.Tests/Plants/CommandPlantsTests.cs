@@ -31,7 +31,7 @@ namespace Spice.Application.Tests.Plants
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create plant throws exception if plant exists on same fields and coordinates")]
+        [TestCase(TestName = "Create plant throws exception if plant exists on same field and coordinates")]
         public void CreatePlantThrowsExceptionIfPlantExistsAtCoordinates()
         {
             // Given
@@ -47,7 +47,7 @@ namespace Spice.Application.Tests.Plants
             createPlant.Should().Throw<PlantExistsAtCoordinatesException>();
         }
 
-        [TestCase(TestName = "Create plant throws exception if field with specified id does not exist")]
+        [TestCase(TestName = "Create plant throws exception if field does not exist")]
         public void CreatePlantThrowsExceptionIfFieldDoesNotExist()
         {
             // Given
@@ -58,10 +58,10 @@ namespace Spice.Application.Tests.Plants
             Func<Task> createPlant = async () => await _commands.Create(model);
 
             // Then
-            createPlant.Should().Throw<FieldDoesNotExistException>();
+            createPlant.Should().Throw<FieldNotFoundException>();
         }
 
-        [TestCase(TestName = "Create plant throws exception if species with specified id does not exist")]
+        [TestCase(TestName = "Create plant throws exception if species does not exist")]
         public void CreatePlantThrowsExceptionIfSpeciesDoesNotExist()
         {
             // Given
@@ -73,7 +73,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> createPlant = async () => await _commands.Create(model);
 
             // Then
-            createPlant.Should().Throw<SpeciesDoesNotExistException>();
+            createPlant.Should().Throw<SpeciesNotFoundException>();
         }
 
         [TestCase(TestName = "Create plant returns Guid on success")]
@@ -108,7 +108,7 @@ namespace Spice.Application.Tests.Plants
             updatePlant.Should().Throw<PlantExistsAtCoordinatesException>();
         }
 
-        [TestCase(TestName = "Update plant throws exception if field with specified id does not exist")]
+        [TestCase(TestName = "Update plant throws exception if field does not exist")]
         public void UpdatePlantThrowsExceptionIfFieldDoesNotExist()
         {
             // Given
@@ -120,10 +120,10 @@ namespace Spice.Application.Tests.Plants
             Func<Task> updatePlant = async () => await _commands.Update(model);
 
             // Then
-            updatePlant.Should().Throw<FieldDoesNotExistException>();
+            updatePlant.Should().Throw<FieldNotFoundException>();
         }
 
-        [TestCase(TestName = "Update plant throws exception if species with specified id does not exist")]
+        [TestCase(TestName = "Update plant throws exception if species does not exist")]
         public void UpdatePlantThrowsExceptionIfSpeciesDoesNotExist()
         {
             // Given
@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> updatePlant = async () => await _commands.Update(model);
 
             // Then
-            updatePlant.Should().Throw<SpeciesDoesNotExistException>();
+            updatePlant.Should().Throw<SpeciesNotFoundException>();
         }
 
         [TestCase(TestName = "Update plant returns null if plant does not exist")]
@@ -159,7 +159,7 @@ namespace Spice.Application.Tests.Plants
             // Given
             Field field = Fields.ModelFactory.DomainModel();
             Guid fieldId = SeedDatabase(field);
-            Domain.Plants.Species species = Species.ModelFactory.DomainModel();
+            Domain.Species species = Species.ModelFactory.DomainModel();
             Guid speciesId = SeedDatabase(species);
             Plant plant = ModelFactory.DomainModel(field, species, 13, 37);
             Guid plantId = SeedDatabase(plant);
@@ -181,7 +181,7 @@ namespace Spice.Application.Tests.Plants
         }
 
         [TestCase(TestName = "Delete plant succeeds")]
-        public async Task DeletePlantShouldSucceed()
+        public async Task DeletePlantSucceeds()
         {
             // Given
             Guid id = SeedDatabase(ModelFactory.DomainModel());

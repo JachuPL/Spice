@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Spice.Application.Nutrients.Exceptions;
+using Spice.Application.Common.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Application.Nutrients.Models;
 using Spice.Domain;
@@ -84,15 +84,16 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "POST Nutrient returns \"Conflict\" and correct content type if nutrient with specified name exists")]
-        public async Task PostNewNutrientReturnsConflictIfNutrientExistsWithSpecifiedName()
+        [TestCase(TestName = "POST Nutrient returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PostNewNutrientReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommands.Create(A<CreateNutrientModel>.Ignored))
-                .Throws(new NutrientWithNameAlreadyExistsException("Nutrient A"));
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+                ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -129,15 +130,16 @@ namespace Spice.WebAPI.Tests.Nutrients
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
         }
 
-        [TestCase(TestName = "PUT Nutrient returns \"Conflict\" and correct content type if other nutrient with specified name already exists")]
-        public async Task PutNutrientReturnsConflictIfNewNameConflictsWithExistingNutrientName()
+        [TestCase(TestName = "PUT Nutrient returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task PutNutrientReturnsConflictIfResourceStateExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
-                .Throws(new NutrientWithNameAlreadyExistsException("Nutrient A"));
+                .Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+                ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -145,27 +147,11 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "PUT Nutrient returns \"Conflict\" and correct content type if nutrient was administered to any plant")]
-        public async Task PutNutrientReturnsConflictIfItWasAdministeredToAnyPlant()
-        {
-            // Given
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored))
-                .Throws(new NutrientAlreadyAdministeredToPlantException());
-
-            // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
-
-            // Then
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase(TestName = "PUT Nutrient returns \"Not Found\" and correct content type if nutrient was not found")]
+        [TestCase(TestName = "PUT Nutrient returns \"Not Found\" and correct content type if nutrient does not exist")]
         public async Task PutNutrientReturnsNotFoundAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Throws(new NutrientDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -206,7 +192,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         }
 
         [TestCase(TestName = "DELETE Nutrient returns \"No Content\"")]
-        public async Task DeletePlantReturnsNoContentAndCorrectContentType()
+        public async Task DeleteNutrientReturnsNoContentAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeCommands.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);

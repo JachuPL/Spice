@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using Spice.Application.Plants.Events;
 using Spice.Application.Plants.Events.Models;
-using Spice.Application.Plants.Exceptions;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
@@ -42,7 +41,7 @@ namespace Spice.Application.Tests.Plants.Events
             IEnumerable<Event> events = await _queries.GetByPlant(plantId);
 
             // Then
-            events.Should().NotBeNull();
+            events.Should().NotBeNullOrEmpty();
         }
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
@@ -64,14 +63,17 @@ namespace Spice.Application.Tests.Plants.Events
             return plant.Id;
         }
 
-        [TestCase(TestName = "Get all by plant id query on plant events throws exception if plant does not exist")]
-        public void GetAllByPlantThrowsExceptionIfPlantDoesNotExist()
+        [TestCase(TestName = "Get all by plant id query on plant events returns null if plant does not exist")]
+        public async Task GetAllByPlantReturnsNullIfPlantDoesNotExist()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+
             // When
-            Func<Task<IEnumerable<Event>>> queryEvents = async () => await _queries.GetByPlant(Guid.NewGuid());
+            IEnumerable<Event> query = await _queries.GetByPlant(plantId);
 
             // Then
-            queryEvents.Should().Throw<PlantDoesNotExistException>();
+            query.Should().BeNull();
         }
 
         [TestCase(TestName = "Get by plant id query on plant events returns null if event has not occured on plant")]
@@ -87,14 +89,18 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get by plant id query on plant events throws exception if plant was not found")]
-        public void GetByPlantThrowsExceptionIfPlantDoesNotExist()
+        [TestCase(TestName = "Get by plant id query on plant events returns null if plant does not exist")]
+        public async Task GetByPlantReturnsNullIfPlantDoesNotExist()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+            Guid id = Guid.NewGuid();
+
             // When
-            Func<Task<Event>> queryForData = async () => await _queries.Get(Guid.NewGuid(), Guid.NewGuid());
+            Event @event = await _queries.Get(plantId, id);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            @event.Should().BeNull();
         }
 
         [TestCase(TestName = "Get by plant id query on plant events returns plant event if found")]
@@ -124,15 +130,17 @@ namespace Spice.Application.Tests.Plants.Events
             }
         }
 
-        [TestCase(TestName = "Get summary of occured events by plant id throws exception if plant does not exist")]
-        public void SumEventsThrowExceptionIfPlantDoesNotExist()
+        [TestCase(TestName = "Get summary of occured events by plant id returns null if plant does not exist")]
+        public async Task SumEventsReturnsNullIfPlantDoesNotExist()
         {
+            // Given
+            Guid plantId = Guid.NewGuid();
+
             // When
-            Func<Task<IEnumerable<OccuredPlantEventsSummaryModel>>> queryForData = async () =>
-                await _queries.Sum(Guid.NewGuid());
+            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Sum(plantId);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            eventsSummary.Should().BeNull();
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Domain.Plants;
+using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
 
@@ -140,6 +141,20 @@ namespace Spice.Domain.Tests.Plants
 
             // Then
             plant.AdministeredNutrients.Should().BeSameAs(administeredNutrients);
+        }
+
+        [TestCase(TestName = "Get and Set events collection property works properly")]
+        public void GetAndSetEventsWorksProperly()
+        {
+            // Given
+            Plant plant = new Plant();
+            ICollection<Event> events = new List<Event>();
+
+            // When
+            plant.Events = events;
+
+            // Then
+            plant.Events.Should().BeSameAs(events);
         }
     }
 }

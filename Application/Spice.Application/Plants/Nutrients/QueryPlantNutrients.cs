@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Nutrients.Models;
-using Spice.Application.Plants.Exceptions;
 using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain.Plants;
@@ -27,10 +26,7 @@ namespace Spice.Application.Plants.Nutrients
         public async Task<IEnumerable<AdministeredNutrient>> GetByPlant(Guid id)
         {
             Plant plant = await GetPlantById(id);
-            if (plant is null)
-                throw new PlantDoesNotExistException(id);
-
-            return plant.AdministeredNutrients;
+            return plant?.AdministeredNutrients;
         }
 
         private async Task<Plant> GetPlantById(Guid id)
@@ -43,20 +39,15 @@ namespace Spice.Application.Plants.Nutrients
         public async Task<AdministeredNutrient> Get(Guid plantId, Guid id)
         {
             Plant plant = await GetPlantById(plantId);
-            if (plant is null)
-                throw new PlantDoesNotExistException(id);
 
-            return plant.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
+            return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Sum(Guid plantId)
         {
             Plant plant = await GetPlantById(plantId);
 
-            if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
-
-            return plant.AdministeredNutrients.GroupBy(x => x.Nutrient)
+            return plant?.AdministeredNutrients.GroupBy(x => x.Nutrient)
                 .Select(x => new AdministeredPlantNutrientsSummaryModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),

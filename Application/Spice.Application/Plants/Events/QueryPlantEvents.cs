@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
-using Spice.Application.Plants.Exceptions;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
@@ -28,20 +27,16 @@ namespace Spice.Application.Plants.Events
         {
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
-            if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
 
-            return plant.Events;
+            return plant?.Events;
         }
 
         public async Task<Event> Get(Guid plantId, Guid id)
         {
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
-            if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
 
-            return plant.Events.FirstOrDefault(x => x.Id == id);
+            return plant?.Events.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<IEnumerable<OccuredPlantEventsSummaryModel>> Sum(Guid plantId)
@@ -49,10 +44,7 @@ namespace Spice.Application.Plants.Events
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
 
-            if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
-
-            return plant.Events.GroupBy(x => x.Type)
+            return plant?.Events.GroupBy(x => x.Type)
                 .Select(x => new OccuredPlantEventsSummaryModel()
                 {
                     Type = x.Key,

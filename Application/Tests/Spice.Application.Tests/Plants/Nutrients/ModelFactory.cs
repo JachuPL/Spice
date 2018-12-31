@@ -5,7 +5,7 @@ using System;
 
 namespace Spice.Application.Tests.Plants.Nutrients
 {
-    public static class ModelFactory
+    internal static class ModelFactory
     {
         public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null, DateTime? administeredDate = null)
         {

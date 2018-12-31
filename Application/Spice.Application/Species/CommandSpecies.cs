@@ -22,22 +22,22 @@ namespace Spice.Application.Species
 
         public async Task<Guid> Create(CreateSpeciesModel model)
         {
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name))
+            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName))
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
 
-            Domain.Plants.Species species = _mapper.Map<Domain.Plants.Species>(model);
+            Domain.Species species = _mapper.Map<Domain.Species>(model);
             await _database.Species.AddAsync(species);
             await _database.SaveAsync();
             return species.Id;
         }
 
-        public async Task<Domain.Plants.Species> Update(UpdateSpeciesModel model)
+        public async Task<Domain.Species> Update(UpdateSpeciesModel model)
         {
-            Domain.Plants.Species species = await _database.Species.FindAsync(model.Id);
+            Domain.Species species = await _database.Species.FindAsync(model.Id);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.Id);
+                return null;
 
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
+            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName && x.Id != model.Id))
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
 
             _mapper.Map(model, species);
@@ -48,7 +48,7 @@ namespace Spice.Application.Species
 
         public async Task Delete(Guid id)
         {
-            Domain.Plants.Species species = await _database.Species.FindAsync(id);
+            Domain.Species species = await _database.Species.FindAsync(id);
             if (species is null)
                 return;
 

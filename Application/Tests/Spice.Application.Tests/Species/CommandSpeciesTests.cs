@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spice.Application.Tests.Species
 {
+    [TestFixture]
     internal sealed class CommandSpeciesTests : AbstractInMemoryDatabaseAwareTestFixture
     {
         private CommandSpecies _commands;
@@ -27,11 +28,11 @@ namespace Spice.Application.Tests.Species
             DatabaseContext.Database.EnsureDeleted();
         }
 
-        [TestCase(TestName = "Create Species throws exception if Species with specified name already exists")]
+        [TestCase(TestName = "Create species throws exception if species with specified name already exists")]
         public void CreateSpeciesThrowsExceptionOnNameConflict()
         {
             // Given
-            Domain.Plants.Species existingSpecies = ModelFactory.DomainModel();
+            Domain.Species existingSpecies = ModelFactory.DomainModel();
             SeedDatabase(existingSpecies);
             CreateSpeciesModel model = ModelFactory.CreationModel();
 
@@ -42,7 +43,7 @@ namespace Spice.Application.Tests.Species
             createSpecies.Should().Throw<SpeciesWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Create Species returns Guid on success")]
+        [TestCase(TestName = "Create species returns Guid on success")]
         public async Task CreateSpeciesReturnsGuidOnSuccess()
         {
             // Given
@@ -55,13 +56,13 @@ namespace Spice.Application.Tests.Species
             SpeciesId.Should().NotBe(Guid.Empty);
         }
 
-        [TestCase(TestName = "Update Species throws exception if Species with specified name already exists")]
+        [TestCase(TestName = "Update species throws exception if species with specified name already exists")]
         public void UpdateSpeciesThrowsExceptionOnNameConflict()
         {
             // Given
-            Domain.Plants.Species existingSpecies = ModelFactory.DomainModel();
+            Domain.Species existingSpecies = ModelFactory.DomainModel();
             SeedDatabase(existingSpecies);
-            Domain.Plants.Species updatedSpecies = ModelFactory.DomainModel("Species B");
+            Domain.Species updatedSpecies = ModelFactory.DomainModel("Species B");
             Guid updatedSpeciesId = SeedDatabase(updatedSpecies);
             UpdateSpeciesModel model = ModelFactory.UpdateModel(updatedSpeciesId);
 
@@ -72,24 +73,24 @@ namespace Spice.Application.Tests.Species
             updateSpecies.Should().Throw<SpeciesWithNameAlreadyExistsException>();
         }
 
-        [TestCase(TestName = "Update Species throws exception if Species does not exist")]
-        public void UpdateSpeciesThrowsExceptionIfSpeciesDoesNotExist()
+        [TestCase(TestName = "Update species returns null if species does not exist")]
+        public async Task UpdateSpeciesReturnsNullIfSpeciesDoesNotExist()
         {
             // Given
             UpdateSpeciesModel model = ModelFactory.UpdateModel(Guid.NewGuid());
 
             // When
-            Func<Task> updateSpecies = async () => await _commands.Update(model);
+            Domain.Species species = await _commands.Update(model);
 
             // Then
-            updateSpecies.Should().Throw<SpeciesDoesNotExistException>();
+            species.Should().BeNull();
         }
 
-        [TestCase(TestName = "Update Species returns updated Species on success")]
+        [TestCase(TestName = "Update species returns updated species on success")]
         public async Task UpdateSpeciesReturnsSpeciesOnSuccess()
         {
             // Given
-            Domain.Plants.Species species = ModelFactory.DomainModel("Basil");
+            Domain.Species species = ModelFactory.DomainModel("Basil");
             Guid speciesId = SeedDatabase(species);
             UpdateSpeciesModel model = ModelFactory.UpdateModel(speciesId);
 
@@ -101,8 +102,8 @@ namespace Spice.Application.Tests.Species
             species.Name.Should().Be("Pepper");
         }
 
-        [TestCase(TestName = "Delete Species succeeds")]
-        public async Task DeleteSpecieshouldSucceed()
+        [TestCase(TestName = "Delete species succeeds")]
+        public async Task DeleteSpeciesSucceeds()
         {
             // Given
             Guid speciesId = SeedDatabase(ModelFactory.DomainModel("Species B"));
@@ -111,8 +112,8 @@ namespace Spice.Application.Tests.Species
             await _commands.Delete(speciesId);
 
             // Then
-            Domain.Plants.Species Species = await DatabaseContext.Species.FindAsync(speciesId);
-            Species.Should().BeNull();
+            Domain.Species species = await DatabaseContext.Species.FindAsync(speciesId);
+            species.Should().BeNull();
         }
     }
 }

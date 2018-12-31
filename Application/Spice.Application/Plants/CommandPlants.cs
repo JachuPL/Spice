@@ -29,7 +29,7 @@ namespace Spice.Application.Plants
         {
             Field field = await _database.Fields.FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException(model.FieldId);
+                throw new FieldNotFoundException(model.FieldId);
 
             Plant existingAtCoordinates =
                 await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
@@ -37,9 +37,9 @@ namespace Spice.Application.Plants
             if (existingAtCoordinates != null)
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
-            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.SpeciesId);
+                throw new SpeciesNotFoundException(model.SpeciesId);
 
             Plant plant = _mapper.Map<Plant>(model);
             plant.Field = field;
@@ -63,14 +63,14 @@ namespace Spice.Application.Plants
                 .Include(x => x.Plants)
                 .FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
-                throw new FieldDoesNotExistException(model.FieldId);
+                throw new FieldNotFoundException(model.FieldId);
 
             if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
-            Domain.Plants.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
             if (species is null)
-                throw new SpeciesDoesNotExistException(model.SpeciesId);
+                throw new SpeciesNotFoundException(model.SpeciesId);
 
             _mapper.Map(model, plant);
             plant.Field = field;

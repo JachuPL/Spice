@@ -16,7 +16,7 @@ namespace Spice.Persistence.Configurations
 
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired().IsUnicode();
             builder.Property(x => x.Description).HasMaxLength(500).IsUnicode();
-            builder.Property(x => x.DosageUnits).HasMaxLength(20).IsUnicode();
+            builder.Property(x => x.DosageUnits).IsRequired().HasMaxLength(20).IsUnicode();
 
             builder.HasMany(x => x.AdministeredToPlants).WithOne(x => x.Nutrient).OnDelete(DeleteBehavior.Cascade);
         }
