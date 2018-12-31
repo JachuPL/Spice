@@ -120,7 +120,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<Guid>.Ignored, A<CreatePlantEventModel>.Ignored))
-                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+                .Throws(new PlantNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -181,7 +181,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<Guid>.Ignored, A<UpdatePlantEventModel>.Ignored))
-                .Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+                .Throws(new PlantNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -270,7 +270,7 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetSumOfPlantEventReturnsNotFoundAndCorrectContentTypeIfPlantDoesNotExist()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantDoesNotExistException(Guid.NewGuid()));
+            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Throws(new PlantNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());

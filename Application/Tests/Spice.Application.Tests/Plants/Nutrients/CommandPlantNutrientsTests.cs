@@ -41,7 +41,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(Guid.NewGuid(), model);
 
             // Then
-            createPlant.Should().Throw<PlantDoesNotExistException>();
+            createPlant.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Create administered plant nutrition throws exception if nutrient does not exist")]
@@ -55,7 +55,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
 
             // Then
-            createPlant.Should().Throw<NutrientDoesNotExistException>();
+            createPlant.Should().Throw<NutrientNotFoundException>();
         }
 
         [TestCase(TestName = "Create administered plant nutrition throws exception if administration date is earlier than plant date")]
@@ -101,7 +101,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(Guid.NewGuid(), model);
 
             // Then
-            updatePlant.Should().Throw<PlantDoesNotExistException>();
+            updatePlant.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Update administered plant nutrition throws exception if nutrient does not exist")]
@@ -118,7 +118,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task> updatePlant = async () => await _commands.Update(plantId, model);
 
             // Then
-            updatePlant.Should().Throw<NutrientDoesNotExistException>();
+            updatePlant.Should().Throw<NutrientNotFoundException>();
         }
 
         [TestCase(TestName = "Update administered plant nutrition throws exception if administration date is earlier than plant date")]

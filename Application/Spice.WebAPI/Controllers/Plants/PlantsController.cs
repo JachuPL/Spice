@@ -60,14 +60,14 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid plantId = await _commands.Create(createPlantModel);
                 return CreatedAtRoute(nameof(GetPlant), new { id = plantId }, null);
             }
-            catch (SpeciesDoesNotExistException ex)
+            catch (SpeciesNotFoundException ex)
             {
                 return Conflict(new
                 {
                     Error = ex.Message
                 });
             }
-            catch (FieldDoesNotExistException ex)
+            catch (FieldNotFoundException ex)
             {
                 return Conflict(new
                 {
@@ -101,14 +101,14 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
             }
-            catch (SpeciesDoesNotExistException ex)
+            catch (SpeciesNotFoundException ex)
             {
                 return Conflict(new
                 {
                     Error = ex.Message
                 });
             }
-            catch (FieldDoesNotExistException ex)
+            catch (FieldNotFoundException ex)
             {
                 return Conflict(new
                 {

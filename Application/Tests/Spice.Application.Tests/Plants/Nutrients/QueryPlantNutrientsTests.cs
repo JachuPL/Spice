@@ -74,7 +74,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task<IEnumerable<AdministeredNutrient>>> queryNutrients = async () => await _queries.GetByPlant(plantId);
 
             // Then
-            queryNutrients.Should().Throw<PlantDoesNotExistException>();
+            queryNutrients.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get by plant id query on plant nutrients returns null if nutrient was not administered on plant")]
@@ -101,7 +101,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task<AdministeredNutrient>> queryForData = async () => await _queries.Get(plantId, id);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            queryForData.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get by plant id query on plant nutrients returns plant if found")]
@@ -141,7 +141,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Func<Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>>> queryForData = async () => await _queries.Sum(plantId);
 
             // Then
-            queryForData.Should().Throw<PlantDoesNotExistException>();
+            queryForData.Should().Throw<PlantNotFoundException>();
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary")]

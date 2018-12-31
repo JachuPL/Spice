@@ -63,14 +63,14 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
                 return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
             }
-            catch (PlantDoesNotExistException ex)
+            catch (PlantNotFoundException ex)
             {
                 return Conflict(new
                 {
                     Error = ex.Message
                 });
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (NutrientNotFoundException ex)
             {
                 return Conflict(new
                 {
@@ -104,14 +104,14 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<UpdateAdministeredNutrientViewModel>(administeredNutrient));
             }
-            catch (PlantDoesNotExistException ex)
+            catch (PlantNotFoundException ex)
             {
                 return Conflict(new
                 {
                     Error = ex.Message
                 });
             }
-            catch (NutrientDoesNotExistException ex)
+            catch (NutrientNotFoundException ex)
             {
                 return Conflict(new
                 {
@@ -145,7 +145,7 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrient));
             }
-            catch (PlantDoesNotExistException)
+            catch (PlantNotFoundException)
             {
                 return NotFound();
             }

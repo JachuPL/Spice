@@ -29,7 +29,7 @@ namespace Spice.Application.Plants.Events
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             return plant.Events;
         }
@@ -39,7 +39,7 @@ namespace Spice.Application.Plants.Events
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             return plant.Events.FirstOrDefault(x => x.Id == id);
         }
@@ -50,7 +50,7 @@ namespace Spice.Application.Plants.Events
                 .FirstOrDefaultAsync(x => x.Id == plantId);
 
             if (plant is null)
-                throw new PlantDoesNotExistException(plantId);
+                throw new PlantNotFoundException(plantId);
 
             return plant.Events.GroupBy(x => x.Type)
                 .Select(x => new OccuredPlantEventsSummaryModel()

@@ -107,7 +107,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(new FieldNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -123,7 +123,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored))
-                .Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
+                .Throws(new SpeciesNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
@@ -184,7 +184,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new FieldDoesNotExistException(Guid.NewGuid()));
+                .Throws(new FieldNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
@@ -200,7 +200,7 @@ namespace Spice.WebAPI.Tests.Plants
         {
             // Given
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
-                .Throws(new SpeciesDoesNotExistException(Guid.NewGuid()));
+                .Throws(new SpeciesNotFoundException(Guid.NewGuid()));
 
             // When
             var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

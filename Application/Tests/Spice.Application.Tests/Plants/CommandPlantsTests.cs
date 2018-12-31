@@ -58,7 +58,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> createPlant = async () => await _commands.Create(model);
 
             // Then
-            createPlant.Should().Throw<FieldDoesNotExistException>();
+            createPlant.Should().Throw<FieldNotFoundException>();
         }
 
         [TestCase(TestName = "Create plant throws exception if species does not exist")]
@@ -73,7 +73,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> createPlant = async () => await _commands.Create(model);
 
             // Then
-            createPlant.Should().Throw<SpeciesDoesNotExistException>();
+            createPlant.Should().Throw<SpeciesNotFoundException>();
         }
 
         [TestCase(TestName = "Create plant returns Guid on success")]
@@ -120,7 +120,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> updatePlant = async () => await _commands.Update(model);
 
             // Then
-            updatePlant.Should().Throw<FieldDoesNotExistException>();
+            updatePlant.Should().Throw<FieldNotFoundException>();
         }
 
         [TestCase(TestName = "Update plant throws exception if species does not exist")]
@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants
             Func<Task> updatePlant = async () => await _commands.Update(model);
 
             // Then
-            updatePlant.Should().Throw<SpeciesDoesNotExistException>();
+            updatePlant.Should().Throw<SpeciesNotFoundException>();
         }
 
         [TestCase(TestName = "Update plant returns null if plant does not exist")]

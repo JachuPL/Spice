@@ -62,7 +62,7 @@ namespace Spice.WebAPI.Controllers.Plants
                 Guid eventId = await _commands.Create(plantId, createEventModel);
                 return CreatedAtRoute(nameof(GetEvent), new { plantId = plantId, id = eventId }, null);
             }
-            catch (PlantDoesNotExistException ex)
+            catch (PlantNotFoundException ex)
             {
                 return Conflict(new
                 {
@@ -96,7 +96,7 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
             }
-            catch (PlantDoesNotExistException ex)
+            catch (PlantNotFoundException ex)
             {
                 return Conflict(new
                 {
@@ -130,7 +130,7 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(Event));
             }
-            catch (PlantDoesNotExistException)
+            catch (PlantNotFoundException)
             {
                 return NotFound();
             }
