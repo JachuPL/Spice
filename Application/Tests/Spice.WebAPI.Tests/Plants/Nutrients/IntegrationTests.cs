@@ -256,8 +256,8 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<AdministeredPlantNutrientsSummaryModel>>(null));
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<PlantNutrientAdministrationCountModel>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
@@ -265,22 +265,27 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET summary of administered plant nutrients returns \"OK\" and correct content type")]
+        [TestCase(TestName = "GET summary of administered plant nutrients returns \"OK\" and correct content type for dates within range")]
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
+            DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
+            DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .Returns(A.Fake<IEnumerable<PlantNutrientAdministrationCountModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryWithinDateRangeEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .MustHaveHappenedOnceExactly();
         }
     }
 }

@@ -12,6 +12,6 @@ namespace Spice.Application.Plants.Nutrients.Interfaces
 
         Task<AdministeredNutrient> Get(Guid plantId, Guid id);
 
-        Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Summary(Guid plantId);
+        Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null);
     }
 }
