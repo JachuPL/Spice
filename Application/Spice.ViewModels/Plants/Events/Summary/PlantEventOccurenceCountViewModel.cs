@@ -1,6 +1,6 @@
-﻿namespace Spice.ViewModels.Plants.Events
+﻿namespace Spice.ViewModels.Plants.Events.Summary
 {
-    public class OccuredPlantEventsSummaryViewModel
+    public class PlantEventOccurenceCountViewModel
     {
         public EventTypeViewModel Type { get; set; }
         public int TotalCount { get; set; }

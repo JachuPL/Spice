@@ -6,6 +6,7 @@ using Spice.Application.Plants.Events.Models;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Common;
 using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Plants.Events.Summary;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -116,7 +117,7 @@ namespace Spice.WebAPI.Controllers.Plants
             if (events is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(events));
+            return Ok(_mapper.Map<IEnumerable<PlantEventOccurenceCountViewModel>>(events));
         }
     }
 }
