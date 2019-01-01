@@ -108,8 +108,8 @@ namespace Spice.WebAPI.Controllers.Plants
             return NoContent();
         }
 
-        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/sum
-        [HttpGet("sum")]
+        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/summary
+        [HttpGet("summary")]
         public async Task<ActionResult<IEnumerable<OccuredPlantEventsSummaryModel>>> GetSummary([FromRoute] Guid plantId)
         {
             IEnumerable<OccuredPlantEventsSummaryModel> events = await _queries.Summary(plantId);
