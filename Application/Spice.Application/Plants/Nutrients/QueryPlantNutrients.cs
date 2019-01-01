@@ -51,7 +51,9 @@ namespace Spice.Application.Plants.Nutrients
                 .Select(x => new PlantNutrientAdministrationCountModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),
-                    TotalAmount = x.Sum(z => z.Amount)
+                    TotalAmount = x.Sum(z => z.Amount),
+                    FirstAdministration = x.Min(z => z.Date),
+                    LastAdministration = x.Max(z => z.Date)
                 }).ToList();
         }
     }
