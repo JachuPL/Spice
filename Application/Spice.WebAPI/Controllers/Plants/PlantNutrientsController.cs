@@ -110,13 +110,13 @@ namespace Spice.WebAPI.Controllers.Plants
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/summary
         [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>> GetSummary([FromRoute] Guid plantId)
+        public async Task<ActionResult<IEnumerable<PlantNutrientAdministrationCountViewModel>>> GetSummary([FromRoute] Guid plantId)
         {
             IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrients = await _queries.Summary(plantId);
             if (administeredNutrients is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrients));
+            return Ok(_mapper.Map<IEnumerable<PlantNutrientAdministrationCountViewModel>>(administeredNutrients));
         }
     }
 }
