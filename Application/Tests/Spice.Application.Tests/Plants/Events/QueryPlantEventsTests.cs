@@ -143,8 +143,8 @@ namespace Spice.Application.Tests.Plants.Events
             eventsSummary.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]
-        public async Task EventsSummaryReturnsEventsSummary()
+        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary from entire history")]
+        public async Task EventsSummaryReturnsEventsSummaryFromEntireHistory()
         {
             // Given
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
@@ -158,14 +158,31 @@ namespace Spice.Application.Tests.Plants.Events
             eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
         }
 
+        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary from specified date range")]
+        public async Task EventsSummaryReturnsEventsSummaryFromSpecifiedDateRange()
+        {
+            // Given
+            Plant plant = SeedDatabaseForGetEventSummaryTesting();
+
+            // When
+            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id,
+                new DateTime(2018, 1, 1, 0, 0, 0),
+                new DateTime(2018, 12, 31, 23, 59, 59));
+
+            // Then
+            eventsFromDatabase.Should().NotBeNull();
+            eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(1);
+            eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
+        }
+
         private Plant SeedDatabaseForGetEventSummaryTesting()
         {
             using (var ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
-                Event event1 = ModelFactory.DomainModel(plant, EventType.Disease);
-                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease);
-                Event event3 = ModelFactory.DomainModel(plant, EventType.OverWatering);
+                Event event1 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 1, 1, 0, 0, 0));
+                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2019, 1, 1, 0, 0, 0));
+                Event event3 = ModelFactory.DomainModel(plant, EventType.OverWatering, new DateTime(2018, 1, 1, 0, 0, 0));
                 plant.Events.Add(event1);
                 plant.Events.Add(event2);
                 plant.Events.Add(event3);

@@ -39,12 +39,23 @@ namespace Spice.Application.Plants.Events
             return plant?.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId)
+        public async Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
         {
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
 
-            return plant?.Events.GroupBy(x => x.Type)
+            if (plant is null)
+                return null;
+
+            IEnumerable<Event> events = plant.Events;
+
+            if (startDate.HasValue)
+                events = events.Where(x => startDate.Value <= x.Occured);
+
+            if (endDate.HasValue)
+                events = events.Where(x => x.Occured <= endDate.Value);
+
+            return events.GroupBy(x => x.Type)
                 .Select(x => new PlantEventOccurenceCountModel()
                 {
                     Type = x.Key,
