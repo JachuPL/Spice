@@ -131,7 +131,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns null if plant does not exist")]
-        public async Task SumAdministeredNutrientsReturnsNullIfPlantDoesNotExist()
+        public async Task AdministeredNutrientsSummaryReturnsNullIfPlantDoesNotExist()
         {
             // Given
             Guid plantId = Guid.NewGuid();
@@ -144,7 +144,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary")]
-        public async Task SumAdministeredNutrientsReturnsAdministeredNutrientsSummary()
+        public async Task AdministeredNutrientsSummaryReturnsAdministeredNutrientsSummary()
         {
             // Given
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();

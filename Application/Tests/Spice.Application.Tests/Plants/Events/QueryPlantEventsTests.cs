@@ -131,7 +131,7 @@ namespace Spice.Application.Tests.Plants.Events
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns null if plant does not exist")]
-        public async Task SumEventsReturnsNullIfPlantDoesNotExist()
+        public async Task EventsSummaryReturnsNullIfPlantDoesNotExist()
         {
             // Given
             Guid plantId = Guid.NewGuid();
@@ -144,7 +144,7 @@ namespace Spice.Application.Tests.Plants.Events
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]
-        public async Task SumEventsReturnsEventsSummary()
+        public async Task EventsSummaryReturnsEventsSummary()
         {
             // Given
             Plant plant = SeedDatabaseForGetEventSummaryTesting();

@@ -252,15 +252,15 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of administered plant nutrients returns \"Not Found\" and correct content type if resource not found exception occured")]
-        public async Task GetSumOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
+        [TestCase(TestName = "GET summary of administered plant nutrients returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task GetSummaryOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
                 .Returns(Task.FromResult<IEnumerable<AdministeredPlantNutrientsSummaryModel>>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -268,14 +268,14 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of administered plant nutrients returns \"OK\" and correct content type")]
-        public async Task GetSumOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
+        [TestCase(TestName = "GET summary of administered plant nutrients returns \"OK\" and correct content type")]
+        public async Task GetSummaryOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
             A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalNutrientsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
