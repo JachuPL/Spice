@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Plants.Events.Interfaces;
-using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
@@ -39,13 +39,13 @@ namespace Spice.Application.Plants.Events
             return plant?.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<OccuredPlantEventsSummaryModel>> Summary(Guid plantId)
+        public async Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId)
         {
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
 
             return plant?.Events.GroupBy(x => x.Type)
-                .Select(x => new OccuredPlantEventsSummaryModel()
+                .Select(x => new PlantEventOccurenceCountModel()
                 {
                     Type = x.Key,
                     TotalCount = x.Sum(z => 1)

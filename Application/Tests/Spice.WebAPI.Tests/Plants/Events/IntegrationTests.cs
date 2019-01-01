@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.Events;
 using Spice.WebAPI.Tests.Common;
@@ -270,7 +271,7 @@ namespace Spice.WebAPI.Tests.Plants.Events
         {
             // Given
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<OccuredPlantEventsSummaryModel>>(null));
+                .Returns(Task.FromResult<IEnumerable<PlantEventOccurenceCountModel>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
@@ -285,7 +286,7 @@ namespace Spice.WebAPI.Tests.Plants.Events
         public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<OccuredPlantEventsSummaryModel>>());
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<PlantEventOccurenceCountModel>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());

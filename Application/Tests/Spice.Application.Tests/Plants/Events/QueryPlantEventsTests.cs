@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Plants.Events;
-using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants.Events
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Summary(plantId);
+            IEnumerable<PlantEventOccurenceCountModel> eventsSummary = await _queries.Summary(plantId);
 
             // Then
             eventsSummary.Should().BeNull();
@@ -150,7 +150,7 @@ namespace Spice.Application.Tests.Plants.Events
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Summary(plant.Id);
+            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
             eventsFromDatabase.Should().NotBeNull();
