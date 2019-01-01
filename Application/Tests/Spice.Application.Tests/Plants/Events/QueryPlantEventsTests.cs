@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants.Events
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Sum(plantId);
+            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Summary(plantId);
 
             // Then
             eventsSummary.Should().BeNull();
@@ -150,7 +150,7 @@ namespace Spice.Application.Tests.Plants.Events
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Sum(plant.Id);
+            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
             eventsFromDatabase.Should().NotBeNull();

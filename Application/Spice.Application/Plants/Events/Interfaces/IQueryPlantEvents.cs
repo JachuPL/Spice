@@ -12,6 +12,6 @@ namespace Spice.Application.Plants.Events.Interfaces
 
         Task<Event> Get(Guid plantId, Guid id);
 
-        Task<IEnumerable<OccuredPlantEventsSummaryModel>> Sum(Guid plantId);
+        Task<IEnumerable<OccuredPlantEventsSummaryModel>> Summary(Guid plantId);
     }
 }
