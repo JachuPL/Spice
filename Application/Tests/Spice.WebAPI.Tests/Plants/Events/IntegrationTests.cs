@@ -283,20 +283,22 @@ namespace Spice.WebAPI.Tests.Plants.Events
                 .MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET summary of plant events returns \"OK\" and correct content type")]
+        [TestCase(TestName = "GET summary of plant events returns \"OK\" and correct content type for dates within range")]
         public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+            DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
+            DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
                 .Returns(A.Fake<IEnumerable<PlantEventOccurenceCountModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.EventsSummaryWithinDateRangeEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
                 .MustHaveHappenedOnceExactly();
         }
     }
