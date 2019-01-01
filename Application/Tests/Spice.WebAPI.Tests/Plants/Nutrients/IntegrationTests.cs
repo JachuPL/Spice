@@ -256,7 +256,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
                 .Returns(Task.FromResult<IEnumerable<PlantNutrientAdministrationCountModel>>(null));
 
             // When
@@ -265,14 +265,16 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET summary of administered plant nutrients returns \"OK\" and correct content type")]
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<PlantNutrientAdministrationCountModel>>());
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .Returns(A.Fake<IEnumerable<PlantNutrientAdministrationCountModel>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
@@ -280,7 +282,8 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .MustHaveHappenedOnceExactly();
         }
     }
 }

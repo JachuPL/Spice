@@ -43,11 +43,21 @@ namespace Spice.Application.Plants.Nutrients
             return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId)
+        public async Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
         {
             Plant plant = await GetPlantById(plantId);
+            if (plant is null)
+                return null;
 
-            return plant?.AdministeredNutrients.GroupBy(x => x.Nutrient)
+            IEnumerable<AdministeredNutrient> administeredNutrients = plant.AdministeredNutrients;
+
+            if (startDate.HasValue)
+                administeredNutrients = administeredNutrients.Where(x => startDate.Value <= x.Date);
+
+            if (endDate.HasValue)
+                administeredNutrients = administeredNutrients.Where(x => x.Date <= endDate.Value);
+
+            return administeredNutrients.GroupBy(x => x.Nutrient)
                 .Select(x => new PlantNutrientAdministrationCountModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),

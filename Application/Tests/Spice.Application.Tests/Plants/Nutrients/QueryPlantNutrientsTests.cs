@@ -143,8 +143,8 @@ namespace Spice.Application.Tests.Plants.Nutrients
             nutrientsSummary.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary")]
-        public async Task AdministeredNutrientsSummaryReturnsAdministeredNutrientsSummary()
+        [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary from entire history")]
+        public async Task AdministeredNutrientsSummaryReturnsAdministeredNutrientsSummaryFromEntireHistory()
         {
             // Given
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
@@ -166,25 +166,50 @@ namespace Spice.Application.Tests.Plants.Nutrients
             fertilizerSummary.TotalAmount.Should().Be(1);
         }
 
+        [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary from specified date range")]
+        public async Task AdministeredNutrientsSummaryReturnsAdministeredNutrientsSummaryFromSpecifiedDateRange()
+        {
+            // Given
+            Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
+
+            // When
+            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientFromDatabase =
+                await _queries.Summary(plant.Id,
+                    new DateTime(2018, 1, 1, 0, 0, 0),
+                    new DateTime(2018, 12, 31, 23, 59, 59));
+
+            // Then
+            administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
+            PlantNutrientAdministrationCountModel waterSummary =
+                administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Water");
+            waterSummary.Nutrient.Should().NotBeNull();
+            waterSummary.TotalAmount.Should().Be(1);
+
+            PlantNutrientAdministrationCountModel fertilizerSummary =
+                administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
+            fertilizerSummary.Nutrient.Should().NotBeNull();
+            fertilizerSummary.TotalAmount.Should().Be(1);
+        }
+
         private Plant SeedDatabaseForGetNutrientSummaryTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
-            {
-                Plant plant = Plants.ModelFactory.DomainModel();
-                Nutrient nutrient1 = new Nutrient() { Name = "Water" };
-                AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel(nutrient1);
-                AdministeredNutrient administeredNutrient2 = ModelFactory.DomainModel(nutrient1);
-                Nutrient nutrient2 = new Nutrient() { Name = "Fertilizer" };
-                AdministeredNutrient administeredNutrient3 = ModelFactory.DomainModel(nutrient2);
-                plant.AdministeredNutrients.Add(administeredNutrient1);
-                plant.AdministeredNutrients.Add(administeredNutrient2);
-                plant.AdministeredNutrients.Add(administeredNutrient3);
-                ctx.Plants.Add(plant);
-                ctx.Nutrients.Add(nutrient1);
-                ctx.Nutrients.Add(nutrient2);
-                ctx.Save();
-                return plant;
-            }
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Nutrient nutrient1 = new Nutrient() { Name = "Water" };
+            AdministeredNutrient administeredNutrient1 =
+                ModelFactory.DomainModel(nutrient1, date: new DateTime(2018, 1, 1, 0, 0, 0));
+            AdministeredNutrient administeredNutrient2 =
+                ModelFactory.DomainModel(nutrient1, date: new DateTime(2019, 1, 1, 0, 0, 0));
+            Nutrient nutrient2 = new Nutrient() { Name = "Fertilizer" };
+            AdministeredNutrient administeredNutrient3 =
+                ModelFactory.DomainModel(nutrient2, date: new DateTime(2018, 1, 1, 0, 0, 0));
+            plant.AdministeredNutrients.Add(administeredNutrient1);
+            plant.AdministeredNutrients.Add(administeredNutrient2);
+            plant.AdministeredNutrients.Add(administeredNutrient3);
+            DatabaseContext.Plants.Add(plant);
+            DatabaseContext.Nutrients.Add(nutrient1);
+            DatabaseContext.Nutrients.Add(nutrient2);
+            DatabaseContext.Save();
+            return plant;
         }
     }
 }
