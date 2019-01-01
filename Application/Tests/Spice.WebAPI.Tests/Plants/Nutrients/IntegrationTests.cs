@@ -256,7 +256,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
                 .Returns(Task.FromResult<IEnumerable<AdministeredPlantNutrientsSummaryModel>>(null));
 
             // When
@@ -265,14 +265,14 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [TestCase(TestName = "GET summary of administered plant nutrients returns \"OK\" and correct content type")]
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
@@ -280,7 +280,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
     }
 }

@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> nutrientsSummary = await _queries.Sum(plantId);
+            IEnumerable<AdministeredPlantNutrientsSummaryModel> nutrientsSummary = await _queries.Summary(plantId);
 
             // Then
             nutrientsSummary.Should().BeNull();
@@ -151,7 +151,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
             // When
             IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrientFromDatabase =
-                await _queries.Sum(plant.Id);
+                await _queries.Summary(plant.Id);
 
             // Then
             administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
