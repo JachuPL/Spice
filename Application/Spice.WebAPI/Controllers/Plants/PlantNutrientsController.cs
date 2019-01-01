@@ -112,7 +112,7 @@ namespace Spice.WebAPI.Controllers.Plants
         [HttpGet("summary")]
         public async Task<ActionResult<IEnumerable<PlantNutrientAdministrationCountViewModel>>> GetSummary([FromRoute] Guid plantId)
         {
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrients = await _queries.Summary(plantId);
+            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrients = await _queries.Summary(plantId);
             if (administeredNutrients is null)
                 return NotFound();
 

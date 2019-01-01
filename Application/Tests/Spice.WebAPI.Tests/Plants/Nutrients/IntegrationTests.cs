@@ -257,7 +257,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         {
             // Given
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<AdministeredPlantNutrientsSummaryModel>>(null));
+                .Returns(Task.FromResult<IEnumerable<PlantNutrientAdministrationCountModel>>(null));
 
             // When
             var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
@@ -272,7 +272,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         public async Task GetSummaryOfAdministeredPlantNutrientsReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<AdministeredPlantNutrientsSummaryModel>>());
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<PlantNutrientAdministrationCountModel>>());
 
             // When
             var response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());

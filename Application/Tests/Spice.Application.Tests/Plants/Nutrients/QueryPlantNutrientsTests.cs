@@ -137,7 +137,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> nutrientsSummary = await _queries.Summary(plantId);
+            IEnumerable<PlantNutrientAdministrationCountModel> nutrientsSummary = await _queries.Summary(plantId);
 
             // Then
             nutrientsSummary.Should().BeNull();
@@ -150,17 +150,17 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrientFromDatabase =
+            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientFromDatabase =
                 await _queries.Summary(plant.Id);
 
             // Then
             administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
-            AdministeredPlantNutrientsSummaryModel waterSummary =
+            PlantNutrientAdministrationCountModel waterSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Water");
             waterSummary.Nutrient.Should().NotBeNull();
             waterSummary.TotalAmount.Should().Be(2);
 
-            AdministeredPlantNutrientsSummaryModel fertilizerSummary =
+            PlantNutrientAdministrationCountModel fertilizerSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
             fertilizerSummary.Nutrient.Should().NotBeNull();
             fertilizerSummary.TotalAmount.Should().Be(1);

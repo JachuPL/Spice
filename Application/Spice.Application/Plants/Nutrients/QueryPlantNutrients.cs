@@ -43,12 +43,12 @@ namespace Spice.Application.Plants.Nutrients
             return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Summary(Guid plantId)
+        public async Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId)
         {
             Plant plant = await GetPlantById(plantId);
 
             return plant?.AdministeredNutrients.GroupBy(x => x.Nutrient)
-                .Select(x => new AdministeredPlantNutrientsSummaryModel()
+                .Select(x => new PlantNutrientAdministrationCountModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),
                     TotalAmount = x.Sum(z => z.Amount)

@@ -2,7 +2,7 @@
 
 namespace Spice.Application.Plants.Nutrients.Models
 {
-    public class AdministeredPlantNutrientsSummaryModel
+    public class PlantNutrientAdministrationCountModel
     {
         public NutrientDetailsModel Nutrient { get; set; }
         public double TotalAmount { get; set; }
