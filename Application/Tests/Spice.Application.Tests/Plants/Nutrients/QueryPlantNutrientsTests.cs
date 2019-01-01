@@ -131,27 +131,27 @@ namespace Spice.Application.Tests.Plants.Nutrients
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns null if plant does not exist")]
-        public async Task SumAdministeredNutrientsReturnsNullIfPlantDoesNotExist()
+        public async Task AdministeredNutrientsSummaryReturnsNullIfPlantDoesNotExist()
         {
             // Given
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> nutrientsSummary = await _queries.Sum(plantId);
+            IEnumerable<AdministeredPlantNutrientsSummaryModel> nutrientsSummary = await _queries.Summary(plantId);
 
             // Then
             nutrientsSummary.Should().BeNull();
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary")]
-        public async Task SumAdministeredNutrientsReturnsAdministeredNutrientsSummary()
+        public async Task AdministeredNutrientsSummaryReturnsAdministeredNutrientsSummary()
         {
             // Given
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
             IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrientFromDatabase =
-                await _queries.Sum(plant.Id);
+                await _queries.Summary(plant.Id);
 
             // Then
             administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();

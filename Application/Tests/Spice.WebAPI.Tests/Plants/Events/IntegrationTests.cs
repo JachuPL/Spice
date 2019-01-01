@@ -265,35 +265,35 @@ namespace Spice.WebAPI.Tests.Plants.Events
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of plant events returns \"Not Found\" and correct content type if resource not found exception occured")]
-        public async Task GetSumOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
+        [TestCase(TestName = "GET summary of plant events returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task GetSummaryOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored))
                 .Returns(Task.FromResult<IEnumerable<OccuredPlantEventsSummaryModel>>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of plant events returns \"OK\" and correct content type")]
-        public async Task GetSumOfPlantEventReturnsOKAndCorrectContentType()
+        [TestCase(TestName = "GET summary of plant events returns \"OK\" and correct content type")]
+        public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<OccuredPlantEventsSummaryModel>>());
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<OccuredPlantEventsSummaryModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
     }
 }

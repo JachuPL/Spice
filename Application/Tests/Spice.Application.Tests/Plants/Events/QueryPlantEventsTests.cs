@@ -131,26 +131,26 @@ namespace Spice.Application.Tests.Plants.Events
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns null if plant does not exist")]
-        public async Task SumEventsReturnsNullIfPlantDoesNotExist()
+        public async Task EventsSummaryReturnsNullIfPlantDoesNotExist()
         {
             // Given
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Sum(plantId);
+            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Summary(plantId);
 
             // Then
             eventsSummary.Should().BeNull();
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]
-        public async Task SumEventsReturnsEventsSummary()
+        public async Task EventsSummaryReturnsEventsSummary()
         {
             // Given
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Sum(plant.Id);
+            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
             eventsFromDatabase.Should().NotBeNull();

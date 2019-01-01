@@ -43,7 +43,7 @@ namespace Spice.Application.Plants.Nutrients
             return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Sum(Guid plantId)
+        public async Task<IEnumerable<AdministeredPlantNutrientsSummaryModel>> Summary(Guid plantId)
         {
             Plant plant = await GetPlantById(plantId);
 

@@ -39,7 +39,7 @@ namespace Spice.Application.Plants.Events
             return plant?.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<OccuredPlantEventsSummaryModel>> Sum(Guid plantId)
+        public async Task<IEnumerable<OccuredPlantEventsSummaryModel>> Summary(Guid plantId)
         {
             Plant plant = await _database.Plants.Include(x => x.Events)
                 .FirstOrDefaultAsync(x => x.Id == plantId);
