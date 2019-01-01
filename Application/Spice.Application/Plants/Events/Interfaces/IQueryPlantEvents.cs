@@ -1,4 +1,4 @@
-﻿using Spice.Application.Plants.Events.Models;
+﻿using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,6 @@ namespace Spice.Application.Plants.Events.Interfaces
 
         Task<Event> Get(Guid plantId, Guid id);
 
-        Task<IEnumerable<OccuredPlantEventsSummaryModel>> Summary(Guid plantId);
+        Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

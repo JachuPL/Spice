@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Common;
 using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Plants.Events.Summary;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -108,15 +110,15 @@ namespace Spice.WebAPI.Controllers.Plants
             return NoContent();
         }
 
-        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/summary
+        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59
         [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<OccuredPlantEventsSummaryModel>>> GetSummary([FromRoute] Guid plantId)
+        public async Task<ActionResult<IEnumerable<PlantEventOccurenceCountModel>>> GetSummary([FromRoute] Guid plantId, [FromQuery]DateTime? fromDate = null, [FromQuery]DateTime? toDate = null)
         {
-            IEnumerable<OccuredPlantEventsSummaryModel> events = await _queries.Summary(plantId);
+            IEnumerable<PlantEventOccurenceCountModel> events = await _queries.Summary(plantId, fromDate, toDate);
             if (events is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<OccuredPlantEventsSummaryViewModel>>(events));
+            return Ok(_mapper.Map<IEnumerable<PlantEventOccurenceCountViewModel>>(events));
         }
     }
 }

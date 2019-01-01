@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.AutoMapper.Profiles.Plant.Converters;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Plants.Events.Summary;
 using System;
 
 namespace Spice.AutoMapper.Profiles.Plant
@@ -31,7 +33,7 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<Event, PlantEventDetailsViewModel>();
 
-            CreateMap<OccuredPlantEventsSummaryModel, OccuredPlantEventsSummaryViewModel>();
+            CreateMap<PlantEventOccurenceCountModel, PlantEventOccurenceCountViewModel>();
         }
     }
 }
