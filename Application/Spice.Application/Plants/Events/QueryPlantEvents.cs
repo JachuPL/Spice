@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Plants.Events.Interfaces;
@@ -48,7 +48,9 @@ namespace Spice.Application.Plants.Events
                 .Select(x => new PlantEventOccurenceCountModel()
                 {
                     Type = x.Key,
-                    TotalCount = x.Sum(z => 1)
+                    TotalCount = x.Count(),
+                    FirstOccurence = x.Min(z => z.Occured),
+                    LastOccurence = x.Max(z => z.Occured)
                 }).ToList();
         }
     }
