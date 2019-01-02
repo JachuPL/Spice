@@ -108,15 +108,16 @@ namespace Spice.WebAPI.Controllers.Plants
             return NoContent();
         }
 
-        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/sum
-        [HttpGet("sum")]
-        public async Task<ActionResult<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>> GetSummary([FromRoute] Guid plantId)
+        // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59
+        [HttpGet("summary")]
+        public async Task<ActionResult<IEnumerable<PlantNutrientAdministrationCountViewModel>>> GetSummary([FromRoute] Guid plantId, [FromQuery]DateTime? fromDate = null, [FromQuery]DateTime? toDate = null)
         {
-            IEnumerable<AdministeredPlantNutrientsSummaryModel> administeredNutrients = await _queries.Sum(plantId);
+            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrients =
+                await _queries.Summary(plantId, fromDate, toDate);
             if (administeredNutrients is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<AdministeredPlantNutrientsSummaryViewModel>>(administeredNutrients));
+            return Ok(_mapper.Map<IEnumerable<PlantNutrientAdministrationCountViewModel>>(administeredNutrients));
         }
     }
 }

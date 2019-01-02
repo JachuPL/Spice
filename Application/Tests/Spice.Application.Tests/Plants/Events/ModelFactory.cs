@@ -28,14 +28,14 @@ namespace Spice.Application.Tests.Plants.Events
             };
         }
 
-        public static Event DomainModel(Plant plant = null, EventType type = EventType.Fungi)
+        public static Event DomainModel(Plant plant = null, EventType type = EventType.Fungi, DateTime? occured = null)
         {
             return new Event()
             {
                 Plant = plant ?? Plants.ModelFactory.DomainModel(),
                 Type = type,
                 Description = "Spotted some fungi on the leaves.",
-                Occured = DateTime.Now
+                Occured = occured ?? DateTime.Now
             };
         }
     }
