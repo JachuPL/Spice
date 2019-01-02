@@ -200,5 +200,41 @@ namespace Spice.WebAPI.Tests.Species
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
+
+        [TestCase(TestName = "GET summary of species nutrition returns \"Not Found\" and correct content type if species does not exist")]
+        public async Task GetSummaryOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
+        {
+            // Given
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<SpeciesNutritionSummaryModel>>(null));
+
+            // When
+            var response = await Client.GetAsync(EndPointFactory.SpeciesSummaryEndpoint());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .MustHaveHappenedOnceExactly();
+        }
+
+        [TestCase(TestName = "GET summary of species nutrition returns \"OK\" and correct content type for dates within range")]
+        public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
+        {
+            // Given
+            DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
+            DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .Returns(A.Fake<IEnumerable<SpeciesNutritionSummaryModel>>());
+
+            // When
+            var response = await Client.GetAsync(EndPointFactory.SpeciesSummaryWithinDateRangeEndpoint());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .MustHaveHappenedOnceExactly();
+        }
     }
 }
