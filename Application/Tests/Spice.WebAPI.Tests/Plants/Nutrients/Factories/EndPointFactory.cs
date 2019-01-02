@@ -12,8 +12,9 @@
 
         public static string DeleteEndpoint() => "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/DC117408-630E-459B-B16F-DE36EBC58E8F";
 
-        public static string SumTotalNutrientsEndpoint() => "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/sum";
+        public static string NutrientsSummaryEndpoint() => "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/summary";
 
-        public static string SumTotalNutrientsBetweenDatesEndpoint() => "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/sum?from=2018-12-20&to=2018-12-31";
+        public static string NutrientsSummaryWithinDateRangeEndpoint() =>
+            "/api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59";
     }
 }

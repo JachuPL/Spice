@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Domain.Plants.Events;
 using Spice.ViewModels.Plants.Events;
 using Spice.WebAPI.Tests.Common;
@@ -265,35 +266,40 @@ namespace Spice.WebAPI.Tests.Plants.Events
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of plant events returns \"Not Found\" and correct content type if resource not found exception occured")]
-        public async Task GetSumOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
+        [TestCase(TestName = "GET summary of plant events returns \"Not Found\" and correct content type if resource not found exception occured")]
+        public async Task GetSummaryOfPlantEventReturnsNotFoundAndCorrectContentTypeIfResourceNotFoundExceptionOccured()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<OccuredPlantEventsSummaryModel>>(null));
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .Returns(Task.FromResult<IEnumerable<PlantEventOccurenceCountModel>>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             response.Content.Headers.ContentType.ToString().Should().Be("application/problem+json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
+                .MustHaveHappenedOnceExactly();
         }
 
-        [TestCase(TestName = "GET sum of plant events returns \"OK\" and correct content type")]
-        public async Task GetSumOfPlantEventReturnsOKAndCorrectContentType()
+        [TestCase(TestName = "GET summary of plant events returns \"OK\" and correct content type for dates within range")]
+        public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).Returns(A.Fake<IEnumerable<OccuredPlantEventsSummaryModel>>());
+            DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
+            DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .Returns(A.Fake<IEnumerable<PlantEventOccurenceCountModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SumTotalEventsEndpoint());
+            var response = await Client.GetAsync(EndPointFactory.EventsSummaryWithinDateRangeEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-            A.CallTo(() => _fakeQuery.Sum(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
+                .MustHaveHappenedOnceExactly();
         }
     }
 }

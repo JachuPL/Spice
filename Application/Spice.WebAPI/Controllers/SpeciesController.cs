@@ -96,5 +96,16 @@ namespace Spice.WebAPI.Controllers
             await _commands.Delete(id);
             return NoContent();
         }
+
+        // GET api/species/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59
+        [HttpGet("{id:guid}/summary")]
+        public async Task<ActionResult<IEnumerable<SpeciesNutritionSummaryViewModel>>> GetSummary(Guid id, [FromQuery]DateTime? fromDate = null, [FromQuery]DateTime? toDate = null)
+        {
+            IEnumerable<SpeciesNutritionSummaryModel> nutritionSummary = await _queries.Summary(id, fromDate, toDate);
+            if (nutritionSummary is null)
+                return NotFound();
+
+            return Ok(_mapper.Map<IEnumerable<SpeciesNutritionSummaryViewModel>>(nutritionSummary));
+        }
     }
 }

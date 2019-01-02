@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Spice.Application.Plants.Events;
-using Spice.Application.Plants.Events.Models;
+using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
@@ -131,30 +131,47 @@ namespace Spice.Application.Tests.Plants.Events
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns null if plant does not exist")]
-        public async Task SumEventsReturnsNullIfPlantDoesNotExist()
+        public async Task EventsSummaryReturnsNullIfPlantDoesNotExist()
         {
             // Given
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsSummary = await _queries.Sum(plantId);
+            IEnumerable<PlantEventOccurenceCountModel> eventsSummary = await _queries.Summary(plantId);
 
             // Then
             eventsSummary.Should().BeNull();
         }
 
-        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary")]
-        public async Task SumEventsReturnsEventsSummary()
+        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary from entire history")]
+        public async Task EventsSummaryReturnsEventsSummaryFromEntireHistory()
         {
             // Given
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<OccuredPlantEventsSummaryModel> eventsFromDatabase = await _queries.Sum(plant.Id);
+            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
             eventsFromDatabase.Should().NotBeNull();
             eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(2);
+            eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
+        }
+
+        [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary from specified date range")]
+        public async Task EventsSummaryReturnsEventsSummaryFromSpecifiedDateRange()
+        {
+            // Given
+            Plant plant = SeedDatabaseForGetEventSummaryTesting();
+
+            // When
+            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id,
+                new DateTime(2018, 1, 1, 0, 0, 0),
+                new DateTime(2018, 12, 31, 23, 59, 59));
+
+            // Then
+            eventsFromDatabase.Should().NotBeNull();
+            eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(1);
             eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
         }
 
@@ -163,9 +180,9 @@ namespace Spice.Application.Tests.Plants.Events
             using (var ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
-                Event event1 = ModelFactory.DomainModel(plant, EventType.Disease);
-                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease);
-                Event event3 = ModelFactory.DomainModel(plant, EventType.OverWatering);
+                Event event1 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 1, 1, 0, 0, 0));
+                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2019, 1, 1, 0, 0, 0));
+                Event event3 = ModelFactory.DomainModel(plant, EventType.OverWatering, new DateTime(2018, 1, 1, 0, 0, 0));
                 plant.Events.Add(event1);
                 plant.Events.Add(event2);
                 plant.Events.Add(event3);
