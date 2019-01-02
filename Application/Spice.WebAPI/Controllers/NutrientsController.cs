@@ -31,8 +31,8 @@ namespace Spice.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NutrientIndexViewModel>>> Get()
         {
-            IEnumerable<Nutrient> Nutrients = await _queries.GetAll();
-            return Ok(_mapper.Map<IEnumerable<NutrientIndexViewModel>>(Nutrients));
+            IEnumerable<Nutrient> nutrients = await _queries.GetAll();
+            return Ok(_mapper.Map<IEnumerable<NutrientIndexViewModel>>(nutrients));
         }
 
         // GET api/nutrients/F3694C70-AC96-4BBC-9D70-7C1AF728E93F
@@ -56,8 +56,8 @@ namespace Spice.WebAPI.Controllers
             try
             {
                 CreateNutrientModel createNutrientModel = _mapper.Map<CreateNutrientModel>(model);
-                Guid NutrientId = await _commands.Create(createNutrientModel);
-                return CreatedAtRoute(nameof(GetNutrient), new { id = NutrientId }, null);
+                Guid nutrientId = await _commands.Create(createNutrientModel);
+                return CreatedAtRoute(nameof(GetNutrient), new { id = nutrientId }, null);
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {
@@ -77,11 +77,11 @@ namespace Spice.WebAPI.Controllers
                 UpdateNutrientModel updateNutrientModel = _mapper.Map<UpdateNutrientModel>(model);
                 updateNutrientModel.Id = id;
 
-                Nutrient Nutrient = await _commands.Update(updateNutrientModel);
-                if (Nutrient is null)
+                Nutrient nutrient = await _commands.Update(updateNutrientModel);
+                if (nutrient is null)
                     return NotFound();
 
-                return Ok(_mapper.Map<NutrientDetailsViewModel>(Nutrient));
+                return Ok(_mapper.Map<NutrientDetailsViewModel>(nutrient));
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {

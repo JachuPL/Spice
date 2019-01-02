@@ -44,11 +44,11 @@ namespace Spice.WebAPI.Controllers.Plants
         [HttpGet("{id:guid}", Name = nameof(GetEvent))]
         public async Task<ActionResult<PlantEventDetailsViewModel>> GetEvent([FromRoute] Guid plantId, Guid id)
         {
-            Event Event = await _queries.Get(plantId, id);
-            if (Event is null)
+            Event @event = await _queries.Get(plantId, id);
+            if (@event is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
+            return Ok(_mapper.Map<PlantEventDetailsViewModel>(@event));
         }
 
         // POST api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events
@@ -86,11 +86,11 @@ namespace Spice.WebAPI.Controllers.Plants
                 UpdatePlantEventModel updateEventModel = _mapper.Map<UpdatePlantEventModel>(model);
                 updateEventModel.Id = id;
 
-                Event Event = await _commands.Update(plantId, updateEventModel);
-                if (Event is null)
+                Event @event = await _commands.Update(plantId, updateEventModel);
+                if (@event is null)
                     return NotFound();
 
-                return Ok(_mapper.Map<PlantEventDetailsViewModel>(Event));
+                return Ok(_mapper.Map<PlantEventDetailsViewModel>(@event));
             }
             catch (Exception ex) when (ex is ResourceNotFoundException)
             {
