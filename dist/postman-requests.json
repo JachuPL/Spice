@@ -12,6 +12,70 @@
 					"name": "Administered nutrients",
 					"item": [
 						{
+							"name": "Summary",
+							"item": [
+								{
+									"name": "Administered nutrients from entire history",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary",
+											"host": [
+												"{{apiUrl}}"
+											],
+											"path": [
+												"plants",
+												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"nutrients",
+												"summary"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Administered nutrients in date range",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59",
+											"host": [
+												"{{apiUrl}}"
+											],
+											"path": [
+												"plants",
+												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"nutrients",
+												"summary"
+											],
+											"query": [
+												{
+													"key": "fromDate",
+													"value": "2018-01-01T00:00:00"
+												},
+												{
+													"key": "toDate",
+													"value": "2018-12-31T23:59:59"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "List all administered plants nutrients Copy",
 							"request": {
 								"method": "GET",
@@ -53,30 +117,6 @@
 										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
 										"nutrients",
 										"41955905-a177-4145-bda5-08d66d666eef"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Sum up all administered nutrients",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/sum",
-									"host": [
-										"{{apiUrl}}"
-									],
-									"path": [
-										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-										"nutrients",
-										"sum"
 									]
 								}
 							},
@@ -181,6 +221,70 @@
 					"name": "Occured events",
 					"item": [
 						{
+							"name": "Summary",
+							"item": [
+								{
+									"name": "Occured events from entire history",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary",
+											"host": [
+												"{{apiUrl}}"
+											],
+											"path": [
+												"plants",
+												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"events",
+												"summary"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Occured events in date range",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59",
+											"host": [
+												"{{apiUrl}}"
+											],
+											"path": [
+												"plants",
+												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"events",
+												"summary"
+											],
+											"query": [
+												{
+													"key": "fromDate",
+													"value": "2018-01-01T00:00:00"
+												},
+												{
+													"key": "toDate",
+													"value": "2018-12-31T23:59:59"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "List all plant events",
 							"request": {
 								"method": "GET",
@@ -222,30 +326,6 @@
 										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
 										"events",
 										"bfa3f1f0-c154-4220-611f-08d66f17f8dc"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Sum up all plant events",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/sum",
-									"host": [
-										"{{apiUrl}}"
-									],
-									"path": [
-										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-										"events",
-										"sum"
 									]
 								}
 							},
@@ -752,6 +832,68 @@
 			"name": "Species",
 			"item": [
 				{
+					"name": "Summary",
+					"item": [
+						{
+							"name": "Nutrition summary over entire history",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/species/d7be6f24-8704-4447-f689-08d66bd60981/summary",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"species",
+										"d7be6f24-8704-4447-f689-08d66bd60981",
+										"summary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Nutrition summary in date range",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUrl}}/species/d7be6f24-8704-4447-f689-08d66bd60981/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"species",
+										"d7be6f24-8704-4447-f689-08d66bd60981",
+										"summary"
+									],
+									"query": [
+										{
+											"key": "fromDate",
+											"value": "2018-01-01T00:00:00"
+										},
+										{
+											"key": "toDate",
+											"value": "2018-12-31T23:59:59"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "List all species",
 					"request": {
 						"method": "GET",
@@ -908,13 +1050,13 @@
 	],
 	"variable": [
 		{
-			"id": "6397f085-3033-4397-bb97-564dec368cc0",
+			"id": "c8d7d427-16ce-456b-8508-720990c7ae2f",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "a4d28779-2246-4c49-afe4-7ff765ac2f16",
+			"id": "bfe6b293-8c79-4837-9d04-2d8265d77ff8",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"

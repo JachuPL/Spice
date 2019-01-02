@@ -3,7 +3,7 @@
 A free and open source software to manage your garden and track plant growth.
 
 ##### Current status
-[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) ![version](https://img.shields.io/badge/version-1.3.0-blue.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e5522f3724747c29e17bb479f3088f0)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
+[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e5522f3724747c29e17bb479f3088f0)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
 
 
 ## Installation
@@ -282,6 +282,26 @@ Note that if a species with specified name already exists this operation will re
 ```
 Note that once a species is deleted it is not possible to restore it and all underlying plants!
 
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/**guid**/summary - returns summary of nutrients applied to all plants of selected species. Example:
+```
+// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd609814/summary
+// Note that you can get nutrition summary for selected period of time by adding start and end date parameters, eg: species/d7be6f24-8704-4447-f689-08d66bd60981/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
+
+[
+    {
+        "nutrient": {
+            "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+            "name": "Mineral water",
+            "description": "Either tap or bottled.",
+            "dosageUnits": "ml"
+        },
+        "totalAmount": 2258,
+        "firstAdministration": "2018-12-29T10:18:31.1115637",
+        "lastAdministration": "2019-12-09T14:30:00"
+    }
+]
+```
+
 ### Nutrients
 Nutrients are very important in your plants growth. You can add some for further progress tracking using these endpoints:
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients - returns list of all nutrients. Example:
@@ -404,9 +424,10 @@ Note that if a plant is not found this operation will result in Conflict. The sa
 ```
 Note that once a nutrition record is deleted it is not possible to restore it!
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/sum - returns summary of nutrients administered to a plant grouped by nutrient. Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/summary - returns summary of nutrients administered to a plant grouped by nutrient. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/sum
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary
+// Note that you can get nutrition info for selected period of time by adding start and end date parameters, eg: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
 
 [
     {
@@ -416,7 +437,9 @@ Note that once a nutrition record is deleted it is not possible to restore it!
             "description": "Either tap or bottled.",
             "dosageUnits": "ml"
         },
-        "totalAmount": 625
+        "totalAmount": 625,
+        "firstAdministration": "2018-12-29T10:18:31.1115637",
+        "lastAdministration": "2019-12-09T14:30:00"
     }
 ]
 ```
@@ -458,8 +481,8 @@ There's a lot happening during your plant lifecycle. With this option you can tr
 {
 	"Type": "Insects",
 	"Description": "Spotted some Leptinotarsa decemlineata on the leaves today.",
-	"Occured": "2018-12-30 13:00:00",
-    "CreateEvent": true
+    "Occured": "2018-12-30 13:00:00",
+	"CreateEvent": true
 }
 ```
 Note that if a plant is not found this operation will result in Conflict. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future. Please keep in mind that response contains 'Location' header with URI to newly created resource. The occurence date parameter is completely optional - a request processing date is used if not specified otherwise. The other optional parameter is 'CreateEvent' - if it is not specified, default value is false.
@@ -483,17 +506,29 @@ Note that if a plant is not found this operation will result in Conflict. The sa
 ```
 Note that once an event record is deleted it is not possible to restore it!
 
-* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/sum - returns summary of events occured to a plant grouped by event type. Example:
+* ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/summary - returns summary of events occured to a plant grouped by event type. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/sum
+// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary
+// Note that you can get event log for selected period of time by adding start and end date parameters, eg: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
 
 [
     {
         "type": 6,
-        "totalCount": 1
+        "totalCount": 3,
+        "firstOccurence": "2018-12-30T13:05:15",
+        "lastOccurence": "2018-12-31T13:03:21.3786219"
     },
     {
         "type": 0,
-        "totalCount": 2
+        "totalCount": 3,
+        "firstOccurence": "2018-12-30T13:00:00",
+        "lastOccurence": "2018-12-30T13:00:00"
+    },
+    {
+        "type": 9,
+        "totalCount": 3,
+        "firstOccurence": "2018-12-30T13:00:00",
+        "lastOccurence": "2019-12-09T14:30:00"
     }
 ]
+```
