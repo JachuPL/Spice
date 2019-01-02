@@ -19,13 +19,16 @@ namespace Spice.Application.Plants
 
         public async Task<IEnumerable<Plant>> GetAll()
         {
-            return await _database.Plants.AsNoTracking()
-                .Include(x => x.Species).ToListAsync();
+            return await _database.Plants
+                .AsNoTracking()
+                .Include(x => x.Species)
+                .ToListAsync();
         }
 
         public async Task<Plant> Get(Guid id)
         {
             return await _database.Plants
+                .AsNoTracking()
                 .Include(x => x.Field)
                 .Include(x => x.Species)
                 .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)

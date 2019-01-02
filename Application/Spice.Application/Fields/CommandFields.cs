@@ -6,6 +6,7 @@ using Spice.Application.Fields.Interfaces;
 using Spice.Application.Fields.Models;
 using Spice.Domain;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Fields
@@ -23,7 +24,10 @@ namespace Spice.Application.Fields
 
         public async Task<Guid> Create(CreateFieldModel model)
         {
-            if (await _database.Fields.AnyAsync(x => x.Name == model.Name))
+            IQueryable<Field> existingFieldsWithName = from existingField in _database.Fields
+                                                       where existingField.Name == model.Name
+                                                       select existingField;
+            if (await existingFieldsWithName.AnyAsync())
                 throw new FieldWithNameAlreadyExistsException(model.Name);
 
             Field field = _mapper.Map<Field>(model);
@@ -38,7 +42,11 @@ namespace Spice.Application.Fields
             if (field is null)
                 return null;
 
-            if (await _database.Fields.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
+            IQueryable<Field> existingFieldsWithName = from existingField in _database.Fields
+                                                       where existingField.Name == model.Name && existingField.Id != field.Id
+                                                       select existingField;
+
+            if (await existingFieldsWithName.AnyAsync())
                 throw new FieldWithNameAlreadyExistsException(model.Name);
 
             _mapper.Map(model, field);

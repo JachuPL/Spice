@@ -25,14 +25,18 @@ namespace Spice.Application.Species
 
         public async Task<IEnumerable<Domain.Species>> GetAll()
         {
-            return await _database.Species.AsNoTracking().ToListAsync();
+            return await _database.Species
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Domain.Species> Get(Guid id)
         {
             return await _database.Species
                 .Include(x => x.Plants)
-                .ThenInclude(x => x.Field).FirstOrDefaultAsync(x => x.Id == id);
+                .ThenInclude(x => x.Field)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<SpeciesNutritionSummaryModel>> Summary(Guid id, DateTime? fromDate = null, DateTime? toDate = null)
@@ -42,7 +46,7 @@ namespace Spice.Application.Species
                 return null;
 
             IQueryable<AdministeredNutrient> administeredNutrients =
-                from nutrients in _database.AdministeredNutrients
+                from nutrients in _database.AdministeredNutrients.AsNoTracking()
                 join plant in _database.Plants on nutrients.Plant.Id equals plant.Id
                 join Species in _database.Species on plant.Species.Id equals Species.Id
                 where plant.Species.Id == id
@@ -54,13 +58,18 @@ namespace Spice.Application.Species
             if (toDate.HasValue)
                 administeredNutrients = administeredNutrients.Where(x => x.Date <= toDate.Value);
 
-            return await administeredNutrients.GroupBy(x => x.Nutrient).Select(x => new SpeciesNutritionSummaryModel()
-            {
-                Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),
-                TotalAmount = x.Sum(z => z.Amount),
-                FirstAdministration = x.Min(z => z.Date),
-                LastAdministration = x.Max(z => z.Date)
-            }).ToListAsync();
+            IQueryable<SpeciesNutritionSummaryModel> administeredNutrientsBySpecies =
+                from administeredNutrient in administeredNutrients
+                group administeredNutrient by administeredNutrient.Nutrient into administeredNutrientsNutrient
+                select new SpeciesNutritionSummaryModel()
+                {
+                    Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientsNutrient.Key),
+                    TotalAmount = administeredNutrientsNutrient.Sum(z => z.Amount),
+                    FirstAdministration = administeredNutrientsNutrient.Min(z => z.Date),
+                    LastAdministration = administeredNutrientsNutrient.Max(z => z.Date)
+                };
+
+            return await administeredNutrientsBySpecies.ToListAsync();
         }
     }
 }

@@ -32,13 +32,17 @@ namespace Spice.Application.Plants
             if (field is null)
                 throw new FieldNotFoundException(model.FieldId);
 
-            Plant existingAtCoordinates =
-                await _database.Plants.AsNoTracking().FirstOrDefaultAsync(x => x.Row == model.Row && x.Column == model.Column && x.Field.Id == model.FieldId);
+            IQueryable<Plant> plantsExistingAtCoordinates =
+                from existingPlantsAtCoordinates in _database.Plants
+                where existingPlantsAtCoordinates.Field.Id == field.Id
+                      && existingPlantsAtCoordinates.Row == model.Row &&
+                      existingPlantsAtCoordinates.Column == model.Column && existingPlantsAtCoordinates.Field.Id == model.FieldId
+                select existingPlantsAtCoordinates;
 
-            if (existingAtCoordinates != null)
+            if (await plantsExistingAtCoordinates.AnyAsync())
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
 
-            Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
+            Domain.Species species = await _database.Species.FindAsync(model.SpeciesId);
             if (species is null)
                 throw new SpeciesNotFoundException(model.SpeciesId);
 

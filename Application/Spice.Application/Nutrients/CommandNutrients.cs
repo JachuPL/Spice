@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Spice.Application.Common;
 using Spice.Application.Nutrients.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Application.Nutrients.Models;
 using Spice.Domain;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Nutrients
@@ -24,7 +24,10 @@ namespace Spice.Application.Nutrients
 
         public async Task<Guid> Create(CreateNutrientModel model)
         {
-            if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name))
+            IQueryable<Nutrient> existingNutrientsWithName = from existingNutrient in _database.Nutrients
+                                                             where existingNutrient.Name == model.Name
+                                                             select existingNutrient;
+            if (await existingNutrientsWithName.AnyAsync())
                 throw new NutrientWithNameAlreadyExistsException(model.Name);
 
             Nutrient nutrient = _mapper.Map<Nutrient>(model);
@@ -44,7 +47,10 @@ namespace Spice.Application.Nutrients
             if (nutrient.AdministeredToPlants.Any())
                 throw new NutrientAdministeredToAPlantException();
 
-            if (await _database.Nutrients.AnyAsync(x => x.Name == model.Name && x.Id != model.Id))
+            IQueryable<Nutrient> existingNutrientsWithName = from existingNutrient in _database.Nutrients
+                                                             where existingNutrient.Name == model.Name && existingNutrient.Id != model.Id
+                                                             select existingNutrient;
+            if (await existingNutrientsWithName.AnyAsync())
                 throw new NutrientWithNameAlreadyExistsException(model.Name);
 
             _mapper.Map(model, nutrient);
