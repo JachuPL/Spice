@@ -9,7 +9,7 @@ using System;
 
 namespace Spice.AutoMapper.Profiles.Plant
 {
-    public class PlantEventProfile : Profile
+    internal sealed class PlantEventProfile : Profile
     {
         public PlantEventProfile()
         {

@@ -5,7 +5,7 @@ using System;
 
 namespace Spice.AutoMapper.Profiles.Species
 {
-    internal class SpeciesProfile : Profile
+    internal sealed class SpeciesProfile : Profile
     {
         public SpeciesProfile()
         {

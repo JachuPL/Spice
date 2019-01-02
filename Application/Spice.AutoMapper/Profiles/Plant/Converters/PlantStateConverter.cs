@@ -4,7 +4,7 @@ using Spice.ViewModels.Plants;
 
 namespace Spice.AutoMapper.Profiles.Plant.Converters
 {
-    internal class PlantStateConverter : ITypeConverter<PlantState, PlantStateViewModel>
+    internal sealed class PlantStateConverter : ITypeConverter<PlantState, PlantStateViewModel>
     {
         public PlantStateViewModel Convert(PlantState source, PlantStateViewModel destination, ResolutionContext context)
         {

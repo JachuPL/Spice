@@ -4,7 +4,7 @@ using Spice.ViewModels.Plants.Events;
 
 namespace Spice.AutoMapper.Profiles.Plant.Converters
 {
-    internal class EventTypeViewModelConverter : ITypeConverter<EventTypeViewModel, EventType>
+    internal sealed class EventTypeViewModelConverter : ITypeConverter<EventTypeViewModel, EventType>
     {
         public EventType Convert(EventTypeViewModel source, EventType destination, ResolutionContext context)
         {

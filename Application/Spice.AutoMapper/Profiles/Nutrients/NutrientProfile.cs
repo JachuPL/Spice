@@ -6,7 +6,7 @@ using System;
 
 namespace Spice.AutoMapper.Profiles.Nutrients
 {
-    internal class NutrientProfile : Profile
+    internal sealed class NutrientProfile : Profile
     {
         public NutrientProfile()
         {
