@@ -11,12 +11,12 @@ namespace Spice.Persistence
 {
     public class SpiceContext : DbContext, IDatabaseService
     {
-        public DbSet<Plant> Plants { get; set; }
-        public DbSet<Field> Fields { get; set; }
-        public DbSet<Species> Species { get; set; }
-        public DbSet<Nutrient> Nutrients { get; set; }
-        public DbSet<AdministeredNutrient> AdministeredNutrients { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Plant> Plants { get; protected set; }
+        public DbSet<Field> Fields { get; protected set; }
+        public DbSet<Species> Species { get; protected set; }
+        public DbSet<Nutrient> Nutrients { get; protected set; }
+        public DbSet<AdministeredNutrient> AdministeredNutrients { get; protected set; }
+        public DbSet<Event> Events { get; protected set; }
 
         public SpiceContext() : base()
         {
