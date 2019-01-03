@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Domain;
 using Spice.Domain.Plants;
@@ -39,12 +39,12 @@ namespace Spice.Persistence
 
         public int Save()
         {
-            return base.SaveChanges();
+            return SaveChanges();
         }
 
         public Task<int> SaveAsync()
         {
-            return base.SaveChangesAsync();
+            return SaveChangesAsync();
         }
     }
 }
