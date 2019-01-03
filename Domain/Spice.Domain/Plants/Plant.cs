@@ -70,13 +70,19 @@ namespace Spice.Domain.Plants
             return newEvent;
         }
 
-        public void AdministerNutrient(Nutrient nutrient, double amount, DateTime date)
+        public AdministeredNutrient AdministerNutrient(Nutrient nutrient, double amount, DateTime date, bool createEvent = false)
         {
-            Event @event = new Event(this,
-                EventType.Nutrition,
-                $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
-                date);
-            Events.Add(@event);
+            AdministeredNutrient administeredNutrient = new AdministeredNutrient(this, nutrient, amount, date);
+            AdministeredNutrients.Add(administeredNutrient);
+            if (createEvent)
+            {
+                Event @event = AddEvent(EventType.Nutrition,
+                    $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
+                    date);
+                Events.Add(@event);
+            }
+
+            return administeredNutrient;
         }
     }
 }

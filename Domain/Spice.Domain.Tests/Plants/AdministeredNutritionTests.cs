@@ -8,9 +8,11 @@ namespace Spice.Domain.Tests.Plants
     [TestFixture]
     internal sealed class AdministeredNutritionTests
     {
-        private AdministeredNutrient CreateAdministeredNutrient() => new AdministeredNutrient(
-            new Plant("Test", new Species(), new Field(), 0, 0),
-            new Nutrient(), 1.0);
+        private readonly Plant _nutritionedPlant = new Plant("Test", new Species(), new Field(), 0, 0);
+        private readonly Nutrient _nutrient = new Nutrient() { Name = "Water", DosageUnits = "ml" };
+
+        private AdministeredNutrient CreateAdministeredNutrient() =>
+            _nutritionedPlant.AdministerNutrient(_nutrient, 1.0, DateTime.Now);
 
         [TestCase(TestName = "Get and Set administered nutrition Id property works properly")]
         public void GetAndSetIdWorksProperly()

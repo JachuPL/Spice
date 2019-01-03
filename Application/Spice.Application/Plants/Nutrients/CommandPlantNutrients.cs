@@ -8,7 +8,6 @@ using Spice.Application.Plants.Nutrients.Interfaces;
 using Spice.Application.Plants.Nutrients.Models;
 using Spice.Domain;
 using Spice.Domain.Plants;
-using Spice.Domain.Plants.Events;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,19 +36,8 @@ namespace Spice.Application.Plants.Nutrients
             if (model.Date < plant.Planted)
                 throw new NutrientAdministrationDateBeforePlantDateException();
 
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient(plant, nutrient, model.Amount);
-            await _database.AdministeredNutrients.AddAsync(administeredNutrient);
-
-            if (model.CreateEvent)
-            {
-                Event @event = new Event(plant,
-                    EventType.Nutrition,
-                    $"Given {model.Amount} {nutrient.DosageUnits} of {nutrient.Name} to {plant.Name}. (Generated automatically)",
-                    model.Date);
-                plant.Events.Add(@event);
-                _database.Plants.Update(plant);
-            }
-
+            AdministeredNutrient administeredNutrient = plant.AdministerNutrient(nutrient, model.Amount, model.Date, model.CreateEvent);
+            _database.Plants.Update(plant);
             await _database.SaveAsync();
             return administeredNutrient.Id;
         }

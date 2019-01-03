@@ -14,7 +14,7 @@ namespace Spice.Domain.Plants
         {
         }
 
-        public AdministeredNutrient(Plant plant, Nutrient nutrient, double amount)
+        internal AdministeredNutrient(Plant plant, Nutrient nutrient, double amount)
         {
             Plant = plant;
             Nutrient = nutrient;
@@ -22,7 +22,7 @@ namespace Spice.Domain.Plants
             Date = DateTime.Now;
         }
 
-        public AdministeredNutrient(Plant plant, Nutrient nutrient, double amount, DateTime date) : this(plant, nutrient, amount)
+        internal AdministeredNutrient(Plant plant, Nutrient nutrient, double amount, DateTime date) : this(plant, nutrient, amount)
         {
             Date = date;
         }

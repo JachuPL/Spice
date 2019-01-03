@@ -29,13 +29,14 @@ namespace Spice.Application.Tests.Plants.Nutrients
             };
         }
 
-        public static AdministeredNutrient DomainModel(Nutrient nutrient = null, Plant plant = null, DateTime? date = null)
+        public static AdministeredNutrient DomainModel(Nutrient nutrient = null, Plant plant = null, DateTime? date = null, bool createEvent = false)
         {
-            return new AdministeredNutrient(
-                plant ?? Plants.ModelFactory.DomainModel(),
+            Plant nutritionedPlant = plant ?? Plants.ModelFactory.DomainModel();
+            return nutritionedPlant.AdministerNutrient(
                 nutrient ?? Tests.Nutrients.ModelFactory.DomainModel(),
                 1.0,
-                date ?? DateTime.Now);
+                date ?? DateTime.Now, 
+                createEvent);
         }
     }
 }
