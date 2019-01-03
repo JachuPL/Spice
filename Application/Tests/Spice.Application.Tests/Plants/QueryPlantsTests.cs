@@ -5,6 +5,7 @@ using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace Spice.Application.Tests.Plants
 
         private void SeedDatabaseForGetAllTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Field field = Fields.ModelFactory.DomainModel();
                 Domain.Species species = Species.ModelFactory.DomainModel();
@@ -87,7 +88,7 @@ namespace Spice.Application.Tests.Plants
 
         private Guid SeedDatabaseForGetByIdTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Field field = Fields.ModelFactory.DomainModel();
                 ctx.Fields.Add(field);

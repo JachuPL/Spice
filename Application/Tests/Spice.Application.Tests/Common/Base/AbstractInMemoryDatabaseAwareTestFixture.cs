@@ -21,7 +21,7 @@ namespace Spice.Application.Tests.Common.Base
 
         protected SpiceContext SetupInMemoryDatabase()
         {
-            var ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
+            DbContextOptionsBuilder<SpiceContext> ctxOptionsBuilder = new DbContextOptionsBuilder<SpiceContext>();
             ctxOptionsBuilder.UseInMemoryDatabase("TestSpiceDatabase");
             return new SpiceContext(ctxOptionsBuilder.Options);
         }

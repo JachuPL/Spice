@@ -5,6 +5,7 @@ using Spice.Application.Plants.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel();
@@ -122,7 +123,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         private Plant SeedDatabaseForGetByPlantTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 AdministeredNutrient administeredNutrient = ModelFactory.DomainModel();
@@ -204,10 +205,10 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         private Plant SeedDatabaseForGetNutrientSummaryTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
-                Nutrient water = new Nutrient() {Name = "Water"};
+                Nutrient water = new Nutrient() { Name = "Water" };
                 AdministeredNutrient administeredWater1 =
                     ModelFactory.DomainModel(water, date: new DateTime(2018, 1, 1, 0, 0, 0));
                 AdministeredNutrient administeredWater2 =
@@ -220,7 +221,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
                     ModelFactory.DomainModel(water, date: new DateTime(2018, 5, 1, 0, 0, 0));
                 AdministeredNutrient administerdWater6 =
                     ModelFactory.DomainModel(water, date: new DateTime(2019, 1, 1, 0, 0, 0));
-                Nutrient fertilizer = new Nutrient() {Name = "Fertilizer"};
+                Nutrient fertilizer = new Nutrient() { Name = "Fertilizer" };
                 AdministeredNutrient administeredFertilizer =
                     ModelFactory.DomainModel(fertilizer, date: new DateTime(2018, 1, 1, 0, 0, 0));
                 plant.AdministeredNutrients.Add(administeredWater1);

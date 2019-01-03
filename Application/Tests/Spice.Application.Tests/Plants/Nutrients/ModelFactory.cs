@@ -35,7 +35,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             return nutritionedPlant.AdministerNutrient(
                 nutrient ?? Tests.Nutrients.ModelFactory.DomainModel(),
                 1.0,
-                date ?? DateTime.Now, 
+                date ?? DateTime.Now,
                 createEvent);
         }
     }

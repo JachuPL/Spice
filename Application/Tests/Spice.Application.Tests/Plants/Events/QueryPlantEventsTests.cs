@@ -5,6 +5,7 @@ using Spice.Application.Plants.Events.Models.Summary;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Spice.Application.Tests.Plants.Events
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 Event event1 = ModelFactory.DomainModel(plant);
@@ -114,15 +115,15 @@ namespace Spice.Application.Tests.Plants.Events
             Event @event = plant.Events.First();
 
             // When
-            Event EventFromDatabase = await _queries.Get(plant.Id, @event.Id);
+            Event eventFromDatabase = await _queries.Get(plant.Id, @event.Id);
 
             // Then
-            EventFromDatabase.Should().NotBeNull();
+            eventFromDatabase.Should().NotBeNull();
         }
 
         private Plant SeedDatabaseForGetByPlantTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 Event @event = ModelFactory.DomainModel();
@@ -175,8 +176,8 @@ namespace Spice.Application.Tests.Plants.Events
 
             // When
             IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id,
-                new DateTime(2018, 1, 1, 0, 0, 0),
-                new DateTime(2018, 3, 1, 23, 59, 59));
+        new DateTime(2018, 1, 1, 0, 0, 0),
+        new DateTime(2018, 3, 1, 23, 59, 59));
 
             // Then
             eventsFromDatabase.Should().NotBeNullOrEmpty();
@@ -192,7 +193,7 @@ namespace Spice.Application.Tests.Plants.Events
 
         private Plant SeedDatabaseForGetEventSummaryTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 Event event1 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 1, 1, 0, 0, 0));

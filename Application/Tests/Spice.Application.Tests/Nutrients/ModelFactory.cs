@@ -32,8 +32,8 @@ namespace Spice.Application.Tests.Nutrients
             return new Nutrient()
             {
                 Name = nutrientName,
-                Description = "Random nutrient description",
-                DosageUnits = "ml"
+                Description = description,
+                DosageUnits = dosageUnits
             };
         }
     }

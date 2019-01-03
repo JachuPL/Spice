@@ -51,10 +51,10 @@ namespace Spice.Application.Tests.Nutrients
             CreateNutrientModel model = ModelFactory.CreationModel();
 
             // When
-            Guid NutrientId = await _commands.Create(model);
+            Guid nutrientId = await _commands.Create(model);
 
             // Then
-            NutrientId.Should().NotBe(Guid.Empty);
+            nutrientId.Should().NotBe(Guid.Empty);
         }
 
         [TestCase(TestName = "Update nutrient throws exception if nutrient with specified name already exists")]
