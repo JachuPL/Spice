@@ -9,7 +9,7 @@ using System;
 
 namespace Spice.AutoMapper.Profiles.Plant
 {
-    public class PlantEventProfile : Profile
+    internal sealed class PlantEventProfile : Profile
     {
         public PlantEventProfile()
         {
@@ -33,7 +33,7 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<Event, PlantEventDetailsViewModel>();
 
-            CreateMap<PlantEventOccurenceCountModel, PlantEventOccurenceCountViewModel>();
+            CreateMap<PlantEventOccurenceSummaryModel, PlantEventOccurenceSummaryViewModel>();
         }
     }
 }

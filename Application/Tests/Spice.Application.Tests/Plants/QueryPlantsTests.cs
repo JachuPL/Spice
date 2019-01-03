@@ -5,6 +5,7 @@ using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -40,16 +41,19 @@ namespace Spice.Application.Tests.Plants
             IEnumerable<Plant> plants = await _queries.GetAll();
 
             // Then
-            plants.Should().NotBeNull();
+            plants.Should().NotBeNullOrEmpty();
         }
 
         private void SeedDatabaseForGetAllTesting()
         {
-            Field field = Fields.ModelFactory.DomainModel();
-            Domain.Species species = Species.ModelFactory.DomainModel();
-            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field));
-            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
-            DatabaseContext.Save();
+            using (SpiceContext ctx = SetupInMemoryDatabase())
+            {
+                Field field = Fields.ModelFactory.DomainModel();
+                Domain.Species species = Species.ModelFactory.DomainModel();
+                ctx.Plants.Add(ModelFactory.DomainModel(field));
+                ctx.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
+                ctx.Save();
+            }
         }
 
         [TestCase(TestName = "Get by id query on plants returns null if plant does not exist")]
@@ -84,7 +88,7 @@ namespace Spice.Application.Tests.Plants
 
         private Guid SeedDatabaseForGetByIdTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Field field = Fields.ModelFactory.DomainModel();
                 ctx.Fields.Add(field);

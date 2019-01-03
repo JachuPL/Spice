@@ -23,12 +23,16 @@ namespace Spice.Application.Nutrients
 
         public async Task<IEnumerable<Nutrient>> GetAll()
         {
-            return await _database.Nutrients.AsNoTracking().ToListAsync();
+            return await _database.Nutrients
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<NutrientDetailsModel> Get(Guid id)
         {
-            Nutrient nutrient = await _database.Nutrients.FindAsync(id);
+            Nutrient nutrient = await _database.Nutrients
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<NutrientDetailsModel>(nutrient);
         }

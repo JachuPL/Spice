@@ -26,10 +26,10 @@ namespace Spice.WebAPI.Tests.Nutrients
         protected override void ServicesConfiguration(IServiceCollection services)
         {
             _fakeQuery = A.Fake<IQueryNutrients>();
-            services.AddSingleton<IQueryNutrients>(_fakeQuery);
+            services.AddSingleton(_fakeQuery);
 
             _fakeCommands = A.Fake<ICommandNutrients>();
-            services.AddSingleton<ICommandNutrients>(_fakeCommands);
+            services.AddSingleton(_fakeCommands);
         }
 
         [SetUp]
@@ -46,7 +46,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Nutrient>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -61,7 +61,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<NutrientDetailsModel>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -76,7 +76,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<NutrientDetailsModel>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -92,7 +92,7 @@ namespace Spice.WebAPI.Tests.Nutrients
                 .Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
                 ViewModelFactory.CreateValidCreationModel());
 
             // Then
@@ -108,7 +108,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Create(A<CreateNutrientModel>.Ignored)).Returns(Guid.NewGuid());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -123,7 +123,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             CreateNutrientViewModel model = ViewModelFactory.CreateInvalidCreationModel();
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -138,7 +138,7 @@ namespace Spice.WebAPI.Tests.Nutrients
                 .Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
                 ViewModelFactory.CreateValidUpdateModel());
 
             // Then
@@ -154,7 +154,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(Task.FromResult<Nutrient>(null));
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -169,7 +169,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(A.Fake<Nutrient>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -184,7 +184,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             UpdateNutrientViewModel model = ViewModelFactory.CreateInvalidUpdateModel();
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -198,7 +198,7 @@ namespace Spice.WebAPI.Tests.Nutrients
             A.CallTo(() => _fakeCommands.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);
 
             // When
-            var response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
+            HttpResponseMessage response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);

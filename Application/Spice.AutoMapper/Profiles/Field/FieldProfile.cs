@@ -5,7 +5,7 @@ using System;
 
 namespace Spice.AutoMapper.Profiles.Field
 {
-    internal class FieldProfile : Profile
+    internal sealed class FieldProfile : Profile
     {
         public FieldProfile()
         {

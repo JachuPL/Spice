@@ -8,6 +8,7 @@ using Spice.Application.Tests.Common.Base;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Tests.Plants.Events
@@ -173,13 +174,7 @@ namespace Spice.Application.Tests.Plants.Events
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
-            Event startEvent = new Event()
-            {
-                Description = "Start event",
-                Plant = plant,
-                Type = EventType.Start,
-                Occured = DateTime.Now
-            };
+            Event startEvent = plant.Events.First(x => x.Type == EventType.Start);
             plant.Events.Add(startEvent);
             Guid plantId = SeedDatabase(plant);
             Guid eventId = startEvent.Id;

@@ -46,7 +46,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Field>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -61,7 +61,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Field>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -76,7 +76,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Field>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -91,7 +91,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Create(A<CreateFieldModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
                 ViewModelFactory.CreateValidCreationModel());
 
             // Then
@@ -107,7 +107,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Create(A<CreateFieldModel>.Ignored)).Returns(Guid.NewGuid());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -122,7 +122,7 @@ namespace Spice.WebAPI.Tests.Fields
             CreateFieldViewModel model = ViewModelFactory.CreateInvalidCreationModel();
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -136,7 +136,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -151,7 +151,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Returns(Task.FromResult<Field>(null));
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -166,7 +166,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Returns(A.Fake<Field>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -181,7 +181,7 @@ namespace Spice.WebAPI.Tests.Fields
             UpdateFieldViewModel model = ViewModelFactory.CreateInvalidUpdateModel();
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -195,7 +195,7 @@ namespace Spice.WebAPI.Tests.Fields
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);
 
             // When
-            var response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
+            HttpResponseMessage response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);

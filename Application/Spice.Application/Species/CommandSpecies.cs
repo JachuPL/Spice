@@ -5,6 +5,7 @@ using Spice.Application.Species.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spice.Application.Species
@@ -22,8 +23,16 @@ namespace Spice.Application.Species
 
         public async Task<Guid> Create(CreateSpeciesModel model)
         {
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName))
+            IQueryable<Domain.Species> anyWithNameAndLatinName =
+                from existingSpeciesWithNameAndLatinName in _database.Species
+                where (existingSpeciesWithNameAndLatinName.Name == model.Name) &&
+                      (existingSpeciesWithNameAndLatinName.LatinName == model.LatinName)
+                select existingSpeciesWithNameAndLatinName;
+
+            if (await anyWithNameAndLatinName.AnyAsync())
+            {
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
+            }
 
             Domain.Species species = _mapper.Map<Domain.Species>(model);
             await _database.Species.AddAsync(species);
@@ -35,10 +44,20 @@ namespace Spice.Application.Species
         {
             Domain.Species species = await _database.Species.FindAsync(model.Id);
             if (species is null)
+            {
                 return null;
+            }
 
-            if (await _database.Species.AnyAsync(x => x.Name == model.Name && x.LatinName == model.LatinName && x.Id != model.Id))
+            IQueryable<Domain.Species> anyWithNameAndLatinName =
+                from existingSpeciesWithNameAndLatinName in _database.Species
+                where (existingSpeciesWithNameAndLatinName.Name == model.Name) &&
+                      (existingSpeciesWithNameAndLatinName.LatinName == model.LatinName) &&
+                      (existingSpeciesWithNameAndLatinName.Id != model.Id)
+                select existingSpeciesWithNameAndLatinName;
+            if (await anyWithNameAndLatinName.AnyAsync())
+            {
                 throw new SpeciesWithNameAlreadyExistsException(model.Name);
+            }
 
             _mapper.Map(model, species);
             _database.Species.Update(species);
@@ -50,7 +69,9 @@ namespace Spice.Application.Species
         {
             Domain.Species species = await _database.Species.FindAsync(id);
             if (species is null)
+            {
                 return;
+            }
 
             _database.Species.Remove(species);
             await _database.SaveAsync();

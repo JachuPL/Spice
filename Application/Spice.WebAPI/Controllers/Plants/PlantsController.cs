@@ -41,7 +41,9 @@ namespace Spice.WebAPI.Controllers.Plants
         {
             Plant plant = await _queries.Get(id);
             if (plant is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
         }
@@ -51,7 +53,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult> Post([FromBody] CreatePlantViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -74,7 +78,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdatePlantViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -83,7 +89,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 Plant plant = await _commands.Update(updatePlantModel);
                 if (plant is null)
+                {
                     return NotFound();
+                }
 
                 return Ok(_mapper.Map<PlantDetailsViewModel>(plant));
             }

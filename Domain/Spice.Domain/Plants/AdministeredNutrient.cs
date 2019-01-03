@@ -9,5 +9,17 @@ namespace Spice.Domain.Plants
         public Nutrient Nutrient { get; set; }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
+
+        protected AdministeredNutrient()
+        {
+        }
+
+        internal AdministeredNutrient(Plant plant, Nutrient nutrient, double amount, DateTime date)
+        {
+            Plant = plant;
+            Nutrient = nutrient;
+            Amount = amount;
+            Date = date;
+        }
     }
 }

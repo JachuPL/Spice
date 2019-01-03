@@ -4,6 +4,7 @@ using Spice.Application.Nutrients;
 using Spice.Application.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -44,12 +45,12 @@ namespace Spice.Application.Tests.Nutrients
 
         private void SeedDatabaseForGetAllTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
-                ctx.Nutrients.Add(Nutrients.ModelFactory.DomainModel("Nutrient A"));
-                ctx.Nutrients.Add(Nutrients.ModelFactory.DomainModel("Nutrient B"));
-                ctx.Nutrients.Add(Nutrients.ModelFactory.DomainModel("Nutrient C"));
-                ctx.Nutrients.Add(Nutrients.ModelFactory.DomainModel("Nutrient D"));
+                ctx.Nutrients.Add(ModelFactory.DomainModel("Nutrient A"));
+                ctx.Nutrients.Add(ModelFactory.DomainModel("Nutrient B"));
+                ctx.Nutrients.Add(ModelFactory.DomainModel("Nutrient C"));
+                ctx.Nutrients.Add(ModelFactory.DomainModel("Nutrient D"));
                 ctx.Save();
             }
         }
@@ -82,9 +83,9 @@ namespace Spice.Application.Tests.Nutrients
 
         private Guid SeedDatabaseForGetByIdTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
-                Nutrient nutrient = Nutrients.ModelFactory.DomainModel();
+                Nutrient nutrient = ModelFactory.DomainModel();
                 ctx.Nutrients.Add(nutrient);
                 ctx.Save();
                 return nutrient.Id;

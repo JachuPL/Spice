@@ -4,79 +4,79 @@ using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
 
-namespace Spice.Domain.Tests.Plants
+namespace Spice.Domain.Tests.Models.Plants
 {
     [TestFixture]
-    internal sealed class EventTests
+    internal sealed class EventTests : AbstractBaseDomainTestFixture<Event>
     {
+        private readonly Plant _eventOwnerPlant = new Plant("Test plant", new Species(), new Field(), 0, 0);
+
+        protected override Event CreateDomainObject() =>
+            _eventOwnerPlant.AddEvent(EventType.Disease, "Spotted some brown leaves.");
+
         [TestCase(TestName = "Get and Set event Id property works properly")]
         public void GetAndSetIdWorksProperly()
         {
             // Given
-            Event @event = new Event();
             Guid id = Guid.NewGuid();
 
             // When
-            @event.Id = id;
+            DomainObject.Id = id;
 
             // Then
-            @event.Id.Should().Be(id);
+            DomainObject.Id.Should().Be(id);
         }
 
         [TestCase(TestName = "Get and Set event Plant property works properly")]
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Event @event = new Event();
-            Plant plant = new Plant();
+            Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
 
             // When
-            @event.Plant = plant;
+            DomainObject.Plant = plant;
 
             // Then
-            @event.Plant.Should().Be(plant);
+            DomainObject.Plant.Should().Be(plant);
         }
 
         [TestCase(TestName = "Get and Set event type property works properly")]
         public void GetAndSetTypeWorksProperly()
         {
             // Given
-            Event @event = new Event();
             EventType type = EventType.Growth;
 
             // When
-            @event.Type = type;
+            DomainObject.Type = type;
 
             // Then
-            @event.Type.Should().Be(type);
+            DomainObject.Type.Should().Be(type);
         }
 
         [TestCase(TestName = "Get and Set event description property works properly")]
         public void GetAndSetDescriptionWorksProperly()
         {
             // Given
-            Event @event = new Event();
             string description = "Random event description";
 
             // When
-            @event.Description = description;
+            DomainObject.Description = description;
 
             // Then
-            @event.Description.Should().Be(description);
+            DomainObject.Description.Should().Be(description);
         }
 
         [TestCase(TestName = "Get and Set event Occured property works properly")]
         public void GetAndSetOccuredWorksProperly()
         {
             // Given
-            Event @event = new Event();
             DateTime date = DateTime.Now.AddDays(1);
 
             // When
-            @event.Occured = date;
+            DomainObject.Occured = date;
 
             // Then
-            @event.Occured.Should().Be(date);
+            DomainObject.Occured.Should().Be(date);
         }
     }
 }

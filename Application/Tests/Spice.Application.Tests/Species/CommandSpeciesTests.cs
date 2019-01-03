@@ -50,10 +50,10 @@ namespace Spice.Application.Tests.Species
             CreateSpeciesModel model = ModelFactory.CreationModel();
 
             // When
-            Guid SpeciesId = await _commands.Create(model);
+            Guid speciesId = await _commands.Create(model);
 
             // Then
-            SpeciesId.Should().NotBe(Guid.Empty);
+            speciesId.Should().NotBe(Guid.Empty);
         }
 
         [TestCase(TestName = "Update species throws exception if species with specified name already exists")]

@@ -3,7 +3,7 @@ using System;
 
 namespace Spice.ViewModels.Plants.Nutrients
 {
-    public class PlantNutrientAdministrationCountViewModel
+    public class PlantNutrientAdministrationSummaryViewModel
     {
         public NutrientDetailsViewModel Nutrient { get; set; }
         public double TotalAmount { get; set; }

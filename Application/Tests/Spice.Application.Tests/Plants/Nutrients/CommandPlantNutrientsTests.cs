@@ -24,7 +24,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
         {
             DatabaseContext = SetupInMemoryDatabase();
             DatabaseContext.Database.EnsureCreated();
-            _commands = new CommandPlantNutrients(DatabaseContext, Mapper);
+            _commands = new CommandPlantNutrients(DatabaseContext);
         }
 
         [TearDown]
