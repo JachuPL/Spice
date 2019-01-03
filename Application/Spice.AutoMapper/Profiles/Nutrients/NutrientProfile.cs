@@ -22,8 +22,8 @@ namespace Spice.AutoMapper.Profiles.Nutrients
             CreateMap<UpdateNutrientModel, Nutrient>()
                 .ForMember(x => x.AdministeredToPlants, opt => opt.Ignore());
 
-            CreateMap<Domain.Nutrient, NutrientIndexViewModel>();
-            CreateMap<Domain.Nutrient, NutrientDetailsModel>();
+            CreateMap<Nutrient, NutrientIndexViewModel>();
+            CreateMap<Nutrient, NutrientDetailsModel>();
             CreateMap<NutrientDetailsModel, NutrientDetailsViewModel>();
         }
     }
