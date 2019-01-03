@@ -5,6 +5,7 @@ using Spice.Application.Plants.Nutrients.Models;
 using Spice.Application.Tests.Common.Base;
 using Spice.Domain;
 using Spice.Domain.Plants;
+using Spice.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,26 +42,29 @@ namespace Spice.Application.Tests.Plants.Nutrients
             IEnumerable<AdministeredNutrient> administeredNutrients = await _queries.GetByPlant(plantId);
 
             // Then
-            administeredNutrients.Should().NotBeNull();
+            administeredNutrients.Should().NotBeNullOrEmpty();
         }
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
         {
-            Plant plant = Plants.ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient2 = ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient3 = ModelFactory.DomainModel();
+            using (SpiceContext ctx = SetupInMemoryDatabase())
+            {
+                Plant plant = Plants.ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient2 = ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient3 = ModelFactory.DomainModel();
 
-            plant.AdministeredNutrients.Add(administeredNutrient1);
-            plant.AdministeredNutrients.Add(administeredNutrient2);
-            plant.AdministeredNutrients.Add(administeredNutrient3);
-            DatabaseContext.Plants.Add(plant);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient1);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient2);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient3);
+                plant.AdministeredNutrients.Add(administeredNutrient1);
+                plant.AdministeredNutrients.Add(administeredNutrient2);
+                plant.AdministeredNutrients.Add(administeredNutrient3);
+                ctx.Plants.Add(plant);
+                ctx.AdministeredNutrients.Add(administeredNutrient1);
+                ctx.AdministeredNutrients.Add(administeredNutrient2);
+                ctx.AdministeredNutrients.Add(administeredNutrient3);
 
-            DatabaseContext.Save();
-            return plant.Id;
+                ctx.Save();
+                return plant.Id;
+            }
         }
 
         [TestCase(TestName = "Get all by plant id query on plant nutrients returns null if plant does not exist")]
@@ -111,15 +115,15 @@ namespace Spice.Application.Tests.Plants.Nutrients
             AdministeredNutrient administeredNutrient = plant.AdministeredNutrients.First();
 
             // When
-            AdministeredNutrient administeredNutrientFromDatabase = await _queries.Get(plant.Id, administeredNutrient.Id);
+            AdministeredNutrient administeredNutrientsFromDatabase = await _queries.Get(plant.Id, administeredNutrient.Id);
 
             // Then
-            administeredNutrientFromDatabase.Should().NotBeNull();
+            administeredNutrientsFromDatabase.Should().NotBeNull();
         }
 
         private Plant SeedDatabaseForGetByPlantTesting()
         {
-            using (var ctx = SetupInMemoryDatabase())
+            using (SpiceContext ctx = SetupInMemoryDatabase())
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 AdministeredNutrient administeredNutrient = ModelFactory.DomainModel();
@@ -137,7 +141,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> nutrientsSummary = await _queries.Summary(plantId);
+            IEnumerable<PlantNutrientAdministrationSummaryModel> nutrientsSummary = await _queries.Summary(plantId);
 
             // Then
             nutrientsSummary.Should().BeNull();
@@ -150,20 +154,24 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientFromDatabase =
+            IEnumerable<PlantNutrientAdministrationSummaryModel> administeredNutrientFromDatabase =
                 await _queries.Summary(plant.Id);
 
             // Then
             administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
-            PlantNutrientAdministrationCountModel waterSummary =
+            PlantNutrientAdministrationSummaryModel waterSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Water");
             waterSummary.Nutrient.Should().NotBeNull();
-            waterSummary.TotalAmount.Should().Be(2);
+            waterSummary.TotalAmount.Should().Be(6);
+            waterSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
+            waterSummary.LastAdministration.Should().Be(new DateTime(2019, 1, 1, 0, 0, 0));
 
-            PlantNutrientAdministrationCountModel fertilizerSummary =
+            PlantNutrientAdministrationSummaryModel fertilizerSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
             fertilizerSummary.Nutrient.Should().NotBeNull();
             fertilizerSummary.TotalAmount.Should().Be(1);
+            fertilizerSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
+            fertilizerSummary.LastAdministration.Should().Be(fertilizerSummary.FirstAdministration);
         }
 
         [TestCase(TestName = "Get summary of administered nutrients by plant id returns administered nutrients summary from specified date range")]
@@ -173,43 +181,62 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientFromDatabase =
+            IEnumerable<PlantNutrientAdministrationSummaryModel> administeredNutrientsFromDatabase =
                 await _queries.Summary(plant.Id,
                     new DateTime(2018, 1, 1, 0, 0, 0),
-                    new DateTime(2018, 12, 31, 23, 59, 59));
+                    new DateTime(2018, 4, 1, 23, 59, 59));
 
             // Then
-            administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
-            PlantNutrientAdministrationCountModel waterSummary =
-                administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Water");
+            administeredNutrientsFromDatabase.Should().NotBeNullOrEmpty();
+            PlantNutrientAdministrationSummaryModel waterSummary =
+                administeredNutrientsFromDatabase.Single(x => x.Nutrient.Name == "Water");
             waterSummary.Nutrient.Should().NotBeNull();
-            waterSummary.TotalAmount.Should().Be(1);
+            waterSummary.TotalAmount.Should().Be(4);
+            waterSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
+            waterSummary.LastAdministration.Should().Be(new DateTime(2018, 4, 1, 0, 0, 0));
 
-            PlantNutrientAdministrationCountModel fertilizerSummary =
-                administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
+            PlantNutrientAdministrationSummaryModel fertilizerSummary =
+                administeredNutrientsFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
             fertilizerSummary.Nutrient.Should().NotBeNull();
             fertilizerSummary.TotalAmount.Should().Be(1);
+            fertilizerSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
+            fertilizerSummary.LastAdministration.Should().Be(fertilizerSummary.FirstAdministration);
         }
 
         private Plant SeedDatabaseForGetNutrientSummaryTesting()
         {
-            Plant plant = Plants.ModelFactory.DomainModel();
-            Nutrient nutrient1 = new Nutrient() { Name = "Water" };
-            AdministeredNutrient administeredNutrient1 =
-                ModelFactory.DomainModel(nutrient1, date: new DateTime(2018, 1, 1, 0, 0, 0));
-            AdministeredNutrient administeredNutrient2 =
-                ModelFactory.DomainModel(nutrient1, date: new DateTime(2019, 1, 1, 0, 0, 0));
-            Nutrient nutrient2 = new Nutrient() { Name = "Fertilizer" };
-            AdministeredNutrient administeredNutrient3 =
-                ModelFactory.DomainModel(nutrient2, date: new DateTime(2018, 1, 1, 0, 0, 0));
-            plant.AdministeredNutrients.Add(administeredNutrient1);
-            plant.AdministeredNutrients.Add(administeredNutrient2);
-            plant.AdministeredNutrients.Add(administeredNutrient3);
-            DatabaseContext.Plants.Add(plant);
-            DatabaseContext.Nutrients.Add(nutrient1);
-            DatabaseContext.Nutrients.Add(nutrient2);
-            DatabaseContext.Save();
-            return plant;
+            using (SpiceContext ctx = SetupInMemoryDatabase())
+            {
+                Plant plant = Plants.ModelFactory.DomainModel();
+                Nutrient water = new Nutrient() { Name = "Water" };
+                AdministeredNutrient administeredWater1 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 1, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater2 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 2, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater3 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 3, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater4 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 4, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater5 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 5, 1, 0, 0, 0));
+                AdministeredNutrient administerdWater6 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2019, 1, 1, 0, 0, 0));
+                Nutrient fertilizer = new Nutrient() { Name = "Fertilizer" };
+                AdministeredNutrient administeredFertilizer =
+                    ModelFactory.DomainModel(fertilizer, date: new DateTime(2018, 1, 1, 0, 0, 0));
+                plant.AdministeredNutrients.Add(administeredWater1);
+                plant.AdministeredNutrients.Add(administeredWater2);
+                plant.AdministeredNutrients.Add(administeredWater3);
+                plant.AdministeredNutrients.Add(administeredWater4);
+                plant.AdministeredNutrients.Add(administeredWater5);
+                plant.AdministeredNutrients.Add(administerdWater6);
+                plant.AdministeredNutrients.Add(administeredFertilizer);
+                ctx.Plants.Add(plant);
+                ctx.Nutrients.Add(water);
+                ctx.Nutrients.Add(fertilizer);
+                ctx.Save();
+                return plant;
+            }
         }
     }
 }

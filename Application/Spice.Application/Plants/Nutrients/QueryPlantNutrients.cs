@@ -32,6 +32,7 @@ namespace Spice.Application.Plants.Nutrients
         private async Task<Plant> GetPlantById(Guid id)
         {
             return await _database.Plants
+                .AsNoTracking()
                 .Include(x => x.AdministeredNutrients).ThenInclude(x => x.Nutrient)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -43,28 +44,45 @@ namespace Spice.Application.Plants.Nutrients
             return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<IEnumerable<PlantNutrientAdministrationSummaryModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
         {
-            Plant plant = await GetPlantById(plantId);
-            if (plant is null)
+            Plant existingPlant = await _database.Plants
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == plantId);
+            if (existingPlant is null)
+            {
                 return null;
+            }
 
-            IEnumerable<AdministeredNutrient> administeredNutrients = plant.AdministeredNutrients;
+            IQueryable<AdministeredNutrient> administeredNutrients =
+                from administeredNutrient in _database.AdministeredNutrients.AsNoTracking()
+                join plant in _database.Plants on administeredNutrient.Plant.Id equals plant.Id
+                where plant.Id == existingPlant.Id
+                select administeredNutrient;
 
             if (startDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => startDate.Value <= x.Date);
+            }
 
             if (endDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => x.Date <= endDate.Value);
+            }
 
-            return administeredNutrients.GroupBy(x => x.Nutrient)
-                .Select(x => new PlantNutrientAdministrationCountModel()
+            IQueryable<PlantNutrientAdministrationSummaryModel> administeredNutrientsByNutrient =
+                from administeredNutrient in administeredNutrients
+                group administeredNutrient by administeredNutrient.Nutrient
+                into administeredNutrientNutrient
+                select new PlantNutrientAdministrationSummaryModel()
                 {
-                    Nutrient = _mapper.Map<NutrientDetailsModel>(x.Key),
-                    TotalAmount = x.Sum(z => z.Amount),
-                    FirstAdministration = x.Min(z => z.Date),
-                    LastAdministration = x.Max(z => z.Date)
-                }).ToList();
+                    Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientNutrient.Key),
+                    TotalAmount = administeredNutrientNutrient.Sum(z => z.Amount),
+                    FirstAdministration = administeredNutrientNutrient.Min(z => z.Date),
+                    LastAdministration = administeredNutrientNutrient.Max(z => z.Date)
+                };
+
+            return await administeredNutrientsByNutrient.ToListAsync();
         }
     }
 }

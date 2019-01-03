@@ -8,12 +8,12 @@ namespace Spice.Application.Common
 {
     public interface IDatabaseService
     {
-        DbSet<Plant> Plants { get; set; }
-        DbSet<Field> Fields { get; set; }
-        DbSet<Domain.Species> Species { get; set; }
-        DbSet<Nutrient> Nutrients { get; set; }
-        DbSet<AdministeredNutrient> AdministeredNutrients { get; set; }
-        DbSet<Event> Events { get; set; }
+        DbSet<Plant> Plants { get; }
+        DbSet<Field> Fields { get; }
+        DbSet<Domain.Species> Species { get; }
+        DbSet<Nutrient> Nutrients { get; }
+        DbSet<AdministeredNutrient> AdministeredNutrients { get; }
+        DbSet<Event> Events { get; }
 
         int Save();
 

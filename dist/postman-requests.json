@@ -24,13 +24,13 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary",
+											"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/summary",
 											"host": [
 												"{{apiUrl}}"
 											],
 											"path": [
 												"plants",
-												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 												"nutrients",
 												"summary"
 											]
@@ -76,7 +76,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "List all administered plants nutrients Copy",
+							"name": "List all administered plants nutrients",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -85,13 +85,13 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"nutrients"
 									]
 								}
@@ -136,16 +136,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 500.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n\t\"CreateEvent\": true\n}"
+									"raw": "{\n\t\"NutrientId\": \"66f3ec7e-d702-427b-f47f-08d6719b259d\",\n\t\"Amount\": 2.0,\n\t\"Date\": \"2018-12-11 11:47:00\",\n\t\"CreateEvent\": true\n}"
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"nutrients"
 									]
 								}
@@ -166,18 +166,18 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"NutrientId\": \"25849c34-3242-4aff-27e3-08d66bfc09eb\",\n\t\"Amount\": 125.0,\n\t\"Date\": \"2019-12-09 14:30:00\",\n}"
+									"raw": "{\n\t\"NutrientId\": \"66f3ec7e-d702-427b-f47f-08d6719b259d\",\n\t\"Amount\": 3.0,\n\t\"Date\": \"2018-12-11 11:47:00\",\n\t\"CreateEvent\": true\n}"
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/094f9561-9f43-44c1-3ade-08d6719f52ff",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"nutrients",
-										"41955905-a177-4145-bda5-08d66d666eef"
+										"094f9561-9f43-44c1-3ade-08d6719f52ff"
 									]
 								}
 							},
@@ -200,15 +200,15 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/0d04fd7d-80b1-4808-94b9-08d66d65df5b",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/c182b654-1f91-4310-3adf-08d6719f52ff",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"nutrients",
-										"0d04fd7d-80b1-4808-94b9-08d66d65df5b"
+										"c182b654-1f91-4310-3adf-08d6719f52ff"
 									]
 								}
 							},
@@ -233,13 +233,13 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary",
+											"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/summary",
 											"host": [
 												"{{apiUrl}}"
 											],
 											"path": [
 												"plants",
-												"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+												"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 												"events",
 												"summary"
 											]
@@ -294,13 +294,13 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"events"
 									]
 								}
@@ -317,15 +317,15 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/bfa3f1f0-c154-4220-611f-08d66f17f8dc",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/4e3c64df-a412-462a-3d42-08d6719bd8da",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"events",
-										"bfa3f1f0-c154-4220-611f-08d66f17f8dc"
+										"4e3c64df-a412-462a-3d42-08d6719bd8da"
 									]
 								}
 							},
@@ -345,16 +345,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Type\": \"Insects\",\n\t\"Description\": \"Spotted some Leptinotarsa decemlineata on the leaves today.\",\n\t\"Occured\": \"2018-12-30 13:00:00\",\n}"
+									"raw": "{\n\t\"Type\": \"Insects\",\n\t\"Description\": \"Spotted some Leptinotarsa decemlineata on the leaves today.\",\n\t\"Occured\": \"2018-12-30 13:00:00\"\n}"
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"events"
 									]
 								}
@@ -375,18 +375,18 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"Type\": 6,\n    \"Description\": \"Moved plant to more sunny place, right behind barn.\",\n    \"Occured\": \"2018-12-30T13:05:15\"\n}"
+									"raw": "{\n    \"Type\": \"Growth\",\n    \"Description\": \"Great progress after fertilizing.\",\n    \"Occured\": \"2018-12-30T13:05:15\"\n}"
 								},
 								"url": {
-									"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb",
+									"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/4e3c64df-a412-462a-3d42-08d6719bd8da",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"plants",
-										"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+										"68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 										"events",
-										"5d34024b-1a26-4a98-2531-08d66e4e33cb"
+										"4e3c64df-a412-462a-3d42-08d6719bd8da"
 									]
 								}
 							},
@@ -457,13 +457,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+							"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4"
+								"68d7f358-6b2f-444a-61ce-08d6719bd8d4"
 							]
 						}
 					},
@@ -483,7 +483,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Aji Lemon Drop\",\n\t\"SpeciesId\": \"907083c1-5032-4a28-f688-08d66bd60981\",\n\t\"FieldId\": \"2694bd84-fa18-4a35-6a3e-08d66bd634b5\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-12-09 14:30:00\",\n\t\"State\": \"Healthy\"\n}"
+							"raw": "{\n\t\"Name\": \"Avocado #1\",\n\t\"SpeciesId\": \"1e7e9575-41e1-470c-9772-08d671982349\",\n\t\"FieldId\": \"8b6e7f21-98b6-4e46-b2c2-08d67188be3c\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-11-01 09:30:00\",\n\t\"State\": \"Healthy\"\n}"
 						},
 						"url": {
 							"raw": "{{apiUrl}}/plants/",
@@ -512,16 +512,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Aji Jobito\",\n\t\"SpeciesId\": \"d7be6f24-8704-4447-f689-08d66bd60981\",\n\t\"FieldId\": \"2694bd84-fa18-4a35-6a3e-08d66bd634b5\",\n\t\"Row\": 1,\n\t\"Column\": 2,\n\t\"Planted\": \"2018-12-09 15:00:00\",\n\t\"State\": \"Fruiting\"\n}"
+							"raw": "{\n\t\"Name\": \"Avocado #2\",\n\t\"SpeciesId\": \"73531e76-eaa7-42e8-9773-08d671982349\",\n\t\"FieldId\": \"b1ed0592-5e91-4690-b2c3-08d67188be3c\",\n\t\"Row\": 0,\n\t\"Column\": 0,\n\t\"Planted\": \"2018-11-01 09:30:00\",\n\t\"State\": \"Healthy\"\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
+							"raw": "{{apiUrl}}/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"ef9f019b-d93e-4f5b-ba8d-08d66bd675e4"
+								"68d7f358-6b2f-444a-61ce-08d6719bd8d4"
 							]
 						}
 					},
@@ -544,13 +544,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/plants/3f12efa0-1b6b-424f-ba7c-08d66b07fda8",
+							"raw": "{{apiUrl}}/plants/22114248-0fdb-4566-61cd-08d6719bd8d4",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"plants",
-								"3f12efa0-1b6b-424f-ba7c-08d66b07fda8"
+								"22114248-0fdb-4566-61cd-08d6719bd8d4"
 							]
 						}
 					},
@@ -592,13 +592,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5",
+							"raw": "{{apiUrl}}/fields/8b6e7f21-98b6-4e46-b2c2-08d67188be3c",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"fields",
-								"2694bd84-fa18-4a35-6a3e-08d66bd634b5"
+								"8b6e7f21-98b6-4e46-b2c2-08d67188be3c"
 							]
 						}
 					},
@@ -618,7 +618,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Field, field, endless field\",\n\t\"Description\": \"Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
+							"raw": "{\n\t\"Name\": \"Field\",\n\t\"Description\": \"Lots of sun from early morning untill afternoon.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
 						},
 						"url": {
 							"raw": "{{apiUrl}}/fields/",
@@ -647,16 +647,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Pole, pole, łyse pole\",\n\t\"Description\": \"Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
+							"raw": "{\n\t\"Name\": \"Field B\",\n\t\"Description\": \"Sunny from the afternoon until the sunset.\",\n\t\"Latitude\": 50.9657062,\n\t\"Longtitude\": 22.3966112\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5",
+							"raw": "{{apiUrl}}/fields/ba9d4125-ca60-49f4-b2c5-08d67188be3c",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"fields",
-								"2694bd84-fa18-4a35-6a3e-08d66bd634b5"
+								"ba9d4125-ca60-49f4-b2c5-08d67188be3c"
 							]
 						}
 					},
@@ -727,13 +727,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb",
+							"raw": "{{apiUrl}}/nutrients/e95b4df9-cec7-439d-f47d-08d6719b259d",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"nutrients",
-								"25849c34-3242-4aff-27e3-08d66bfc09eb"
+								"e95b4df9-cec7-439d-f47d-08d6719b259d"
 							]
 						}
 					},
@@ -844,13 +844,13 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{apiUrl}}/species/d7be6f24-8704-4447-f689-08d66bd60981/summary",
+									"raw": "{{apiUrl}}/species/1e7e9575-41e1-470c-9772-08d671982349/summary",
 									"host": [
 										"{{apiUrl}}"
 									],
 									"path": [
 										"species",
-										"d7be6f24-8704-4447-f689-08d66bd60981",
+										"1e7e9575-41e1-470c-9772-08d671982349",
 										"summary"
 									]
 								}
@@ -924,13 +924,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{apiUrl}}/species/d7be6f24-8704-4447-f689-08d66bd60981",
+							"raw": "{{apiUrl}}/species/1e7e9575-41e1-470c-9772-08d671982349",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"species",
-								"d7be6f24-8704-4447-f689-08d66bd60981"
+								"1e7e9575-41e1-470c-9772-08d671982349"
 							]
 						}
 					},
@@ -950,7 +950,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Name\": \"Green bell pepper\",\n\t\"LatinName\": \"Capsicum annuum\",\n\t\"Description\": \"Not spicy at all. Widely used in hungarian cuisine.\"\n}"
+							"raw": "{\n\t\"Name\": \"Bell pepper\",\n\t\"LatinName\": \"Capsicum annuum\",\n\t\"Description\": \"Sweet pepper with no spiciness at all.\"\n}"
 						},
 						"url": {
 							"raw": "{{apiUrl}}/species/",
@@ -982,13 +982,13 @@
 							"raw": "{\n\t\"Name\": \"Spicy pepper\",\n\t\"LatinName\": \"Capsicum baccatum\",\n\t\"Description\": \"To get rid of spice drink a glass of milk or eat a spoon of butter.\",\n}"
 						},
 						"url": {
-							"raw": "{{apiUrl}}/species/907083c1-5032-4a28-f688-08d66bd60981",
+							"raw": "{{apiUrl}}/species/ef0ab7dc-aed5-40cc-9774-08d671982349",
 							"host": [
 								"{{apiUrl}}"
 							],
 							"path": [
 								"species",
-								"907083c1-5032-4a28-f688-08d66bd60981"
+								"ef0ab7dc-aed5-40cc-9774-08d671982349"
 							]
 						}
 					},
@@ -1050,13 +1050,13 @@
 	],
 	"variable": [
 		{
-			"id": "c8d7d427-16ce-456b-8508-720990c7ae2f",
+			"id": "8da92f90-5654-4b5c-bb70-a17c2fa7a1af",
 			"key": "appUrl",
 			"value": "https://localhost:44398",
 			"type": "string"
 		},
 		{
-			"id": "bfe6b293-8c79-4837-9d04-2d8265d77ff8",
+			"id": "a1d649d3-e23c-4d72-a2c6-6b8436fc80d9",
 			"key": "apiUrl",
 			"value": "{{appUrl}}/api",
 			"type": "string"

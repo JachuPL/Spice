@@ -8,11 +8,11 @@ namespace Spice.AutoMapper
 {
     public static class AutoMapperFactory
     {
-        private static readonly MapperConfiguration _configuration;
+        private static readonly MapperConfiguration Configuration;
 
         static AutoMapperFactory()
         {
-            _configuration = new MapperConfiguration(cfg =>
+            Configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<PlantProfile>();
                 cfg.AddProfile<FieldProfile>();
@@ -23,6 +23,6 @@ namespace Spice.AutoMapper
             });
         }
 
-        public static IMapper CreateMapper() => _configuration.CreateMapper();
+        public static IMapper CreateMapper() => Configuration.CreateMapper();
     }
 }

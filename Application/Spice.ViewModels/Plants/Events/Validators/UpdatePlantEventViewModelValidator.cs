@@ -39,10 +39,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
 
         private bool BeAValidDescription(string arg)
         {
-            if (arg is null)
-                return true;
-
-            return arg.Trim().Length > 0;
+            return arg is null || (arg.Trim().Length > 0);
         }
     }
 }

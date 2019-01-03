@@ -41,7 +41,9 @@ namespace Spice.WebAPI.Controllers
         {
             Species species = await _queries.Get(id);
             if (species is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<SpeciesDetailsViewModel>(species));
         }
@@ -51,7 +53,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Post([FromBody] CreateSpeciesViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -70,7 +74,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdateSpeciesViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -79,7 +85,9 @@ namespace Spice.WebAPI.Controllers
 
                 Species species = await _commands.Update(updateSpeciesModel);
                 if (species is null)
+                {
                     return NotFound();
+                }
 
                 return Ok(_mapper.Map<SpeciesDetailsViewModel>(species));
             }
@@ -103,7 +111,9 @@ namespace Spice.WebAPI.Controllers
         {
             IEnumerable<SpeciesNutritionSummaryModel> nutritionSummary = await _queries.Summary(id, fromDate, toDate);
             if (nutritionSummary is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<IEnumerable<SpeciesNutritionSummaryViewModel>>(nutritionSummary));
         }

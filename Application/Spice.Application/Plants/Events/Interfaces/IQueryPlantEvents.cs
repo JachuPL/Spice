@@ -12,6 +12,6 @@ namespace Spice.Application.Plants.Events.Interfaces
 
         Task<Event> Get(Guid plantId, Guid id);
 
-        Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null);
+        Task<IEnumerable<PlantEventOccurenceSummaryModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

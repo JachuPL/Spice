@@ -41,7 +41,9 @@ namespace Spice.WebAPI.Controllers
         {
             Field field = await _queries.Get(id);
             if (field is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<FieldDetailsViewModel>(field));
         }
@@ -51,7 +53,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Post([FromBody] CreateFieldViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -70,7 +74,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdateFieldViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -79,7 +85,9 @@ namespace Spice.WebAPI.Controllers
 
                 Field field = await _commands.Update(updateFieldModel);
                 if (field is null)
+                {
                     return NotFound();
+                }
 
                 return Ok(_mapper.Map<FieldDetailsViewModel>(field));
             }
