@@ -271,7 +271,7 @@ namespace Spice.WebAPI.Tests.Plants.Events
         {
             // Given
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<PlantEventOccurenceCountModel>>(null));
+                .Returns(Task.FromResult<IEnumerable<PlantEventOccurenceSummaryModel>>(null));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.EventsSummaryEndpoint());
@@ -290,7 +290,7 @@ namespace Spice.WebAPI.Tests.Plants.Events
             DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
             DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
-                .Returns(A.Fake<IEnumerable<PlantEventOccurenceCountModel>>());
+                .Returns(A.Fake<IEnumerable<PlantEventOccurenceSummaryModel>>());
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.EventsSummaryWithinDateRangeEndpoint());

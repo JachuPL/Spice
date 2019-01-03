@@ -141,7 +141,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> nutrientsSummary = await _queries.Summary(plantId);
+            IEnumerable<PlantNutrientAdministrationSummaryModel> nutrientsSummary = await _queries.Summary(plantId);
 
             // Then
             nutrientsSummary.Should().BeNull();
@@ -154,19 +154,19 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientFromDatabase =
+            IEnumerable<PlantNutrientAdministrationSummaryModel> administeredNutrientFromDatabase =
                 await _queries.Summary(plant.Id);
 
             // Then
             administeredNutrientFromDatabase.Should().NotBeNullOrEmpty();
-            PlantNutrientAdministrationCountModel waterSummary =
+            PlantNutrientAdministrationSummaryModel waterSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Water");
             waterSummary.Nutrient.Should().NotBeNull();
             waterSummary.TotalAmount.Should().Be(6);
             waterSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
             waterSummary.LastAdministration.Should().Be(new DateTime(2019, 1, 1, 0, 0, 0));
 
-            PlantNutrientAdministrationCountModel fertilizerSummary =
+            PlantNutrientAdministrationSummaryModel fertilizerSummary =
                 administeredNutrientFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
             fertilizerSummary.Nutrient.Should().NotBeNull();
             fertilizerSummary.TotalAmount.Should().Be(1);
@@ -181,21 +181,21 @@ namespace Spice.Application.Tests.Plants.Nutrients
             Plant plant = SeedDatabaseForGetNutrientSummaryTesting();
 
             // When
-            IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrientsFromDatabase =
+            IEnumerable<PlantNutrientAdministrationSummaryModel> administeredNutrientsFromDatabase =
                 await _queries.Summary(plant.Id,
                     new DateTime(2018, 1, 1, 0, 0, 0),
                     new DateTime(2018, 4, 1, 23, 59, 59));
 
             // Then
             administeredNutrientsFromDatabase.Should().NotBeNullOrEmpty();
-            PlantNutrientAdministrationCountModel waterSummary =
+            PlantNutrientAdministrationSummaryModel waterSummary =
                 administeredNutrientsFromDatabase.Single(x => x.Nutrient.Name == "Water");
             waterSummary.Nutrient.Should().NotBeNull();
             waterSummary.TotalAmount.Should().Be(4);
             waterSummary.FirstAdministration.Should().Be(new DateTime(2018, 1, 1, 0, 0, 0));
             waterSummary.LastAdministration.Should().Be(new DateTime(2018, 4, 1, 0, 0, 0));
 
-            PlantNutrientAdministrationCountModel fertilizerSummary =
+            PlantNutrientAdministrationSummaryModel fertilizerSummary =
                 administeredNutrientsFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
             fertilizerSummary.Nutrient.Should().NotBeNull();
             fertilizerSummary.TotalAmount.Should().Be(1);

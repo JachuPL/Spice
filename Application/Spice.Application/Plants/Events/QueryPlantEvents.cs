@@ -40,7 +40,7 @@ namespace Spice.Application.Plants.Events
             return plant?.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PlantEventOccurenceCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<IEnumerable<PlantEventOccurenceSummaryModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
         {
             Plant existingPlant = await _database.Plants
                 .AsNoTracking()
@@ -65,11 +65,11 @@ namespace Spice.Application.Plants.Events
                 occuredEvents = occuredEvents.Where(x => x.Occured <= endDate.Value);
             }
 
-            IQueryable<PlantEventOccurenceCountModel> occuredEventsByType =
+            IQueryable<PlantEventOccurenceSummaryModel> occuredEventsByType =
                 from occuredEvent in occuredEvents
                 group occuredEvent by occuredEvent.Type
                 into occuredEventType
-                select new PlantEventOccurenceCountModel()
+                select new PlantEventOccurenceSummaryModel()
                 {
                     Type = occuredEventType.Key,
                     TotalCount = occuredEventType.Count(),

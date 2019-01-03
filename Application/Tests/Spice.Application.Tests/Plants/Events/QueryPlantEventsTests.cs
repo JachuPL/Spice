@@ -141,7 +141,7 @@ namespace Spice.Application.Tests.Plants.Events
             Guid plantId = Guid.NewGuid();
 
             // When
-            IEnumerable<PlantEventOccurenceCountModel> eventsSummary = await _queries.Summary(plantId);
+            IEnumerable<PlantEventOccurenceSummaryModel> eventsSummary = await _queries.Summary(plantId);
 
             // Then
             eventsSummary.Should().BeNull();
@@ -154,15 +154,15 @@ namespace Spice.Application.Tests.Plants.Events
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id);
+            IEnumerable<PlantEventOccurenceSummaryModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
             eventsFromDatabase.Should().NotBeNullOrEmpty();
-            PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
+            PlantEventOccurenceSummaryModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
             diseaseSummary.TotalCount.Should().Be(4);
             diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
             diseaseSummary.LastOccurence.Should().Be(new DateTime(2018, 04, 01, 0, 0, 0));
-            PlantEventOccurenceCountModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
+            PlantEventOccurenceSummaryModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
             overwateringSummary.TotalCount.Should().Be(1);
             overwateringSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
             overwateringSummary.LastOccurence.Should().Be(overwateringSummary.FirstOccurence);
@@ -175,17 +175,17 @@ namespace Spice.Application.Tests.Plants.Events
             Plant plant = SeedDatabaseForGetEventSummaryTesting();
 
             // When
-            IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id,
+            IEnumerable<PlantEventOccurenceSummaryModel> eventsFromDatabase = await _queries.Summary(plant.Id,
         new DateTime(2018, 1, 1, 0, 0, 0),
         new DateTime(2018, 3, 1, 23, 59, 59));
 
             // Then
             eventsFromDatabase.Should().NotBeNullOrEmpty();
-            PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
+            PlantEventOccurenceSummaryModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
             diseaseSummary.TotalCount.Should().Be(3);
             diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
             diseaseSummary.LastOccurence.Should().Be(new DateTime(2018, 03, 01, 0, 0, 0));
-            PlantEventOccurenceCountModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
+            PlantEventOccurenceSummaryModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
             overwateringSummary.TotalCount.Should().Be(1);
             overwateringSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
             overwateringSummary.LastOccurence.Should().Be(overwateringSummary.FirstOccurence);

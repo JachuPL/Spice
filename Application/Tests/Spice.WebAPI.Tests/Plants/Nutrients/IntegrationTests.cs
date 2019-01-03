@@ -257,7 +257,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
         {
             // Given
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, A<DateTime?>.Ignored, A<DateTime?>.Ignored))
-                .Returns(Task.FromResult<IEnumerable<PlantNutrientAdministrationCountModel>>(null));
+                .Returns(Task.FromResult<IEnumerable<PlantNutrientAdministrationSummaryModel>>(null));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.NutrientsSummaryEndpoint());
@@ -276,7 +276,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients
             DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
             DateTime toDate = new DateTime(2018, 12, 31, 23, 59, 59);
             A.CallTo(() => _fakeQuery.Summary(A<Guid>.Ignored, fromDate, toDate))
-                .Returns(A.Fake<IEnumerable<PlantNutrientAdministrationCountModel>>());
+                .Returns(A.Fake<IEnumerable<PlantNutrientAdministrationSummaryModel>>());
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.NutrientsSummaryWithinDateRangeEndpoint());

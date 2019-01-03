@@ -30,7 +30,7 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<AdministeredNutrient, AdministeredNutrientDetailsViewModel>();
 
-            CreateMap<PlantNutrientAdministrationCountModel, PlantNutrientAdministrationCountViewModel>();
+            CreateMap<PlantNutrientAdministrationSummaryModel, PlantNutrientAdministrationSummaryViewModel>();
         }
     }
 }

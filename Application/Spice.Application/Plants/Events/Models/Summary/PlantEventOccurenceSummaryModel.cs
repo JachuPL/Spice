@@ -3,7 +3,7 @@ using System;
 
 namespace Spice.Application.Plants.Events.Models.Summary
 {
-    public class PlantEventOccurenceCountModel
+    public class PlantEventOccurenceSummaryModel
     {
         public EventType Type { get; set; }
         public int TotalCount { get; set; }

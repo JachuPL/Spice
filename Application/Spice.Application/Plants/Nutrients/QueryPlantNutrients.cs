@@ -44,7 +44,7 @@ namespace Spice.Application.Plants.Nutrients
             return plant?.AdministeredNutrients.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PlantNutrientAdministrationCountModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<IEnumerable<PlantNutrientAdministrationSummaryModel>> Summary(Guid plantId, DateTime? startDate = null, DateTime? endDate = null)
         {
             Plant existingPlant = await _database.Plants
                 .AsNoTracking()
@@ -70,11 +70,11 @@ namespace Spice.Application.Plants.Nutrients
                 administeredNutrients = administeredNutrients.Where(x => x.Date <= endDate.Value);
             }
 
-            IQueryable<PlantNutrientAdministrationCountModel> administeredNutrientsByNutrient =
+            IQueryable<PlantNutrientAdministrationSummaryModel> administeredNutrientsByNutrient =
                 from administeredNutrient in administeredNutrients
                 group administeredNutrient by administeredNutrient.Nutrient
                 into administeredNutrientNutrient
-                select new PlantNutrientAdministrationCountModel()
+                select new PlantNutrientAdministrationSummaryModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientNutrient.Key),
                     TotalAmount = administeredNutrientNutrient.Sum(z => z.Amount),

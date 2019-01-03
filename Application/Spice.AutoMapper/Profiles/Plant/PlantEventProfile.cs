@@ -33,7 +33,7 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<Event, PlantEventDetailsViewModel>();
 
-            CreateMap<PlantEventOccurenceCountModel, PlantEventOccurenceCountViewModel>();
+            CreateMap<PlantEventOccurenceSummaryModel, PlantEventOccurenceSummaryViewModel>();
         }
     }
 }
