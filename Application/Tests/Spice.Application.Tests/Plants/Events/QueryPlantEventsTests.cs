@@ -153,7 +153,7 @@ namespace Spice.Application.Tests.Plants.Events
             IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id);
 
             // Then
-            eventsFromDatabase.Should().NotBeNull();
+            eventsFromDatabase.Should().NotBeNullOrEmpty();
             PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
             diseaseSummary.TotalCount.Should().Be(4);
             diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
@@ -176,7 +176,7 @@ namespace Spice.Application.Tests.Plants.Events
                 new DateTime(2018, 3, 1, 23, 59, 59));
 
             // Then
-            eventsFromDatabase.Should().NotBeNull();
+            eventsFromDatabase.Should().NotBeNullOrEmpty();
             PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
             diseaseSummary.TotalCount.Should().Be(3);
             diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));

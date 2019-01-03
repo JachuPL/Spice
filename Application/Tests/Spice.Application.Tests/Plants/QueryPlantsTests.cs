@@ -40,7 +40,7 @@ namespace Spice.Application.Tests.Plants
             IEnumerable<Plant> plants = await _queries.GetAll();
 
             // Then
-            plants.Should().NotBeNull();
+            plants.Should().NotBeNullOrEmpty();
         }
 
         private void SeedDatabaseForGetAllTesting()
