@@ -18,12 +18,10 @@ namespace Spice.Application.Plants.Nutrients
     public class CommandPlantNutrients : ICommandPlantNutrients
     {
         private readonly IDatabaseService _database;
-        private readonly IMapper _mapper;
 
         public CommandPlantNutrients(IDatabaseService database, IMapper mapper)
         {
             _database = database;
-            _mapper = mapper;
         }
 
         public async Task<Guid> Create(Guid plantId, CreateAdministeredNutrientModel model)
@@ -39,9 +37,7 @@ namespace Spice.Application.Plants.Nutrients
             if (model.Date < plant.Planted)
                 throw new NutrientAdministrationDateBeforePlantDateException();
 
-            AdministeredNutrient administeredNutrient = _mapper.Map<AdministeredNutrient>(model);
-            administeredNutrient.Plant = plant;
-            administeredNutrient.Nutrient = nutrient;
+            AdministeredNutrient administeredNutrient = new AdministeredNutrient(plant, nutrient, model.Amount);
             await _database.AdministeredNutrients.AddAsync(administeredNutrient);
 
             if (model.CreateEvent)
@@ -78,7 +74,6 @@ namespace Spice.Application.Plants.Nutrients
             if (model.Date < plant.Planted)
                 throw new NutrientAdministrationDateBeforePlantDateException();
 
-            _mapper.Map(model, administeredNutrient);
             administeredNutrient.Plant = plant;
             administeredNutrient.Nutrient = nutrient;
             _database.AdministeredNutrients.Update(administeredNutrient);

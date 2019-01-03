@@ -8,11 +8,15 @@ namespace Spice.Domain.Tests.Plants
     [TestFixture]
     internal sealed class AdministeredNutritionTests
     {
+        private AdministeredNutrient CreateAdministeredNutrient() => new AdministeredNutrient(
+            new Plant("Test", new Species(), new Field(), 0, 0),
+            new Nutrient(), 1.0);
+
         [TestCase(TestName = "Get and Set administered nutrition Id property works properly")]
         public void GetAndSetIdWorksProperly()
         {
             // Given
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient();
+            AdministeredNutrient administeredNutrient = CreateAdministeredNutrient();
             Guid id = Guid.NewGuid();
 
             // When
@@ -26,7 +30,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient();
+            AdministeredNutrient administeredNutrient = CreateAdministeredNutrient();
             Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
 
             // When
@@ -40,7 +44,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetNutrientWorksProperly()
         {
             // Given
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient();
+            AdministeredNutrient administeredNutrient = CreateAdministeredNutrient();
             Nutrient nutrient = new Nutrient();
 
             // When
@@ -54,7 +58,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetAmountWorksProperly()
         {
             // Given
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient();
+            AdministeredNutrient administeredNutrient = CreateAdministeredNutrient();
             double amount = 0.75;
 
             // When
@@ -68,7 +72,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetDateWorksProperly()
         {
             // Given
-            AdministeredNutrient administeredNutrient = new AdministeredNutrient();
+            AdministeredNutrient administeredNutrient = CreateAdministeredNutrient();
             DateTime date = DateTime.Now.AddDays(1);
 
             // When
