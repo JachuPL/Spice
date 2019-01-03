@@ -134,8 +134,16 @@ namespace Spice.Application.Tests.Species
 
             // Then
             speciesFromDatabase.Should().NotBeNullOrEmpty();
-            speciesFromDatabase.Single(x => x.Nutrient.Name == "Water").TotalAmount.Should().Be(2);
-            speciesFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer").TotalAmount.Should().Be(4);
+            SpeciesNutritionSummaryModel waterSummary = speciesFromDatabase.Single(x => x.Nutrient.Name == "Water");
+            waterSummary.Nutrient.Should().NotBeNull();
+            waterSummary.TotalAmount.Should().Be(2);
+            waterSummary.FirstAdministration.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            waterSummary.LastAdministration.Should().Be(new DateTime(2018, 01, 02, 0, 0, 0));
+            SpeciesNutritionSummaryModel fertilizerSummary = speciesFromDatabase.Single(x => x.Nutrient.Name == "Fertilizer");
+            fertilizerSummary.Nutrient.Should().NotBeNull();
+            fertilizerSummary.TotalAmount.Should().Be(4);
+            fertilizerSummary.FirstAdministration.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            fertilizerSummary.LastAdministration.Should().Be(new DateTime(2018, 02, 02, 0, 0, 0));
         }
 
         private Domain.Species SeedDatabaseForGetSpeciesSummaryTesting()
@@ -154,7 +162,7 @@ namespace Spice.Application.Tests.Species
             AdministeredNutrient waterPlant1_1 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2017, 01, 01, 0, 0, 0));
             AdministeredNutrient waterPlant1_2 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
             AdministeredNutrient waterPlant1_3 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2019, 01, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant1, new DateTime(2018, 02, 01, 0, 0, 0));
+            AdministeredNutrient fertilizerPlant1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
             plant1.AdministeredNutrients.Add(waterPlant1_1);
             plant1.AdministeredNutrients.Add(waterPlant1_2);
             plant1.AdministeredNutrients.Add(waterPlant1_3);
@@ -162,7 +170,7 @@ namespace Spice.Application.Tests.Species
 
             // plant #2 was watered 2 times with 1ml of water and fertilized twice with 1 gram of fertilizer
             AdministeredNutrient waterPlant2_1 = Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2017, 01, 01, 0, 0, 0));
-            AdministeredNutrient waterPlant2_2 = Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2018, 01, 01, 0, 0, 0));
+            AdministeredNutrient waterPlant2_2 = Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2018, 01, 02, 0, 0, 0));
             AdministeredNutrient fertilizerPlant2_1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2018, 02, 01, 0, 0, 0));
             AdministeredNutrient fertilizerPlant2_2 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2019, 01, 01, 0, 0, 0));
             plant2.AdministeredNutrients.Add(waterPlant2_1);
@@ -173,7 +181,7 @@ namespace Spice.Application.Tests.Species
             // plant #3 was not watered and was fertilized four times with 1 gram of fertilizer
             AdministeredNutrient fertilizerPlant3_1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2017, 01, 01, 0, 0, 0));
             AdministeredNutrient fertilizerPlant3_2 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 01, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant3_3 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 02, 01, 0, 0, 0));
+            AdministeredNutrient fertilizerPlant3_3 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 02, 02, 0, 0, 0));
             AdministeredNutrient fertilizerPlant3_4 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2019, 01, 01, 0, 0, 0));
             plant3.AdministeredNutrients.Add(fertilizerPlant3_1);
             plant3.AdministeredNutrients.Add(fertilizerPlant3_2);

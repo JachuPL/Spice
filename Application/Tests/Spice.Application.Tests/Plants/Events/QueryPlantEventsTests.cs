@@ -154,8 +154,14 @@ namespace Spice.Application.Tests.Plants.Events
 
             // Then
             eventsFromDatabase.Should().NotBeNull();
-            eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(2);
-            eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
+            PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
+            diseaseSummary.TotalCount.Should().Be(4);
+            diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            diseaseSummary.LastOccurence.Should().Be(new DateTime(2018, 04, 01, 0, 0, 0));
+            PlantEventOccurenceCountModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
+            overwateringSummary.TotalCount.Should().Be(1);
+            overwateringSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            overwateringSummary.LastOccurence.Should().Be(overwateringSummary.FirstOccurence);
         }
 
         [TestCase(TestName = "Get summary of occured events by plant id returns occured events summary from specified date range")]
@@ -167,12 +173,18 @@ namespace Spice.Application.Tests.Plants.Events
             // When
             IEnumerable<PlantEventOccurenceCountModel> eventsFromDatabase = await _queries.Summary(plant.Id,
                 new DateTime(2018, 1, 1, 0, 0, 0),
-                new DateTime(2018, 12, 31, 23, 59, 59));
+                new DateTime(2018, 3, 1, 23, 59, 59));
 
             // Then
             eventsFromDatabase.Should().NotBeNull();
-            eventsFromDatabase.Single(x => x.Type == EventType.Disease).TotalCount.Should().Be(1);
-            eventsFromDatabase.Single(x => x.Type == EventType.OverWatering).TotalCount.Should().Be(1);
+            PlantEventOccurenceCountModel diseaseSummary = eventsFromDatabase.Single(x => x.Type == EventType.Disease);
+            diseaseSummary.TotalCount.Should().Be(3);
+            diseaseSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            diseaseSummary.LastOccurence.Should().Be(new DateTime(2018, 03, 01, 0, 0, 0));
+            PlantEventOccurenceCountModel overwateringSummary = eventsFromDatabase.Single(x => x.Type == EventType.OverWatering);
+            overwateringSummary.TotalCount.Should().Be(1);
+            overwateringSummary.FirstOccurence.Should().Be(new DateTime(2018, 01, 01, 0, 0, 0));
+            overwateringSummary.LastOccurence.Should().Be(overwateringSummary.FirstOccurence);
         }
 
         private Plant SeedDatabaseForGetEventSummaryTesting()
@@ -181,15 +193,21 @@ namespace Spice.Application.Tests.Plants.Events
             {
                 Plant plant = Plants.ModelFactory.DomainModel();
                 Event event1 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 1, 1, 0, 0, 0));
-                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2019, 1, 1, 0, 0, 0));
-                Event event3 = ModelFactory.DomainModel(plant, EventType.OverWatering, new DateTime(2018, 1, 1, 0, 0, 0));
+                Event event2 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 2, 1, 0, 0, 0));
+                Event event3 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 3, 1, 0, 0, 0));
+                Event event4 = ModelFactory.DomainModel(plant, EventType.Disease, new DateTime(2018, 4, 1, 0, 0, 0));
+                Event event5 = ModelFactory.DomainModel(plant, EventType.OverWatering, new DateTime(2018, 1, 1, 0, 0, 0));
                 plant.Events.Add(event1);
                 plant.Events.Add(event2);
                 plant.Events.Add(event3);
+                plant.Events.Add(event4);
+                plant.Events.Add(event5);
                 ctx.Plants.Add(plant);
                 ctx.Events.Add(event1);
                 ctx.Events.Add(event2);
                 ctx.Events.Add(event3);
+                ctx.Events.Add(event4);
+                ctx.Events.Add(event5);
                 ctx.Save();
                 return plant;
             }
