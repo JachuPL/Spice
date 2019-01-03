@@ -50,7 +50,9 @@ namespace Spice.Application.Plants.Nutrients
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (existingPlant is null)
+            {
                 return null;
+            }
 
             IQueryable<AdministeredNutrient> administeredNutrients =
                 from administeredNutrient in _database.AdministeredNutrients.AsNoTracking()
@@ -59,14 +61,19 @@ namespace Spice.Application.Plants.Nutrients
                 select administeredNutrient;
 
             if (startDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => startDate.Value <= x.Date);
+            }
 
             if (endDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => x.Date <= endDate.Value);
+            }
 
             IQueryable<PlantNutrientAdministrationCountModel> administeredNutrientsByNutrient =
                 from administeredNutrient in administeredNutrients
-                group administeredNutrient by administeredNutrient.Nutrient into administeredNutrientNutrient
+                group administeredNutrient by administeredNutrient.Nutrient
+                into administeredNutrientNutrient
                 select new PlantNutrientAdministrationCountModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientNutrient.Key),

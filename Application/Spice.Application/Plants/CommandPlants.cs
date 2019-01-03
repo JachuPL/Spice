@@ -29,21 +29,27 @@ namespace Spice.Application.Plants
         {
             Field field = await _database.Fields.FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
+            {
                 throw new FieldNotFoundException(model.FieldId);
+            }
 
             IQueryable<Plant> plantsExistingAtCoordinates =
                 from existingPlantsAtCoordinates in _database.Plants
-                where existingPlantsAtCoordinates.Field.Id == field.Id
-                      && existingPlantsAtCoordinates.Row == model.Row &&
-                      existingPlantsAtCoordinates.Column == model.Column && existingPlantsAtCoordinates.Field.Id == model.FieldId
+                where (existingPlantsAtCoordinates.Field.Id == field.Id)
+                      && (existingPlantsAtCoordinates.Row == model.Row) &&
+                      (existingPlantsAtCoordinates.Column == model.Column) && (existingPlantsAtCoordinates.Field.Id == model.FieldId)
                 select existingPlantsAtCoordinates;
 
             if (await plantsExistingAtCoordinates.AnyAsync())
+            {
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
+            }
 
             Domain.Species species = await _database.Species.FindAsync(model.SpeciesId);
             if (species is null)
+            {
                 throw new SpeciesNotFoundException(model.SpeciesId);
+            }
 
             Plant plant = new Plant(model.Name, species, field, model.Row, model.Column)
             {
@@ -61,20 +67,28 @@ namespace Spice.Application.Plants
                 .Include(x => x.Field)
                 .FirstOrDefaultAsync(x => x.Id == model.Id);
             if (plant is null)
+            {
                 return null;
+            }
 
             Field field = await _database.Fields
                 .Include(x => x.Plants)
                 .FirstOrDefaultAsync(x => x.Id == model.FieldId);
             if (field is null)
+            {
                 throw new FieldNotFoundException(model.FieldId);
+            }
 
-            if (field.Plants.Any(x => x.Row == model.Row && x.Column == model.Column && x.Id != model.Id))
+            if (field.Plants.Any(x => (x.Row == model.Row) && (x.Column == model.Column) && (x.Id != model.Id)))
+            {
                 throw new PlantExistsAtCoordinatesException(model.Row, model.Column);
+            }
 
             Domain.Species species = await _database.Species.FirstOrDefaultAsync(x => x.Id == model.SpeciesId);
             if (species is null)
+            {
                 throw new SpeciesNotFoundException(model.SpeciesId);
+            }
 
             _mapper.Map(model, plant);
             plant.ChangeField(field);
@@ -89,7 +103,9 @@ namespace Spice.Application.Plants
         {
             Plant plant = await _database.Plants.FindAsync(id);
             if (plant is null)
+            {
                 return;
+            }
 
             _database.Plants.Remove(plant);
             await _database.SaveAsync();

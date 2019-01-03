@@ -41,26 +41,34 @@ namespace Spice.Application.Species
 
         public async Task<IEnumerable<SpeciesNutritionSummaryModel>> Summary(Guid id, DateTime? fromDate = null, DateTime? toDate = null)
         {
-            Domain.Species species = await _database.Species.FindAsync(id);
-            if (species is null)
+            Domain.Species existingSpecies =
+                await _database.Species.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            if (existingSpecies is null)
+            {
                 return null;
+            }
 
             IQueryable<AdministeredNutrient> administeredNutrients =
                 from nutrients in _database.AdministeredNutrients.AsNoTracking()
                 join plant in _database.Plants on nutrients.Plant.Id equals plant.Id
-                join Species in _database.Species on plant.Species.Id equals Species.Id
+                join species in _database.Species on plant.Species.Id equals species.Id
                 where plant.Species.Id == id
                 select nutrients;
 
             if (fromDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => fromDate.Value <= x.Date);
+            }
 
             if (toDate.HasValue)
+            {
                 administeredNutrients = administeredNutrients.Where(x => x.Date <= toDate.Value);
+            }
 
             IQueryable<SpeciesNutritionSummaryModel> administeredNutrientsBySpecies =
                 from administeredNutrient in administeredNutrients
-                group administeredNutrient by administeredNutrient.Nutrient into administeredNutrientsNutrient
+                group administeredNutrient by administeredNutrient.Nutrient
+                into administeredNutrientsNutrient
                 select new SpeciesNutritionSummaryModel()
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientsNutrient.Key),

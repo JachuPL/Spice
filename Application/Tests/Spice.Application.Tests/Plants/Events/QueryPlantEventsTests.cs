@@ -23,7 +23,7 @@ namespace Spice.Application.Tests.Plants.Events
         {
             DatabaseContext = SetupInMemoryDatabase();
             DatabaseContext.Database.EnsureCreated();
-            _queries = new QueryPlantEvents(DatabaseContext, Mapper);
+            _queries = new QueryPlantEvents(DatabaseContext);
         }
 
         [TearDown]

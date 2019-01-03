@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Spice.Application.Common;
 using Spice.Application.Plants.Events.Interfaces;
@@ -15,12 +14,10 @@ namespace Spice.Application.Plants.Events
     public class QueryPlantEvents : IQueryPlantEvents
     {
         private readonly IDatabaseService _database;
-        private readonly IMapper _mapper;
 
-        public QueryPlantEvents(IDatabaseService database, IMapper mapper)
+        public QueryPlantEvents(IDatabaseService database)
         {
             _database = database;
-            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Event>> GetByPlant(Guid plantId)
@@ -49,7 +46,9 @@ namespace Spice.Application.Plants.Events
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == plantId);
             if (existingPlant is null)
+            {
                 return null;
+            }
 
             IQueryable<Event> occuredEvents =
                 from events in _database.Events.AsNoTracking()
@@ -57,10 +56,14 @@ namespace Spice.Application.Plants.Events
                 where plant.Id == existingPlant.Id
                 select events;
             if (startDate.HasValue)
+            {
                 occuredEvents = occuredEvents.Where(x => startDate.Value <= x.Occured);
+            }
 
             if (endDate.HasValue)
+            {
                 occuredEvents = occuredEvents.Where(x => x.Occured <= endDate.Value);
+            }
 
             IQueryable<PlantEventOccurenceCountModel> occuredEventsByType =
                 from occuredEvent in occuredEvents

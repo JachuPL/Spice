@@ -28,7 +28,9 @@ namespace Spice.Application.Fields
                                                        where existingField.Name == model.Name
                                                        select existingField;
             if (await existingFieldsWithName.AnyAsync())
+            {
                 throw new FieldWithNameAlreadyExistsException(model.Name);
+            }
 
             Field field = _mapper.Map<Field>(model);
             await _database.Fields.AddAsync(field);
@@ -40,14 +42,18 @@ namespace Spice.Application.Fields
         {
             Field field = await _database.Fields.FindAsync(model.Id);
             if (field is null)
+            {
                 return null;
+            }
 
             IQueryable<Field> existingFieldsWithName = from existingField in _database.Fields
-                                                       where existingField.Name == model.Name && existingField.Id != field.Id
+                                                       where (existingField.Name == model.Name) && (existingField.Id != field.Id)
                                                        select existingField;
 
             if (await existingFieldsWithName.AnyAsync())
+            {
                 throw new FieldWithNameAlreadyExistsException(model.Name);
+            }
 
             _mapper.Map(model, field);
             _database.Fields.Update(field);
@@ -59,7 +65,9 @@ namespace Spice.Application.Fields
         {
             Field field = await _database.Fields.FindAsync(id);
             if (field is null)
+            {
                 return;
+            }
 
             _database.Fields.Remove(field);
             await _database.SaveAsync();
