@@ -14,7 +14,7 @@ namespace Spice.Domain.Plants.Events
         {
         }
 
-        public Event(Plant plant, EventType type, string description)
+        internal Event(Plant plant, EventType type, string description)
         {
             Plant = plant;
             Type = type;
@@ -22,7 +22,7 @@ namespace Spice.Domain.Plants.Events
             Occured = DateTime.Now;
         }
 
-        public Event(Plant plant, EventType type, string description, DateTime occured) : this(plant, type, description)
+        internal Event(Plant plant, EventType type, string description, DateTime occured) : this(plant, type, description)
         {
             Occured = occured;
         }

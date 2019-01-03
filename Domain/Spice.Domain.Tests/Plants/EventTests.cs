@@ -9,8 +9,9 @@ namespace Spice.Domain.Tests.Plants
     [TestFixture]
     internal sealed class EventTests
     {
-        private Event CreateTestEvent() =>
-            new Event(new Plant("Test", new Species(), new Field(), 0, 0), EventType.Disease, "Test");
+        private readonly Plant _eventOwnerPlant = new Plant("Test plant", new Species(), new Field(), 0, 0);
+
+        private Event CreateTestEvent() => _eventOwnerPlant.AddEvent(EventType.Disease, "Test");
 
         [TestCase(TestName = "Get and Set event Id property works properly")]
         public void GetAndSetIdWorksProperly()

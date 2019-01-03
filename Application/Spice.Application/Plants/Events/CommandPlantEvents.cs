@@ -36,8 +36,8 @@ namespace Spice.Application.Plants.Events
             if (model.Type.IsCreationRestricted())
                 throw new EventTypeIsCreationRestrictedException(model.Type);
 
-            Event @event = new Event(plant, model.Type, model.Description, model.Occured);
-            await _database.Events.AddAsync(@event);
+            Event @event = plant.AddEvent(model.Type, model.Description, model.Occured);
+            _database.Plants.Update(plant);
             await _database.SaveAsync();
             return @event.Id;
         }

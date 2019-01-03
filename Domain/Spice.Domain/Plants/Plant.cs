@@ -57,5 +57,26 @@ namespace Spice.Domain.Plants
                 $"{Name} was moved to field {newField.Name}. (Generated automatically)");
             Events.Add(fieldChangedEvent);
         }
+
+        public Event AddEvent(EventType type, string description)
+        {
+            return AddEvent(type, description, DateTime.Now);
+        }
+
+        public Event AddEvent(EventType type, string description, DateTime occured)
+        {
+            Event newEvent = new Event(this, type, description, occured);
+            Events.Add(newEvent);
+            return newEvent;
+        }
+
+        public void AdministerNutrient(Nutrient nutrient, double amount, DateTime date)
+        {
+            Event @event = new Event(this,
+                EventType.Nutrition,
+                $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
+                date);
+            Events.Add(@event);
+        }
     }
 }
