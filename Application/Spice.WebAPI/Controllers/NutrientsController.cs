@@ -41,7 +41,9 @@ namespace Spice.WebAPI.Controllers
         {
             NutrientDetailsModel nutrient = await _queries.Get(id);
             if (nutrient is null)
+            {
                 return NotFound();
+            }
 
             return Ok(nutrient);
         }
@@ -51,7 +53,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Post([FromBody] CreateNutrientViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -70,7 +74,9 @@ namespace Spice.WebAPI.Controllers
         public async Task<ActionResult> Put(Guid id, [FromBody] UpdateNutrientViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -79,7 +85,9 @@ namespace Spice.WebAPI.Controllers
 
                 Nutrient nutrient = await _commands.Update(updateNutrientModel);
                 if (nutrient is null)
+                {
                     return NotFound();
+                }
 
                 return Ok(_mapper.Map<NutrientDetailsViewModel>(nutrient));
             }

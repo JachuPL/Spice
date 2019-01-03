@@ -33,7 +33,9 @@ namespace Spice.WebAPI.Controllers.Plants
         {
             IEnumerable<AdministeredNutrient> administeredNutrients = await _queries.GetByPlant(plantId);
             if (administeredNutrients is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<IEnumerable<AdministeredNutrientsIndexViewModel>>(administeredNutrients));
         }
@@ -44,7 +46,9 @@ namespace Spice.WebAPI.Controllers.Plants
         {
             AdministeredNutrient administeredNutrient = await _queries.Get(plantId, id);
             if (administeredNutrient is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<AdministeredNutrientDetailsViewModel>(administeredNutrient));
         }
@@ -54,7 +58,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult> Post([FromRoute] Guid plantId, [FromBody] CreateAdministeredNutrientViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -77,7 +83,9 @@ namespace Spice.WebAPI.Controllers.Plants
         public async Task<ActionResult> Put([FromRoute] Guid plantId, Guid id, [FromBody] UpdateAdministeredNutrientViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             try
             {
@@ -86,7 +94,9 @@ namespace Spice.WebAPI.Controllers.Plants
 
                 AdministeredNutrient administeredNutrient = await _commands.Update(plantId, updateAdministeredNutrientModel);
                 if (administeredNutrient is null)
+                {
                     return NotFound();
+                }
 
                 return Ok(_mapper.Map<UpdateAdministeredNutrientViewModel>(administeredNutrient));
             }
@@ -102,7 +112,7 @@ namespace Spice.WebAPI.Controllers.Plants
 
         // DELETE api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/DC117408-630E-459B-B16F-DE36EBC58E8F
         [HttpDelete("{id:guid}")]
-        public async Task<NoContentResult> Delete([FromRoute]Guid plantId, Guid id)
+        public async Task<NoContentResult> Delete([FromRoute] Guid plantId, Guid id)
         {
             await _commands.Delete(plantId, id);
             return NoContent();
@@ -110,12 +120,16 @@ namespace Spice.WebAPI.Controllers.Plants
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/nutrients/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59
         [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<PlantNutrientAdministrationCountViewModel>>> GetSummary([FromRoute] Guid plantId, [FromQuery]DateTime? fromDate = null, [FromQuery]DateTime? toDate = null)
+        public async Task<ActionResult<IEnumerable<PlantNutrientAdministrationCountViewModel>>> GetSummary([FromRoute] Guid plantId,
+                                                                                                           [FromQuery] DateTime? fromDate = null,
+                                                                                                           [FromQuery] DateTime? toDate = null)
         {
             IEnumerable<PlantNutrientAdministrationCountModel> administeredNutrients =
                 await _queries.Summary(plantId, fromDate, toDate);
             if (administeredNutrients is null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<IEnumerable<PlantNutrientAdministrationCountViewModel>>(administeredNutrients));
         }
