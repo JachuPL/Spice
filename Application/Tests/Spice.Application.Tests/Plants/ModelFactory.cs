@@ -38,16 +38,10 @@ namespace Spice.Application.Tests.Plants
 
         public static Plant DomainModel(Field field = null, Domain.Species species = null, int row = 0, int col = 0)
         {
-            return new Plant()
-            {
-                Name = "Rocoto Giant Red",
-                Species = species ?? Species.ModelFactory.DomainModel(),
-                Field = field ?? Fields.ModelFactory.DomainModel(),
-                Column = col,
-                Row = row,
-                Planted = DateTime.Now,
-                State = PlantState.Healthy
-            };
+            return new Plant("Rocoto Giant Red",
+                species ?? Species.ModelFactory.DomainModel(),
+                field ?? Fields.ModelFactory.DomainModel(),
+                row, col);
         }
     }
 }

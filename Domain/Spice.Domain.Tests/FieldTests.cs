@@ -85,10 +85,7 @@ namespace Spice.Domain.Tests
             // Given
             Field field = new Field();
             List<Plant> plants = new List<Plant>();
-            Plant examplePlant = new Plant()
-            {
-                Name = "Random plant #1"
-            };
+            Plant examplePlant = new Plant("Random plant #1", new Species(), new Field(), 0, 0);
 
             plants.Add(examplePlant);
 

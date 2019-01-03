@@ -28,7 +28,7 @@ namespace Spice.Domain.Tests.Plants
         {
             // Given
             Event @event = new Event();
-            Plant plant = new Plant();
+            Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
 
             // When
             @event.Plant = plant;

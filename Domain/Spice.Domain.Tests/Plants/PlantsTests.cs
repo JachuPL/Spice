@@ -10,11 +10,13 @@ namespace Spice.Domain.Tests.Plants
     [TestFixture]
     internal sealed class PlantsTests
     {
+        private Plant CreateTestPlant() => new Plant("Test", new Species(), new Field(), 0, 0);
+
         [TestCase(TestName = "Get and Set plant Id property works properly")]
         public void GetAndSetIdWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             Guid id = Guid.NewGuid();
 
             // When
@@ -28,7 +30,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetNameWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             string name = Guid.Empty.ToString();
 
             // When
@@ -42,7 +44,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetSpeciesWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             Species species = new Species()
             {
                 Name = "Pepper",
@@ -60,7 +62,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetFieldWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             Field field = new Field()
             {
                 Name = "Random field #1"
@@ -77,7 +79,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetRowWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             int row = 1;
 
             // When
@@ -91,7 +93,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetColumnWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             int column = 2;
 
             // When
@@ -105,7 +107,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetPlantedWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             DateTime planted = DateTime.Now.AddDays(1);
 
             // When
@@ -119,7 +121,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetStateWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             PlantState state = PlantState.Deceased;
 
             // When
@@ -133,7 +135,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetAdministeredNutrientsWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             ICollection<AdministeredNutrient> administeredNutrients = new List<AdministeredNutrient>();
 
             // When
@@ -147,7 +149,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetEventsWorksProperly()
         {
             // Given
-            Plant plant = new Plant();
+            Plant plant = CreateTestPlant();
             ICollection<Event> events = new List<Event>();
 
             // When
@@ -155,6 +157,42 @@ namespace Spice.Domain.Tests.Plants
 
             // Then
             plant.Events.Should().BeSameAs(events);
+        }
+
+        [TestCase(TestName = "Create plant should produce creation event")]
+        public void CreatePlantShouldProduceCreationEvent()
+        {
+            // Given
+            string plantName = "Plant";
+            Species species = new Species();
+            Field field = new Field();
+            int row = 0;
+            int col = 0;
+
+            // When
+            Plant plant = new Plant(plantName, species, field, row, col);
+
+            // Then
+            plant.Events.Should().Contain(x => x.Type == EventType.Start);
+        }
+
+        [TestCase(TestName = "Change field should produce field changed event")]
+        public void ChangeFieldShouldProduceFieldChangedEvent()
+        {
+            // Given
+            string plantName = "Plant";
+            Species species = new Species();
+            Field field = new Field();
+            int row = 0;
+            int col = 0;
+            Plant plant = new Plant(plantName, species, field, row, col);
+            Field newField = new Field();
+
+            // When
+            plant.ChangeField(newField);
+
+            // Then
+            plant.Events.Should().Contain(x => x.Type == EventType.Moving);
         }
     }
 }

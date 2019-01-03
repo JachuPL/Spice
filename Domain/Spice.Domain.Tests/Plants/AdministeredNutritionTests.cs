@@ -27,7 +27,7 @@ namespace Spice.Domain.Tests.Plants
         {
             // Given
             AdministeredNutrient administeredNutrient = new AdministeredNutrient();
-            Plant plant = new Plant();
+            Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
 
             // When
             administeredNutrient.Plant = plant;

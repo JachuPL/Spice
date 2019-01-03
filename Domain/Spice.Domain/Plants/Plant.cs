@@ -14,7 +14,58 @@ namespace Spice.Domain.Plants
         public int Column { get; set; }
         public DateTime Planted { get; set; }
         public PlantState State { get; set; }
-        public ICollection<AdministeredNutrient> AdministeredNutrients { get; set; } = new List<AdministeredNutrient>();
-        public ICollection<Event> Events { get; set; } = new List<Event>();
+        public ICollection<AdministeredNutrient> AdministeredNutrients { get; set; }
+        public ICollection<Event> Events { get; set; }
+
+        protected Plant()
+        {
+            AdministeredNutrients = new List<AdministeredNutrient>();
+            Events = new List<Event>();
+        }
+
+        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn) : this()
+        {
+            Column = fieldColumn;
+            Row = fieldRow;
+            Field = field;
+            Species = species;
+            Name = name;
+            Planted = DateTime.Now;
+            State = PlantState.Healthy;
+            AddCreationEvent();
+        }
+
+        private void AddCreationEvent()
+        {
+            Event plantCreatedEvent = new Event()
+            {
+                Plant = this,
+                Type = EventType.Start,
+                Description = $"{Name} was planted on field {Field.Name}. (Generated automatically)",
+                Occured = DateTime.Now
+            };
+            Events.Add(plantCreatedEvent);
+        }
+
+        public void ChangeField(Field newField)
+        {
+            if (Field != newField)
+            {
+                Field = newField;
+                AddFieldChangeEvent(newField);
+            }
+        }
+
+        private void AddFieldChangeEvent(Field newField)
+        {
+            Event fieldChangedEvent = new Event()
+            {
+                Plant = this,
+                Type = EventType.Moving,
+                Occured = DateTime.Now,
+                Description = $"{Name} was moved to field {newField.Name}. (Generated automatically)"
+            };
+            Events.Add(fieldChangedEvent);
+        }
     }
 }
