@@ -148,63 +148,78 @@ namespace Spice.Application.Tests.Species
 
         private Domain.Species SeedDatabaseForGetSpeciesSummaryTesting()
         {
-            // test data overview: three plants of one species growing on three different fields
-            Domain.Species species = ModelFactory.DomainModel();
-            Plant plant1 = Plants.ModelFactory.DomainModel(species: species);
-            Plant plant2 = Plants.ModelFactory.DomainModel(species: species);
-            Plant plant3 = Plants.ModelFactory.DomainModel(species: species);
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                // test data overview: three plants of one species growing on three different fields
+                Domain.Species species = ModelFactory.DomainModel();
+                Plant plant1 = Plants.ModelFactory.DomainModel(species: species);
+                Plant plant2 = Plants.ModelFactory.DomainModel(species: species);
+                Plant plant3 = Plants.ModelFactory.DomainModel(species: species);
 
-            // two nutrients - water and fertilizer
-            Nutrient water = Nutrients.ModelFactory.DomainModel("Water");
-            Nutrient fertilizer = Nutrients.ModelFactory.DomainModel("Fertilizer", dosageUnits: "g");
+                // two nutrients - water and fertilizer
+                Nutrient water = Nutrients.ModelFactory.DomainModel("Water");
+                Nutrient fertilizer = Nutrients.ModelFactory.DomainModel("Fertilizer", dosageUnits: "g");
 
-            // plant #1 was watered 3 times with 1ml of water and fertilized once with 1 gram of fertilizer
-            AdministeredNutrient waterPlant1_1 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2017, 01, 01, 0, 0, 0));
-            AdministeredNutrient waterPlant1_2 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
-            AdministeredNutrient waterPlant1_3 = Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2019, 01, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
-            plant1.AdministeredNutrients.Add(waterPlant1_1);
-            plant1.AdministeredNutrients.Add(waterPlant1_2);
-            plant1.AdministeredNutrients.Add(waterPlant1_3);
-            plant1.AdministeredNutrients.Add(fertilizerPlant1);
+                // plant #1 was watered 3 times with 1ml of water and fertilized once with 1 gram of fertilizer
+                AdministeredNutrient waterPlant1_1 =
+                    Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2017, 01, 01, 0, 0, 0));
+                AdministeredNutrient waterPlant1_2 =
+                    Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
+                AdministeredNutrient waterPlant1_3 =
+                    Plants.Nutrients.ModelFactory.DomainModel(water, plant1, new DateTime(2019, 01, 01, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant1 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant1, new DateTime(2018, 01, 01, 0, 0, 0));
+                plant1.AdministeredNutrients.Add(waterPlant1_1);
+                plant1.AdministeredNutrients.Add(waterPlant1_2);
+                plant1.AdministeredNutrients.Add(waterPlant1_3);
+                plant1.AdministeredNutrients.Add(fertilizerPlant1);
 
-            // plant #2 was watered 2 times with 1ml of water and fertilized twice with 1 gram of fertilizer
-            AdministeredNutrient waterPlant2_1 = Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2017, 01, 01, 0, 0, 0));
-            AdministeredNutrient waterPlant2_2 = Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2018, 01, 02, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant2_1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2018, 02, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant2_2 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2019, 01, 01, 0, 0, 0));
-            plant2.AdministeredNutrients.Add(waterPlant2_1);
-            plant2.AdministeredNutrients.Add(waterPlant2_2);
-            plant2.AdministeredNutrients.Add(fertilizerPlant2_1);
-            plant2.AdministeredNutrients.Add(fertilizerPlant2_2);
+                // plant #2 was watered 2 times with 1ml of water and fertilized twice with 1 gram of fertilizer
+                AdministeredNutrient waterPlant2_1 =
+                    Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2017, 01, 01, 0, 0, 0));
+                AdministeredNutrient waterPlant2_2 =
+                    Plants.Nutrients.ModelFactory.DomainModel(water, plant2, new DateTime(2018, 01, 02, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant2_1 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2018, 02, 01, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant2_2 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant2, new DateTime(2019, 01, 01, 0, 0, 0));
+                plant2.AdministeredNutrients.Add(waterPlant2_1);
+                plant2.AdministeredNutrients.Add(waterPlant2_2);
+                plant2.AdministeredNutrients.Add(fertilizerPlant2_1);
+                plant2.AdministeredNutrients.Add(fertilizerPlant2_2);
 
-            // plant #3 was not watered and was fertilized four times with 1 gram of fertilizer
-            AdministeredNutrient fertilizerPlant3_1 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2017, 01, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant3_2 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 01, 01, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant3_3 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 02, 02, 0, 0, 0));
-            AdministeredNutrient fertilizerPlant3_4 = Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2019, 01, 01, 0, 0, 0));
-            plant3.AdministeredNutrients.Add(fertilizerPlant3_1);
-            plant3.AdministeredNutrients.Add(fertilizerPlant3_2);
-            plant3.AdministeredNutrients.Add(fertilizerPlant3_3);
-            plant3.AdministeredNutrients.Add(fertilizerPlant3_4);
+                // plant #3 was not watered and was fertilized four times with 1 gram of fertilizer
+                AdministeredNutrient fertilizerPlant3_1 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2017, 01, 01, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant3_2 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 01, 01, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant3_3 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2018, 02, 02, 0, 0, 0));
+                AdministeredNutrient fertilizerPlant3_4 =
+                    Plants.Nutrients.ModelFactory.DomainModel(fertilizer, plant3, new DateTime(2019, 01, 01, 0, 0, 0));
+                plant3.AdministeredNutrients.Add(fertilizerPlant3_1);
+                plant3.AdministeredNutrients.Add(fertilizerPlant3_2);
+                plant3.AdministeredNutrients.Add(fertilizerPlant3_3);
+                plant3.AdministeredNutrients.Add(fertilizerPlant3_4);
 
-            // Water used in 2017: 2
-            // Water used in 2018: 2
-            // Water used in 2019: 1
-            // Fertilizer used in 2017: 1
-            // Fertilizer used in 2018: 4
-            // Fertilizer used in 2019: 2
-            // Total used water: 5 ml
-            // Total used fertilizer: 7 g
-            DatabaseContext.Species.Add(species);
-            DatabaseContext.Nutrients.Add(water);
-            DatabaseContext.Nutrients.Add(fertilizer);
-            DatabaseContext.Plants.Add(plant1);
-            DatabaseContext.Plants.Add(plant2);
-            DatabaseContext.Plants.Add(plant3);
-            DatabaseContext.Save();
+                // Water used in 2017: 2
+                // Water used in 2018: 2
+                // Water used in 2019: 1
+                // Fertilizer used in 2017: 1
+                // Fertilizer used in 2018: 4
+                // Fertilizer used in 2019: 2
+                // Total used water: 5 ml
+                // Total used fertilizer: 7 g
+                ctx.Species.Add(species);
+                ctx.Nutrients.Add(water);
+                ctx.Nutrients.Add(fertilizer);
+                ctx.Plants.Add(plant1);
+                ctx.Plants.Add(plant2);
+                ctx.Plants.Add(plant3);
+                ctx.Save();
 
-            return species;
+                return species;
+            }
         }
     }
 }

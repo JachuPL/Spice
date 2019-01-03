@@ -45,11 +45,14 @@ namespace Spice.Application.Tests.Plants
 
         private void SeedDatabaseForGetAllTesting()
         {
-            Field field = Fields.ModelFactory.DomainModel();
-            Domain.Species species = Species.ModelFactory.DomainModel();
-            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field));
-            DatabaseContext.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
-            DatabaseContext.Save();
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                Field field = Fields.ModelFactory.DomainModel();
+                Domain.Species species = Species.ModelFactory.DomainModel();
+                ctx.Plants.Add(ModelFactory.DomainModel(field));
+                ctx.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
+                ctx.Save();
+            }
         }
 
         [TestCase(TestName = "Get by id query on plants returns null if plant does not exist")]

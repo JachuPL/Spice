@@ -46,21 +46,24 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
         {
-            Plant plant = Plants.ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient2 = ModelFactory.DomainModel();
-            AdministeredNutrient administeredNutrient3 = ModelFactory.DomainModel();
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                Plant plant = Plants.ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient1 = ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient2 = ModelFactory.DomainModel();
+                AdministeredNutrient administeredNutrient3 = ModelFactory.DomainModel();
 
-            plant.AdministeredNutrients.Add(administeredNutrient1);
-            plant.AdministeredNutrients.Add(administeredNutrient2);
-            plant.AdministeredNutrients.Add(administeredNutrient3);
-            DatabaseContext.Plants.Add(plant);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient1);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient2);
-            DatabaseContext.AdministeredNutrients.Add(administeredNutrient3);
+                plant.AdministeredNutrients.Add(administeredNutrient1);
+                plant.AdministeredNutrients.Add(administeredNutrient2);
+                plant.AdministeredNutrients.Add(administeredNutrient3);
+                ctx.Plants.Add(plant);
+                ctx.AdministeredNutrients.Add(administeredNutrient1);
+                ctx.AdministeredNutrients.Add(administeredNutrient2);
+                ctx.AdministeredNutrients.Add(administeredNutrient3);
 
-            DatabaseContext.Save();
-            return plant.Id;
+                ctx.Save();
+                return plant.Id;
+            }
         }
 
         [TestCase(TestName = "Get all by plant id query on plant nutrients returns null if plant does not exist")]
@@ -201,35 +204,38 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         private Plant SeedDatabaseForGetNutrientSummaryTesting()
         {
-            Plant plant = Plants.ModelFactory.DomainModel();
-            Nutrient water = new Nutrient() { Name = "Water" };
-            AdministeredNutrient administeredWater1 =
-                ModelFactory.DomainModel(water, date: new DateTime(2018, 1, 1, 0, 0, 0));
-            AdministeredNutrient administeredWater2 =
-                ModelFactory.DomainModel(water, date: new DateTime(2018, 2, 1, 0, 0, 0));
-            AdministeredNutrient administeredWater3 =
-                ModelFactory.DomainModel(water, date: new DateTime(2018, 3, 1, 0, 0, 0));
-            AdministeredNutrient administeredWater4 =
-                ModelFactory.DomainModel(water, date: new DateTime(2018, 4, 1, 0, 0, 0));
-            AdministeredNutrient administeredWater5 =
-                ModelFactory.DomainModel(water, date: new DateTime(2018, 5, 1, 0, 0, 0));
-            AdministeredNutrient administerdWater6 =
-                ModelFactory.DomainModel(water, date: new DateTime(2019, 1, 1, 0, 0, 0));
-            Nutrient fertilizer = new Nutrient() { Name = "Fertilizer" };
-            AdministeredNutrient administeredFertilizer =
-                ModelFactory.DomainModel(fertilizer, date: new DateTime(2018, 1, 1, 0, 0, 0));
-            plant.AdministeredNutrients.Add(administeredWater1);
-            plant.AdministeredNutrients.Add(administeredWater2);
-            plant.AdministeredNutrients.Add(administeredWater3);
-            plant.AdministeredNutrients.Add(administeredWater4);
-            plant.AdministeredNutrients.Add(administeredWater5);
-            plant.AdministeredNutrients.Add(administerdWater6);
-            plant.AdministeredNutrients.Add(administeredFertilizer);
-            DatabaseContext.Plants.Add(plant);
-            DatabaseContext.Nutrients.Add(water);
-            DatabaseContext.Nutrients.Add(fertilizer);
-            DatabaseContext.Save();
-            return plant;
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                Plant plant = Plants.ModelFactory.DomainModel();
+                Nutrient water = new Nutrient() {Name = "Water"};
+                AdministeredNutrient administeredWater1 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 1, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater2 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 2, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater3 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 3, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater4 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 4, 1, 0, 0, 0));
+                AdministeredNutrient administeredWater5 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2018, 5, 1, 0, 0, 0));
+                AdministeredNutrient administerdWater6 =
+                    ModelFactory.DomainModel(water, date: new DateTime(2019, 1, 1, 0, 0, 0));
+                Nutrient fertilizer = new Nutrient() {Name = "Fertilizer"};
+                AdministeredNutrient administeredFertilizer =
+                    ModelFactory.DomainModel(fertilizer, date: new DateTime(2018, 1, 1, 0, 0, 0));
+                plant.AdministeredNutrients.Add(administeredWater1);
+                plant.AdministeredNutrients.Add(administeredWater2);
+                plant.AdministeredNutrients.Add(administeredWater3);
+                plant.AdministeredNutrients.Add(administeredWater4);
+                plant.AdministeredNutrients.Add(administeredWater5);
+                plant.AdministeredNutrients.Add(administerdWater6);
+                plant.AdministeredNutrients.Add(administeredFertilizer);
+                ctx.Plants.Add(plant);
+                ctx.Nutrients.Add(water);
+                ctx.Nutrients.Add(fertilizer);
+                ctx.Save();
+                return plant;
+            }
         }
     }
 }

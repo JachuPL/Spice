@@ -46,21 +46,24 @@ namespace Spice.Application.Tests.Plants.Events
 
         private Guid SeedDatabaseForGetByPlantIdTesting()
         {
-            Plant plant = Plants.ModelFactory.DomainModel();
-            Event event1 = ModelFactory.DomainModel(plant);
-            Event event2 = ModelFactory.DomainModel(plant);
-            Event event3 = ModelFactory.DomainModel(plant);
+            using (var ctx = SetupInMemoryDatabase())
+            {
+                Plant plant = Plants.ModelFactory.DomainModel();
+                Event event1 = ModelFactory.DomainModel(plant);
+                Event event2 = ModelFactory.DomainModel(plant);
+                Event event3 = ModelFactory.DomainModel(plant);
 
-            plant.Events.Add(event1);
-            plant.Events.Add(event2);
-            plant.Events.Add(event3);
-            DatabaseContext.Plants.Add(plant);
-            DatabaseContext.Events.Add(event1);
-            DatabaseContext.Events.Add(event2);
-            DatabaseContext.Events.Add(event3);
+                plant.Events.Add(event1);
+                plant.Events.Add(event2);
+                plant.Events.Add(event3);
+                ctx.Plants.Add(plant);
+                ctx.Events.Add(event1);
+                ctx.Events.Add(event2);
+                ctx.Events.Add(event3);
 
-            DatabaseContext.Save();
-            return plant.Id;
+                ctx.Save();
+                return plant.Id;
+            }
         }
 
         [TestCase(TestName = "Get all by plant id query on plant events returns null if plant does not exist")]
