@@ -32,7 +32,7 @@ namespace Spice.Application.Plants.Events
                 throw new PlantNotFoundException(plantId);
             }
 
-            if ((model.Occured < plant.Planted) || (DateTime.Now < model.Occured))
+            if (EventOccuredBeforePlantedOrInTheFuture(plant, model.Occured))
             {
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
             }
@@ -46,6 +46,11 @@ namespace Spice.Application.Plants.Events
             _database.Plants.Update(plant);
             await _database.SaveAsync();
             return @event.Id;
+        }
+
+        private static bool EventOccuredBeforePlantedOrInTheFuture(Plant plant, DateTime occurence)
+        {
+            return (occurence < plant.Planted) || (DateTime.Now < occurence);
         }
 
         public async Task<Event> Update(Guid plantId, UpdatePlantEventModel model)
@@ -63,7 +68,7 @@ namespace Spice.Application.Plants.Events
                 return null;
             }
 
-            if ((model.Occured < plant.Planted) || (DateTime.Now < model.Occured))
+            if (EventOccuredBeforePlantedOrInTheFuture(plant, model.Occured))
             {
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
             }
