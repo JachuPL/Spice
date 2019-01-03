@@ -51,10 +51,7 @@ namespace Spice.Application.Plants
                 throw new SpeciesNotFoundException(model.SpeciesId);
             }
 
-            Plant plant = new Plant(model.Name, species, field, model.Row, model.Column)
-            {
-                State = model.State
-            };
+            Plant plant = new Plant(model.Name, species, field, model.Row, model.Column, model.State);
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
 

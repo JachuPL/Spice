@@ -35,6 +35,12 @@ namespace Spice.Domain.Plants
             AddCreationEvent();
         }
 
+        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn, PlantState state) :
+            this(name, species, field, fieldRow, fieldColumn)
+        {
+            State = state;
+        }
+
         private void AddCreationEvent()
         {
             Event plantCreatedEvent = new Event(this, EventType.Start,
