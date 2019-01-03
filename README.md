@@ -45,59 +45,145 @@ Spice is all about plants. As of now, the following requests are available:
 ```
 [
     {
-        "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-        "name": "Aji Jobito",
-        "species": "Capsicum annuum",
-        "state": 2
+        "id": "68d7f358-6b2f-444a-61ce-08d6719bd8d4",
+        "name": "Avocado #1",
+        "species": "Persea americana",
+        "state": 0
+    },
+    {
+        "id": "944e487e-0947-485b-61cf-08d6719bd8d4",
+        "name": "Avocado #2",
+        "species": "Persea americana",
+        "state": 0
     }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid** - returns plant details by id (specified guid). Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4
 
 {
-    "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-    "name": "Aji Jobito",
+    "id": "68d7f358-6b2f-444a-61ce-08d6719bd8d4",
+    "name": "Avocado #1",
     "species": {
-        "id": "d7be6f24-8704-4447-f689-08d66bd60981",
-        "name": "Yellow bell pepper",
-        "latinName": "Capsicum annuum"
+        "id": "1e7e9575-41e1-470c-9772-08d671982349",
+        "name": "Avocado (Hass cultivar)",
+        "latinName": "Persea americana"
     },
     "field": {
-        "id": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
-        "name": "Pole, pole, łyse pole",
-        "description": "Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank."
+        "id": "8b6e7f21-98b6-4e46-b2c2-08d67188be3c",
+        "name": "Windowsill (bedroom)",
+        "description": "Internal windowsill in bedroom."
     },
-    "row": 1,
-    "column": 2,
-    "planted": "2018-12-09T15:00:00",
-    "state": 2,
+    "row": 0,
+    "column": 0,
+    "planted": "2018-11-01T09:30:00",
+    "state": 0,
     "nutrients": [
         {
-            "id": "41955905-a177-4145-bda5-08d66d666eef",
+            "id": "b57da65c-f0d8-4566-3ad8-08d6719f52ff",
             "name": "Mineral water",
-            "amount": "125 ml",
-            "date": "2019-12-09T14:30:00"
+            "amount": "100 ml",
+            "date": "2018-11-03T14:30:00"
         },
         {
-            "id": "624587e6-63a4-4ba1-bda6-08d66d666eef",
+            "id": "36e719ea-9020-4682-3ad9-08d6719f52ff",
             "name": "Mineral water",
-            "amount": "500 ml",
-            "date": "2019-12-09T14:30:00"
+            "amount": "150 ml",
+            "date": "2018-11-08T08:30:00"
+        },
+        {
+            "id": "5a7ae091-c21f-48aa-3ada-08d6719f52ff",
+            "name": "Mineral water",
+            "amount": "50 ml",
+            "date": "2018-11-10T08:00:00"
+        },
+        {
+            "id": "78a4bbd5-28fa-4a8c-3adb-08d6719f52ff",
+            "name": "Mineral water",
+            "amount": "250 ml",
+            "date": "2018-11-20T19:40:00"
+        },
+        {
+            "id": "cff14009-206f-4e15-3adc-08d6719f52ff",
+            "name": "Organic fertilizer",
+            "amount": "50 g",
+            "date": "2018-11-09T11:25:00"
+        },
+        {
+            "id": "f4696a14-6b2b-43db-3add-08d6719f52ff",
+            "name": "Organic fertilizer",
+            "amount": "150 g",
+            "date": "2018-12-01T17:31:00"
+        },
+        {
+            "id": "094f9561-9f43-44c1-3ade-08d6719f52ff",
+            "name": "Anti-insect and Anti-fungi sticks",
+            "amount": "2 pcs",
+            "date": "2018-12-11T11:47:00"
         }
     ],
     "events": [
         {
-            "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
+            "id": "a1669fdb-a471-45b3-3d3e-08d6719bd8da",
+            "type": 8,
+            "occured": "2019-01-03T17:54:05.9362537"
+        },
+        {
+            "id": "8d981e89-eeae-4e9c-3d3f-08d6719bd8da",
             "type": 6,
+            "occured": "2019-01-03T17:57:05.759464"
+        },
+        {
+            "id": "53525e74-0eb3-4538-3d40-08d6719bd8da",
+            "type": 6,
+            "occured": "2019-01-03T17:57:12.1350025"
+        },
+        {
+            "id": "4e3c64df-a412-462a-3d42-08d6719bd8da",
+            "type": 7,
             "occured": "2018-12-30T13:05:15"
         },
         {
-            "id": "0dca2f37-c0b5-428d-4f3a-08d66e4fa2b2",
-            "type": 0,
-            "occured": "2018-12-30T13:00:00"
+            "id": "a2d7701f-72ff-40f5-3d43-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-11-03T14:30:00"
+        },
+        {
+            "id": "fb0080ee-4310-4e0b-3d44-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-11-08T08:30:00"
+        },
+        {
+            "id": "dccf0322-0832-4f3e-3d45-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-11-10T08:00:00"
+        },
+        {
+            "id": "d0ef6ffd-3118-4501-3d46-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-11-20T19:40:00"
+        },
+        {
+            "id": "f098f148-bd34-4c96-3d47-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-11-09T11:25:00"
+        },
+        {
+            "id": "494297d3-2338-4424-3d48-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-12-01T17:31:00"
+        },
+        {
+            "id": "437efb82-e8b1-4a25-3d49-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-12-11T11:47:00"
+        },
+        {
+            "id": "7bf15af3-83fa-4d4f-3d4a-08d6719bd8da",
+            "type": 9,
+            "occured": "2018-12-11T11:47:00"
         }
     ]
 }
@@ -106,12 +192,12 @@ Spice is all about plants. As of now, the following requests are available:
 * ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants - adds new plant with specified data. Example:
 ```
 {
-	"Name": "Aji Lemon Drop",
-	"SpeciesId": "907083c1-5032-4a28-f688-08d66bd60981",
-	"FieldId": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
+	"Name": "Avocado #1",
+	"SpeciesId": "1e7e9575-41e1-470c-9772-08d671982349",
+	"FieldId": "8b6e7f21-98b6-4e46-b2c2-08d67188be3c",
 	"Row": 0,
 	"Column": 0,
-	"Planted": "2018-12-09 14:30:00",
+	"Planted": "2018-11-01 09:30:00",
 	"State": "Healthy"
 }
 ```
@@ -119,15 +205,15 @@ Note that if a plant is found growing on specified field, row and column this op
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid** - updates plant data with specified id. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4
 
 {
-	"Name": "Aji Jobito",
-	"SpeciesId": "d7be6f24-8704-4447-f689-08d66bd60981",
-	"FieldId": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
+	"Name": "Avocado #2",
+	"SpeciesId": "73531e76-eaa7-42e8-9773-08d671982349",
+	"FieldId": "b1ed0592-5e91-4690-b2c3-08d67188be3c",
 	"Row": 1,
-	"Column": 2,
-	"Planted": "2018-12-09 15:00:00",
+	"Column": 0,
+	"Planted": "2018-11-02 10:00:00",
 	"State": "Fruiting"
 }
 ```
@@ -135,7 +221,7 @@ Note that if a plant is found growing on specified field, row and column this op
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid** - deletes plant with specified id. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4
+// Requested uri: api/plants/944e487e-0947-485b-61cf-08d6719bd8d4
 // Returns 204 No Content
 ```
 Note that once a plant is deleted it is not possible to restore it!
@@ -146,44 +232,54 @@ Not all plants grow on fields - some are raised using hydroponics or just in a p
 ```
 [
     {
-        "id": "10000000-0000-0000-0000-000000000001",
-        "name": "Unknown Field",
-        "description": "This field was automatically created while applying migration to database. Since it ignores domain restrictions, please move all plants from this field to another one."
+        "id": "8b6e7f21-98b6-4e46-b2c2-08d67188be3c",
+        "name": "Windowsill (bedroom)",
+        "description": "Internal windowsill in bedroom."
     },
     {
-        "id": "c4fcb846-65a1-4c86-92fc-08d66b49d1b7",
-        "name": "Field, field, endless field",
-        "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
+        "id": "b1ed0592-5e91-4690-b2c3-08d67188be3c",
+        "name": "Windowsill (living room)",
+        "description": "Internal windowsill in living room."
+    },
+    {
+        "id": "9e444078-0898-44f6-b2c4-08d67188be3c",
+        "name": "Balcony",
+        "description": "Balcony in living room."
+    },
+    {
+        "id": "ba9d4125-ca60-49f4-b2c5-08d67188be3c",
+        "name": "Field",
+        "description": "Lots of sun from early morning untill afternoon."
     }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/fields/**guid** - returns field details by id (specified guid). Example:
 ```
-// Requested uri: api/fields/2694bd84-fa18-4a35-6a3e-08d66bd634b5
+// Requested uri: api/fields/8b6e7f21-98b6-4e46-b2c2-08d67188be3c
 
 {
-    "id": "2694bd84-fa18-4a35-6a3e-08d66bd634b5",
-    "name": "Field, field, endless field",
-    "description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank."
+    "id": "8b6e7f21-98b6-4e46-b2c2-08d67188be3c",
+    "name": "Windowsill (bedroom)",
+    "description": "Internal windowsill in bedroom.",
     "latitude": 50.9657062,
     "longtitude": 22.3966112,
     "plants": [
         {
-            "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-            "name": "Aji Jobito",
-            "species": "Capsicum annuum",
-            "state": 2
+            "id": "68d7f358-6b2f-444a-61ce-08d6719bd8d4",
+            "name": "Avocado #1",
+            "species": "Persea americana",
+            "state": 0
         }
     ]
 }
 ```
 
-* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants - adds new field with specified data. Example:
+* ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/fields - adds new field with specified data. Example:
 ```
 {
-	"Name": "Field, field, endless field",
-	"Description": "Here's still a wheat stubble, but there will be San Francisco. And over there, where's that molehill there will be my bank.",
+	"Name": "Field",
+	"Description": "Lots of sun from early morning untill afternoon.",
 	"Latitude": 50.9657062,
 	"Longtitude": 22.3966112
 }
@@ -192,11 +288,11 @@ Note that if a field with specified name already exists this operation will resu
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/fields/**guid** - updates field data with specified id. Example:
 ```
-// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
+// Requested uri: api/fields/ba9d4125-ca60-49f4-b2c5-08d67188be3c
 
 {
-	"Name": "Pole, pole, łyse pole",
-	"Description": "Tu na razie jest ściernisko, ale będzie San Francisco. A tam, gdzie to kretowisko będzie stał mój bank.",
+	"Name": "Field B",
+	"Description": "Sunny from the afternoon until the sunset.",
 	"Latitude": 50.9657062,
 	"Longtitude": 22.3966112
 }
@@ -205,7 +301,7 @@ Note that if a field with specified name already exists this operation will resu
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/fields/**guid** - deletes field with specified id. Example:
 ```
-// Requested uri: api/fields/c4fcb846-65a1-4c86-92fc-08d66b49d1b7
+// Requested uri: api/fields/ba9d4125-ca60-49f4-b2c5-08d67188be3c
 // Returns 204 No Content
 ```
 Note that once a field is deleted it is not possible to restore it and all underlying plants!
@@ -216,18 +312,18 @@ You can also group your plants into species. This might come in handy in the fut
 ```
 [
     {
-        "id": "907083c1-5032-4a28-f688-08d66bd60981",
-        "name": "Spicy pepper",
-        "latinName": "Capsicum baccatum"
+        "id": "1e7e9575-41e1-470c-9772-08d671982349",
+        "name": "Avocado (Hass cultivar)",
+        "latinName": "Persea americana"
     },
     {
-        "id": "d7be6f24-8704-4447-f689-08d66bd60981",
-        "name": "Yellow bell pepper",
-        "latinName": "Capsicum annuum"
+        "id": "73531e76-eaa7-42e8-9773-08d671982349",
+        "name": "Avocado (Fuerte cultivar)",
+        "latinName": "Persea americana"
     },
     {
-        "id": "b329ee44-084f-48a4-f68a-08d66bd60981",
-        "name": "Green bell pepper",
+        "id": "ef0ab7dc-aed5-40cc-9774-08d671982349",
+        "name": "Bell pepper",
         "latinName": "Capsicum annuum"
     }
 ]
@@ -235,19 +331,19 @@ You can also group your plants into species. This might come in handy in the fut
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/**guid** - returns species details by id (specified guid). Example:
 ```
-// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+// Requested uri: api/species/1e7e9575-41e1-470c-9772-08d671982349
 
 {
-    "id": "d7be6f24-8704-4447-f689-08d66bd60981",
-    "name": "Yellow bell pepper",
-    "latinName": "Capsicum annuum",
-    "description": "Not spicy at all. Widely used in hungarian cuisine.",
+    "id": "1e7e9575-41e1-470c-9772-08d671982349",
+    "name": "Avocado (Hass cultivar)",
+    "latinName": "Persea americana",
+    "description": "Know by Latin American cultures as 'butter of the gods'.",
     "plants": [
         {
-            "id": "ef9f019b-d93e-4f5b-ba8d-08d66bd675e4",
-            "name": "Aji Jobito",
-            "species": "Capsicum annuum",
-            "state": 2
+            "id": "68d7f358-6b2f-444a-61ce-08d6719bd8d4",
+            "name": "Avocado #1",
+            "species": "Persea americana",
+            "state": 0
         }
     ]
 }
@@ -256,16 +352,16 @@ You can also group your plants into species. This might come in handy in the fut
 * ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/species - adds new species with specified data. Example:
 ```
 {
-	"Name": "Green bell pepper",
+	"Name": "Bell pepper",
 	"LatinName": "Capsicum annuum",
-	"Description": "Not spicy at all. Widely used in hungarian cuisine."
+	"Description": "Sweet pepper with no spiciness at all."
 }
 ```
 Note that if a species with specified name already exists this operation will result in Conflict. Please keep in mind that response contains 'Location' header with URI to newly created resource.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/species/**guid** - updates species data with specified id. Example:
 ```
-// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+// Requested uri: api/species/ef0ab7dc-aed5-40cc-9774-08d671982349
 
 {
 	"Name": "Spicy pepper",
@@ -277,27 +373,49 @@ Note that if a species with specified name already exists this operation will re
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/species/**guid** - deletes species with specified id. Example:
 ```
-// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd60981
+// Requested uri: api/species/ef0ab7dc-aed5-40cc-9774-08d671982349
 // Returns 204 No Content
 ```
 Note that once a species is deleted it is not possible to restore it and all underlying plants!
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/species/**guid**/summary - returns summary of nutrients applied to all plants of selected species. Example:
 ```
-// Requested uri: api/species/d7be6f24-8704-4447-f689-08d66bd609814/summary
-// Note that you can get nutrition summary for selected period of time by adding start and end date parameters, eg: species/d7be6f24-8704-4447-f689-08d66bd60981/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
+// Requested uri: api/species/1e7e9575-41e1-470c-9772-08d671982349/summary
+// Note that you can get nutrition summary for selected period of time by adding start and end date parameters, eg: api/species/1e7e9575-41e1-470c-9772-08d671982349/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
 
 [
     {
         "nutrient": {
-            "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+            "id": "e95b4df9-cec7-439d-f47d-08d6719b259d",
             "name": "Mineral water",
             "description": "Either tap or bottled.",
             "dosageUnits": "ml"
         },
-        "totalAmount": 2258,
-        "firstAdministration": "2018-12-29T10:18:31.1115637",
-        "lastAdministration": "2019-12-09T14:30:00"
+        "totalAmount": 550,
+        "firstAdministration": "2018-11-03T14:30:00",
+        "lastAdministration": "2018-11-20T19:40:00"
+    },
+    {
+        "nutrient": {
+            "id": "72a26221-45f4-43dd-f47e-08d6719b259d",
+            "name": "Organic fertilizer",
+            "description": "Some plants do not require it.",
+            "dosageUnits": "g"
+        },
+        "totalAmount": 200,
+        "firstAdministration": "2018-11-09T11:25:00",
+        "lastAdministration": "2018-12-01T17:31:00"
+    },
+    {
+        "nutrient": {
+            "id": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+            "name": "Anti-insect and Anti-fungi sticks",
+            "description": "Just put two into the soil.",
+            "dosageUnits": "pcs"
+        },
+        "totalAmount": 2,
+        "firstAdministration": "2018-12-11T11:47:00",
+        "lastAdministration": "2018-12-11T11:47:00"
     }
 ]
 ```
@@ -308,19 +426,29 @@ Nutrients are very important in your plants growth. You can add some for further
 ```
 [
     {
-        "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+        "id": "e95b4df9-cec7-439d-f47d-08d6719b259d",
         "name": "Mineral water",
         "description": "Either tap or bottled."
+    },
+    {
+        "id": "72a26221-45f4-43dd-f47e-08d6719b259d",
+        "name": "Organic fertilizer",
+        "description": "Some plants do not require it."
+    },
+    {
+        "id": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+        "name": "Anti-insect and Anti-fungi sticks",
+        "description": "Just put two into the soil."
     }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/nutrients/**guid** - returns nutrient details by id (specified guid). Example:
 ```
-// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+// Requested uri: api/nutrients/e95b4df9-cec7-439d-f47d-08d6719b259d
 
 {
-    "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+    "id": "e95b4df9-cec7-439d-f47d-08d6719b259d",
     "name": "Mineral water",
     "description": "Either tap or bottled.",
     "dosageUnits": "ml"
@@ -339,7 +467,7 @@ Note that if a nutrient with specified name already exists this operation will r
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/nutrients/**guid** - updates nutrients data with specified id. Example:
 ```
-// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+// Requested uri: api/nutrients/72a26221-45f4-43dd-f47e-08d6719b259d
 
 {
 	"Name": "Fertilizer",
@@ -351,7 +479,7 @@ Note that if a nutrient with specified name already exists this operation will r
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/nutrients/**guid** - deletes nutrients with specified id. Example:
 ```
-// Requested uri: api/nutrients/25849c34-3242-4aff-27e3-08d66bfc09eb
+// Requested uri: api/nutrients/72a26221-45f4-43dd-f47e-08d6719b259d
 // Returns 204 No Content
 ```
 Note that once a nutrient is deleted it is not possible to restore it and all underlying plants!
@@ -360,86 +488,142 @@ Note that once a nutrient is deleted it is not possible to restore it and all un
 Your plants would not survive long without nutrients. With this option you can track the lifecycle of your plants. For now, you can make such API calls:
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients - returns list of administered plant nutrients. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients
 
 [
     {
-        "id": "41955905-a177-4145-bda5-08d66d666eef",
+        "id": "b57da65c-f0d8-4566-3ad8-08d6719f52ff",
         "name": "Mineral water",
-        "amount": "125 ml",
-        "date": "2018-12-09T14:30:00"
+        "amount": "100 ml",
+        "date": "2018-11-03T14:30:00"
     },
     {
-        "id": "624587e6-63a4-4ba1-bda6-08d66d666eef",
+        "id": "36e719ea-9020-4682-3ad9-08d6719f52ff",
         "name": "Mineral water",
-        "amount": "500 ml",
-        "date": "2018-12-10T20:00:00"
+        "amount": "150 ml",
+        "date": "2018-11-08T08:30:00"
+    },
+    {
+        "id": "5a7ae091-c21f-48aa-3ada-08d6719f52ff",
+        "name": "Mineral water",
+        "amount": "50 ml",
+        "date": "2018-11-10T08:00:00"
+    },
+    {
+        "id": "78a4bbd5-28fa-4a8c-3adb-08d6719f52ff",
+        "name": "Mineral water",
+        "amount": "250 ml",
+        "date": "2018-11-20T19:40:00"
+    },
+    {
+        "id": "cff14009-206f-4e15-3adc-08d6719f52ff",
+        "name": "Organic fertilizer",
+        "amount": "50 g",
+        "date": "2018-11-09T11:25:00"
+    },
+    {
+        "id": "f4696a14-6b2b-43db-3add-08d6719f52ff",
+        "name": "Organic fertilizer",
+        "amount": "150 g",
+        "date": "2018-12-01T17:31:00"
+    },
+    {
+        "id": "094f9561-9f43-44c1-3ade-08d6719f52ff",
+        "name": "Anti-insect and Anti-fungi sticks",
+        "amount": "2 pcs",
+        "date": "2018-12-11T11:47:00"
     }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/**guid** - returns administered plant nutrient details by plant id (first guid parameter) and nutrition record id (second guid parameter). Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/094f9561-9f43-44c1-3ade-08d6719f52ff
 
 {
-    "id": "41955905-a177-4145-bda5-08d66d666eef",
+    "id": "094f9561-9f43-44c1-3ade-08d6719f52ff",
     "nutrient": {
-        "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
-        "name": "Mineral water",
-        "description": "Either tap or bottled.",
-        "dosageUnits": "ml"
+        "id": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+        "name": "Anti-insect and Anti-fungi sticks",
+        "description": "Just put two into the soil.",
+        "dosageUnits": "pcs"
     },
-    "amount": 125,
-    "date": "2019-12-09T14:30:00"
+    "amount": 2,
+    "date": "2018-12-11T11:47:00"
 }
 ```
 
 * ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/nutrients - adds new nutrition record with specified data. Example:
 ```
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients
+
 {
-	"NutrientId": "25849c34-3242-4aff-27e3-08d66bfc09eb",
-	"Amount": 500.0,
-	"Date": "2018-12-29 10:20:00",
+	"NutrientId": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+	"Amount": 2.0,
+	"Date": "2018-12-11 11:47:00",
+	"CreateEvent": true
 }
 ```
 Note that if a plant is not found this operation will result in Conflict. The same applies if nutrient does not exist. Also, you will receive a Conflict response if specified date is earlier than plant date. Please keep in mind that response contains 'Location' header with URI to newly created resource. The date parameter is completely optional - a request processing date is used if not specified otherwise.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid**/nutrients/**guid** - updates nutrition record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
 ```
-// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/094f9561-9f43-44c1-3ade-08d6719f52ff
 
 {
-	"NutrientId": "25849c34-3242-4aff-27e3-08d66bfc09eb",
-	"Amount": 125.0,
-	"Date": "2019-12-09 14:30:00",
+	"NutrientId": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+	"Amount": 3.0,
+	"Date": "2018-12-11 11:47:00",
+	"CreateEvent": true
 }
 ```
 Note that if a plant is not found this operation will result in Conflict. The same applies if either nutrient or the nutrition record itself does not exist. Also, you will receive a Conflict response if specified date is earlier than plant date.
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid**/nutrients/**guid** - deletes nutrition record with specified id (second guid parameter) from plant with specified id (first guid parameter). Example:
 ```
-// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/41955905-a177-4145-bda5-08d66d666eef
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/094f9561-9f43-44c1-3ade-08d6719f52ff
 // Returns 204 No Content
 ```
-Note that once a nutrition record is deleted it is not possible to restore it!
+Note that once a nutrition record is deleted it is not possible to restore it! **Important**: if an event was created while adding nutrition info it won't be deleted and you have to remove such event manually!
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/nutrients/summary - returns summary of nutrients administered to a plant grouped by nutrient. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary
-// Note that you can get nutrition info for selected period of time by adding start and end date parameters, eg: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/nutrients/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/summary
+// Note that you can get nutrition info for selected period of time by adding start and end date parameters, eg: plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/nutrients/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
 
 [
     {
         "nutrient": {
-            "id": "25849c34-3242-4aff-27e3-08d66bfc09eb",
+            "id": "e95b4df9-cec7-439d-f47d-08d6719b259d",
             "name": "Mineral water",
             "description": "Either tap or bottled.",
             "dosageUnits": "ml"
         },
-        "totalAmount": 625,
-        "firstAdministration": "2018-12-29T10:18:31.1115637",
-        "lastAdministration": "2019-12-09T14:30:00"
+        "totalAmount": 550,
+        "firstAdministration": "2018-11-03T14:30:00",
+        "lastAdministration": "2018-11-20T19:40:00"
+    },
+    {
+        "nutrient": {
+            "id": "72a26221-45f4-43dd-f47e-08d6719b259d",
+            "name": "Organic fertilizer",
+            "description": "Some plants do not require it.",
+            "dosageUnits": "g"
+        },
+        "totalAmount": 200,
+        "firstAdministration": "2018-11-09T11:25:00",
+        "lastAdministration": "2018-12-01T17:31:00"
+    },
+    {
+        "nutrient": {
+            "id": "66f3ec7e-d702-427b-f47f-08d6719b259d",
+            "name": "Anti-insect and Anti-fungi sticks",
+            "description": "Just put two into the soil.",
+            "dosageUnits": "pcs"
+        },
+        "totalAmount": 2,
+        "firstAdministration": "2018-12-11T11:47:00",
+        "lastAdministration": "2018-12-11T11:47:00"
     }
 ]
 ```
@@ -448,52 +632,58 @@ Note that once a nutrition record is deleted it is not possible to restore it!
 There's a lot happening during your plant lifecycle. With this option you can track all the events that occur. For now, you can make such API calls:
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events - returns list of plant events. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events
 
 [
     {
-        "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
-        "type": 6,
-        "occured": "2018-12-30T12:59:07.1700099"
+        "id": "a1669fdb-a471-45b3-3d3e-08d6719bd8da",
+        "type": 8,
+        "occured": "2019-01-03T17:54:05.9362537"
     },
     {
-        "id": "a392e095-f061-40df-2532-08d66e4e33cb",
-        "type": 0,
-        "occured": "2018-12-30T13:00:00"
+        "id": "8d981e89-eeae-4e9c-3d3f-08d6719bd8da",
+        "type": 6,
+        "occured": "2019-01-03T17:57:05.759464"
+    },
+    {
+        "id": "53525e74-0eb3-4538-3d40-08d6719bd8da",
+        "type": 6,
+        "occured": "2019-01-03T17:57:12.1350025"
     }
 ]
 ```
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/**guid** - returns plant event details by plant id (first guid parameter) and event record id (second guid parameter). Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/5d34024b-1a26-4a98-2531-08d66e4e33cb
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/4e3c64df-a412-462a-3d42-08d6719bd8da
 
 {
-    "id": "5d34024b-1a26-4a98-2531-08d66e4e33cb",
-    "type": 6,
-    "description": "Moved plant to more sunny place.",
-    "occured": "2018-12-30T12:59:07.1700099"
+    "id": "4e3c64df-a412-462a-3d42-08d6719bd8da",
+    "type": 7,
+    "description": "Great progress after fertilizing.",
+    "occured": "2018-12-30T13:05:15"
 }
 ```
 
 * ![POST Request](https://img.shields.io/badge/Method-POST-yellow.svg) api/plants/**guid**/events - adds new event with specified data. Example:
 ```
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events
+
 {
 	"Type": "Insects",
 	"Description": "Spotted some Leptinotarsa decemlineata on the leaves today.",
-    "Occured": "2018-12-30 13:00:00",
-	"CreateEvent": true
+    "Occured": "2018-12-30 13:00:00"
 }
 ```
 Note that if a plant is not found this operation will result in Conflict. Also, you will receive a Conflict response if specified occurence date is earlier than plant date or in the future. Please keep in mind that response contains 'Location' header with URI to newly created resource. The occurence date parameter is completely optional - a request processing date is used if not specified otherwise. The other optional parameter is 'CreateEvent' - if it is not specified, default value is false.
 
 * ![PUT Request](https://img.shields.io/badge/Method-PUT-blue.svg) api/plants/**guid**/events/**guid** - updates event record with specified id (second guid parameter) for plant with specified id (first guid parameter). Example:
 ```
-// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/41955905-a177-4145-bda5-08d66d666eef
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/4e3c64df-a412-462a-3d42-08d6719bd8da
 
 {
-    "Type": "Moving",
-    "Description": "Moved plant to more sunny place, right behind barn.",
+    "Type": "Growth",
+    "Description": "Great progress after fertilizing.",
     "Occured": "2018-12-30T13:05:15"
 }
 ```
@@ -501,34 +691,34 @@ Note that if a plant is not found this operation will result in Conflict. The sa
 
 * ![DELETE Request](https://img.shields.io/badge/Method-DELETE-red.svg) api/plants/**guid**/events/**guid** - deletes event record with specified id (second guid parameter) from plant with specified id (first guid parameter). Example:
 ```
-// Requested uri: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/a392e095-f061-40df-2532-08d66e4e33cb
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/4e3c64df-a412-462a-3d42-08d6719bd8da
 // Returns 204 No Content
 ```
 Note that once an event record is deleted it is not possible to restore it!
 
 * ![GET Request](https://img.shields.io/badge/Method-GET-brightgreen.svg) api/plants/**guid**/events/summary - returns summary of events occured to a plant grouped by event type. Example:
 ```
-// Requested uri: api/plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary
+// Requested uri: api/plants/68d7f358-6b2f-444a-61ce-08d6719bd8d4/events/summary
 // Note that you can get event log for selected period of time by adding start and end date parameters, eg: plants/ef9f019b-d93e-4f5b-ba8d-08d66bd675e4/events/summary?fromDate=2018-01-01T00:00:00&toDate=2018-12-31T23:59:59
 
 [
     {
         "type": 6,
-        "totalCount": 3,
+        "totalCount": 2,
+        "firstOccurence": "2019-01-03T17:57:05.759464",
+        "lastOccurence": "2019-01-03T17:57:12.1350025"
+    },
+    {
+        "type": 7,
+        "totalCount": 1,
         "firstOccurence": "2018-12-30T13:05:15",
-        "lastOccurence": "2018-12-31T13:03:21.3786219"
+        "lastOccurence": "2018-12-30T13:05:15"
     },
     {
-        "type": 0,
-        "totalCount": 3,
-        "firstOccurence": "2018-12-30T13:00:00",
-        "lastOccurence": "2018-12-30T13:00:00"
-    },
-    {
-        "type": 9,
-        "totalCount": 3,
-        "firstOccurence": "2018-12-30T13:00:00",
-        "lastOccurence": "2019-12-09T14:30:00"
+        "type": 8,
+        "totalCount": 1,
+        "firstOccurence": "2019-01-03T17:54:05.9362537",
+        "lastOccurence": "2019-01-03T17:54:05.9362537"
     }
 ]
 ```
