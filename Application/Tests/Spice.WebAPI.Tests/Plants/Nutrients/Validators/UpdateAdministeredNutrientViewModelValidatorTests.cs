@@ -7,18 +7,18 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients.Validators
     [TestFixture]
     internal sealed class UpdateAdministeredNutrientViewModelValidatorTests
     {
-        private UpdateAdministeredNutrientViewModelValidator Validator;
+        private UpdateAdministeredNutrientViewModelValidator _validator;
 
         [SetUp]
         public void SetUp()
         {
-            Validator = new UpdateAdministeredNutrientViewModelValidator();
+            _validator = new UpdateAdministeredNutrientViewModelValidator();
         }
 
         [TestCase(TestName = "Update Administered Nutrient Validator should have error for Amount equal to 0")]
         public void ValidatorShouldHaveErrorWhenAmountIsZero()
         {
-            Validator.ShouldHaveValidationErrorFor(x => x.Amount, 0);
+            _validator.ShouldHaveValidationErrorFor(x => x.Amount, 0);
         }
     }
 }

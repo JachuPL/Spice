@@ -45,7 +45,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.GetAll()).Returns(A.Fake<IEnumerable<Domain.Species>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.ListEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.ListEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -60,7 +60,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(Task.FromResult<Domain.Species>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -75,7 +75,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -90,7 +90,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -105,7 +105,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Create(A<CreateSpeciesModel>.Ignored)).Returns(Guid.NewGuid());
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -120,7 +120,7 @@ namespace Spice.WebAPI.Tests.Species
             CreateSpeciesViewModel model = ViewModelFactory.CreateInvalidCreationModel();
 
             // When
-            var response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
+            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -134,7 +134,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -150,7 +150,7 @@ namespace Spice.WebAPI.Tests.Species
                 .Returns(Task.FromResult<Domain.Species>(null));
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -165,7 +165,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Species>());
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -180,7 +180,7 @@ namespace Spice.WebAPI.Tests.Species
             UpdateSpeciesViewModel model = ViewModelFactory.CreateInvalidUpdateModel();
 
             // When
-            var response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
+            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), model);
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -194,7 +194,7 @@ namespace Spice.WebAPI.Tests.Species
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored)).Returns(Task.CompletedTask);
 
             // When
-            var response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
+            HttpResponseMessage response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -209,7 +209,7 @@ namespace Spice.WebAPI.Tests.Species
                 .Returns(Task.FromResult<IEnumerable<SpeciesNutritionSummaryModel>>(null));
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SpeciesSummaryEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.SpeciesSummaryEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -219,7 +219,7 @@ namespace Spice.WebAPI.Tests.Species
         }
 
         [TestCase(TestName = "GET summary of species nutrition returns \"OK\" and correct content type for dates within range")]
-        public async Task GetSummaryOfPlantEventReturnsOKAndCorrectContentType()
+        public async Task GetSummaryOfSpeciesNutritionReturnsSummaryAndCorrectContentType()
         {
             // Given
             DateTime fromDate = new DateTime(2018, 12, 01, 00, 00, 00);
@@ -228,7 +228,7 @@ namespace Spice.WebAPI.Tests.Species
                 .Returns(A.Fake<IEnumerable<SpeciesNutritionSummaryModel>>());
 
             // When
-            var response = await Client.GetAsync(EndPointFactory.SpeciesSummaryWithinDateRangeEndpoint());
+            HttpResponseMessage response = await Client.GetAsync(EndPointFactory.SpeciesSummaryWithinDateRangeEndpoint());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);
