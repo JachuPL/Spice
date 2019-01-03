@@ -37,13 +37,8 @@ namespace Spice.Domain.Plants
 
         private void AddCreationEvent()
         {
-            Event plantCreatedEvent = new Event()
-            {
-                Plant = this,
-                Type = EventType.Start,
-                Description = $"{Name} was planted on field {Field.Name}. (Generated automatically)",
-                Occured = DateTime.Now
-            };
+            Event plantCreatedEvent = new Event(this, EventType.Start,
+                $"{Name} was planted on field {Field.Name}. (Generated automatically)");
             Events.Add(plantCreatedEvent);
         }
 
@@ -58,13 +53,8 @@ namespace Spice.Domain.Plants
 
         private void AddFieldChangeEvent(Field newField)
         {
-            Event fieldChangedEvent = new Event()
-            {
-                Plant = this,
-                Type = EventType.Moving,
-                Occured = DateTime.Now,
-                Description = $"{Name} was moved to field {newField.Name}. (Generated automatically)"
-            };
+            Event fieldChangedEvent = new Event(this, EventType.Moving,
+                $"{Name} was moved to field {newField.Name}. (Generated automatically)");
             Events.Add(fieldChangedEvent);
         }
     }

@@ -173,13 +173,8 @@ namespace Spice.Application.Tests.Plants.Events
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
-            Event startEvent = new Event()
-            {
-                Description = "Start event",
-                Plant = plant,
-                Type = EventType.Start,
-                Occured = DateTime.Now
-            };
+            Event startEvent = new Event(plant,
+                EventType.Start, "Start event");
             plant.Events.Add(startEvent);
             Guid plantId = SeedDatabase(plant);
             Guid eventId = startEvent.Id;

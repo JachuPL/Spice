@@ -30,13 +30,10 @@ namespace Spice.Application.Tests.Plants.Events
 
         public static Event DomainModel(Plant plant = null, EventType type = EventType.Fungi, DateTime? occured = null)
         {
-            return new Event()
-            {
-                Plant = plant ?? Plants.ModelFactory.DomainModel(),
-                Type = type,
-                Description = "Spotted some fungi on the leaves.",
-                Occured = occured ?? DateTime.Now
-            };
+            return new Event(plant ?? Plants.ModelFactory.DomainModel(),
+                type,
+                "Spotted some fungi on the leaves.",
+                occured ?? DateTime.Now);
         }
     }
 }

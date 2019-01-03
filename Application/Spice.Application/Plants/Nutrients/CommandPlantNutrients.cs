@@ -46,13 +46,10 @@ namespace Spice.Application.Plants.Nutrients
 
             if (model.CreateEvent)
             {
-                Event @event = new Event()
-                {
-                    Plant = plant,
-                    Type = EventType.Nutrition,
-                    Description = $"Given {model.Amount} {nutrient.DosageUnits} of {nutrient.Name} to {plant.Name}. (Generated automatically)",
-                    Occured = model.Date
-                };
+                Event @event = new Event(plant,
+                    EventType.Nutrition,
+                    $"Given {model.Amount} {nutrient.DosageUnits} of {nutrient.Name} to {plant.Name}. (Generated automatically)",
+                    model.Date);
                 plant.Events.Add(@event);
                 _database.Plants.Update(plant);
             }

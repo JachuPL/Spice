@@ -9,11 +9,14 @@ namespace Spice.Domain.Tests.Plants
     [TestFixture]
     internal sealed class EventTests
     {
+        private Event CreateTestEvent() =>
+            new Event(new Plant("Test", new Species(), new Field(), 0, 0), EventType.Disease, "Test");
+
         [TestCase(TestName = "Get and Set event Id property works properly")]
         public void GetAndSetIdWorksProperly()
         {
             // Given
-            Event @event = new Event();
+            Event @event = CreateTestEvent();
             Guid id = Guid.NewGuid();
 
             // When
@@ -27,7 +30,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Event @event = new Event();
+            Event @event = CreateTestEvent();
             Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
 
             // When
@@ -41,7 +44,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetTypeWorksProperly()
         {
             // Given
-            Event @event = new Event();
+            Event @event = CreateTestEvent();
             EventType type = EventType.Growth;
 
             // When
@@ -55,7 +58,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetDescriptionWorksProperly()
         {
             // Given
-            Event @event = new Event();
+            Event @event = CreateTestEvent();
             string description = "Random event description";
 
             // When
@@ -69,7 +72,7 @@ namespace Spice.Domain.Tests.Plants
         public void GetAndSetOccuredWorksProperly()
         {
             // Given
-            Event @event = new Event();
+            Event @event = CreateTestEvent();
             DateTime date = DateTime.Now.AddDays(1);
 
             // When
