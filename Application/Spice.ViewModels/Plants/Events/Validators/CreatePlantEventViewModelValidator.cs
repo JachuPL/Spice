@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Spice.ViewModels.Common.Validators;
 using System;
 
 namespace Spice.ViewModels.Plants.Events.Validators
@@ -8,39 +9,15 @@ namespace Spice.ViewModels.Plants.Events.Validators
         public CreatePlantEventViewModelValidator()
         {
             RuleFor(x => x.Type)
-                .Must(BeAValidValue).WithMessage("Select a valid type of event.");
+                .SetValidator(new EventTypeViewModelValidator());
 
             RuleFor(x => x.Description)
-                .Must(BeAValidDescription).WithMessage("Description cannot be build from whitespace characters only.")
+                .SetValidator(new DescriptionViewModelValidator())
                 .MinimumLength(2).WithMessage("Minimum length of event description is 2 characters.")
                 .MaximumLength(500).WithMessage("Maximum lenght of event description is 500 characters.");
 
             RuleFor(x => x.Occured)
                 .LessThanOrEqualTo(DateTime.Now).WithMessage("Event occurence date cannot be in the future");
-        }
-
-        private bool BeAValidValue(EventTypeViewModel value)
-        {
-            switch (value)
-            {
-                case EventTypeViewModel.Disease:
-                case EventTypeViewModel.Fungi:
-                case EventTypeViewModel.Growth:
-                case EventTypeViewModel.Insects:
-                case EventTypeViewModel.OverWatering:
-                case EventTypeViewModel.Pests:
-                case EventTypeViewModel.UnderWatering:
-                case EventTypeViewModel.Nutrition:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        private bool BeAValidDescription(string arg)
-        {
-            return arg is null || (arg.Trim().Length > 0);
         }
     }
 }

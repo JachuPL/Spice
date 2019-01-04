@@ -8,7 +8,7 @@ namespace Spice.Application.Tests.Fields
     {
         public static CreateFieldModel CreationModel()
         {
-            return new CreateFieldModel()
+            return new CreateFieldModel
             {
                 Name = "Field A",
                 Description = "Random field description",
@@ -19,7 +19,7 @@ namespace Spice.Application.Tests.Fields
 
         public static UpdateFieldModel UpdateModel(Guid? id = null)
         {
-            return new UpdateFieldModel()
+            return new UpdateFieldModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Field A",
@@ -31,7 +31,7 @@ namespace Spice.Application.Tests.Fields
 
         public static Field DomainModel(string fieldName = "Field A", double latitude = 52, double longtitude = 20)
         {
-            return new Field()
+            return new Field
             {
                 Name = fieldName,
                 Description = "Random field description",

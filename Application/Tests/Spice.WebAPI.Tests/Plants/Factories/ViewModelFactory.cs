@@ -7,7 +7,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
     {
         public static CreatePlantViewModel CreateValidCreationModel()
         {
-            return new CreatePlantViewModel()
+            return new CreatePlantViewModel
             {
                 Name = "Pepper",
                 SpeciesId = Guid.NewGuid(),
@@ -21,7 +21,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
 
         public static CreatePlantViewModel CreateInvalidCreationModel()
         {
-            return new CreatePlantViewModel()
+            return new CreatePlantViewModel
             {
                 Name = string.Empty,
                 SpeciesId = Guid.Empty,
@@ -35,7 +35,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
 
         public static UpdatePlantViewModel CreateValidUpdateModel()
         {
-            return new UpdatePlantViewModel()
+            return new UpdatePlantViewModel
             {
                 Name = "Pepper",
                 SpeciesId = Guid.NewGuid(),
@@ -49,7 +49,7 @@ namespace Spice.WebAPI.Tests.Plants.Factories
 
         public static UpdatePlantViewModel CreateInvalidUpdateModel()
         {
-            return new UpdatePlantViewModel()
+            return new UpdatePlantViewModel
             {
                 Name = string.Empty,
                 SpeciesId = Guid.Empty,

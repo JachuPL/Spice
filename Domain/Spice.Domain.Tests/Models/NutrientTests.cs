@@ -9,7 +9,7 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class NutrientTests : AbstractBaseDomainTestFixture<Nutrient>
     {
-        protected override Nutrient CreateDomainObject() => new Nutrient()
+        protected override Nutrient CreateDomainObject() => new Nutrient
         {
             Name = "Test",
             Description = "Test desc",

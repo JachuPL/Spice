@@ -9,7 +9,7 @@ namespace Spice.Domain.Tests.Models.Plants
     internal sealed class AdministeredNutritionTests : AbstractBaseDomainTestFixture<AdministeredNutrient>
     {
         private readonly Plant _nutritionedPlant = new Plant("Test", new Species(), new Field(), 0, 0);
-        private readonly Nutrient _nutrient = new Nutrient() { Name = "Water", DosageUnits = "ml" };
+        private readonly Nutrient _nutrient = new Nutrient { Name = "Water", DosageUnits = "ml" };
 
         protected override AdministeredNutrient CreateDomainObject() =>
             _nutritionedPlant.AdministerNutrient(_nutrient, 1.0, DateTime.Now);

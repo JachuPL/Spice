@@ -9,7 +9,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
     {
         public static CreateAdministeredNutrientModel CreationModel(Guid? nutrientId = null, DateTime? administeredDate = null, bool createEvent = false)
         {
-            return new CreateAdministeredNutrientModel()
+            return new CreateAdministeredNutrientModel
             {
                 Date = administeredDate ?? DateTime.Now,
                 NutrientId = nutrientId ?? Guid.NewGuid(),
@@ -20,7 +20,7 @@ namespace Spice.Application.Tests.Plants.Nutrients
 
         public static UpdateAdministeredNutrientModel UpdateModel(Guid? id = null, Guid? nutrientId = null, DateTime? administeredDate = null)
         {
-            return new UpdateAdministeredNutrientModel()
+            return new UpdateAdministeredNutrientModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Date = administeredDate ?? DateTime.Now,

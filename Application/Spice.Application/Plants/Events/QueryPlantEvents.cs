@@ -69,7 +69,7 @@ namespace Spice.Application.Plants.Events
                 from occuredEvent in occuredEvents
                 group occuredEvent by occuredEvent.Type
                 into occuredEventType
-                select new PlantEventOccurenceSummaryModel()
+                select new PlantEventOccurenceSummaryModel
                 {
                     Type = occuredEventType.Key,
                     TotalCount = occuredEventType.Count(),

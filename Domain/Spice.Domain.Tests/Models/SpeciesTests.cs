@@ -9,7 +9,7 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class SpeciesTests : AbstractBaseDomainTestFixture<Species>
     {
-        protected override Species CreateDomainObject() => new Species()
+        protected override Species CreateDomainObject() => new Species
         {
             Name = "Bell pepper",
             LatinName = "Capsicum annuum",

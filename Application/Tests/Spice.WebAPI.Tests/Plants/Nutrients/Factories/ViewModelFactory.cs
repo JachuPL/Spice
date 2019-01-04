@@ -7,7 +7,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients.Factories
     {
         public static CreateAdministeredNutrientViewModel CreateValidCreationModel()
         {
-            return new CreateAdministeredNutrientViewModel()
+            return new CreateAdministeredNutrientViewModel
             {
                 Date = DateTime.Now.AddHours(-1),
                 NutrientId = Guid.NewGuid(),
@@ -17,7 +17,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients.Factories
 
         public static CreateAdministeredNutrientViewModel CreateInvalidCreationModel()
         {
-            return new CreateAdministeredNutrientViewModel()
+            return new CreateAdministeredNutrientViewModel
             {
                 Date = DateTime.Now.AddHours(-1),
                 NutrientId = Guid.Empty,
@@ -27,7 +27,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients.Factories
 
         public static UpdateAdministeredNutrientViewModel CreateValidUpdateModel()
         {
-            return new UpdateAdministeredNutrientViewModel()
+            return new UpdateAdministeredNutrientViewModel
             {
                 Date = DateTime.Now.AddHours(1),
                 NutrientId = Guid.NewGuid(),
@@ -37,7 +37,7 @@ namespace Spice.WebAPI.Tests.Plants.Nutrients.Factories
 
         public static UpdateAdministeredNutrientViewModel CreateInvalidUpdateModel()
         {
-            return new UpdateAdministeredNutrientViewModel()
+            return new UpdateAdministeredNutrientViewModel
             {
                 Date = DateTime.Now.AddHours(1),
                 NutrientId = Guid.NewGuid(),

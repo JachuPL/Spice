@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Spice.ViewModels.Common.Validators;
 
 namespace Spice.ViewModels.Species.Validators
 {
@@ -17,14 +18,9 @@ namespace Spice.ViewModels.Species.Validators
                 .MaximumLength(50).WithMessage("Maximum lenght of species latin name is 50 characters.");
 
             RuleFor(x => x.Description)
-                .Must(BeAValidDescription).WithMessage("Description cannot be build from whitespace characters only.")
+                .SetValidator(new DescriptionViewModelValidator())
                 .MinimumLength(2).WithMessage("Minimum length of species description is 2 characters.")
                 .MaximumLength(500).WithMessage("Maximum length of species description is 500 characters.");
-        }
-
-        private bool BeAValidDescription(string arg)
-        {
-            return arg is null || (arg.Trim().Length > 0);
         }
     }
 }

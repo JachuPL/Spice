@@ -3,7 +3,7 @@
 A free and open source software to manage your garden and track plant growth.
 
 ##### Current status
-[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e5522f3724747c29e17bb479f3088f0)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
+[![Build status](https://ci.appveyor.com/api/projects/status/cyrjed4o78gpjskj/branch/develop?svg=true)](https://ci.appveyor.com/project/JachuPL/spice/branch/develop) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9dfb48d0323d4a2f9ae5a94fd092cdf5)](https://www.codacy.com/app/JachuPL/Spice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JachuPL/Spice&amp;utm_campaign=Badge_Grade)
 
 
 ## Installation
@@ -19,9 +19,28 @@ Spice uses Entity Framework for connecting with database. Entity Framework enabl
 5. Type `update-database` and confirm it by pressing Enter.
 6. Database migration succeeded if you see "Done." in the last line of output.
 
+### Running unit tests
+Spice comes to you with a wide set of unit and integration tests. To run tests follow these steps:
+1. Checkout this repository
+2. Restore NuGet packages for solution
+   1. If you prefer using command line, execute `dotnet restore`
+   2. If you prefer using Visual Studio 2017, open Solution Explorer, right-click the solution item (topmost in the project tree) and click `Restore NuGet packages`
+3. Build solution
+   1. If you prefer using command line, execute `dotnet build`
+   2. If you prefer using Visual Studio 2017, press `Ctrl + Shift + B`
+4. Run tests
+   1. If you prefer using command line execute `dotnet test` for these projects (paths relative to folder containing .sln file):
+      * Application\Tests\Spice.WebAPI.Tests\Spice.WebAPI.Tests.csproj
+      * Application\Tests\Spice.Application.Tests\Spice.Application.Tests.csproj
+      * Domain\Spice.Domain.Tests\Spice.Domain.Tests.csproj
+   2. If you prefer using Visual Studio 2017 open Test Explorer window (Test -> Windows -> Test Explorer), then click `Run all`
+
+### How do I help?
+I'm glad you want to help! Just fork the project, add your changes and create a new pull request. Your pull request will automatically be reviewed by AppVeyor and Codacy. Please remember about unit tests for your changes as all PR's with untested changes will be rejected. And keep your code clean!
+
+
 ### Launching the application
 When database is created, you can launch web application project by pressing F5 in Visual Studio (make sure its still a default project - its name should be displayed **in bold** in Solution Explorer). Now the project will build and when build succeeds a new browser window will be displayed with default page.
-
 
 ## Third Party software used by Spice
 Spice relies on the following packages (via NuGet):

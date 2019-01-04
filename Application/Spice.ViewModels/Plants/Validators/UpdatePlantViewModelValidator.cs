@@ -21,23 +21,7 @@ namespace Spice.ViewModels.Plants.Validators
                 .NotNull().WithMessage("Plant date cannot be null.");
 
             RuleFor(x => x.State)
-                .Must(BeAValidValue).WithMessage("Select a valid state of plant.");
-        }
-
-        private bool BeAValidValue(PlantStateViewModel state)
-        {
-            switch (state)
-            {
-                case PlantStateViewModel.Healthy:
-                case PlantStateViewModel.Deceased:
-                case PlantStateViewModel.Flowering:
-                case PlantStateViewModel.Fruiting:
-                case PlantStateViewModel.Harvested:
-                case PlantStateViewModel.Sick:
-                    return true;
-
-                default: return false;
-            }
+                .SetValidator(new PlantStateViewModelValidator());
         }
     }
 }

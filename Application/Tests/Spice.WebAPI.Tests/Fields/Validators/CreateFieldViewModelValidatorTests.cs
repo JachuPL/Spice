@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
+using Spice.ViewModels.Common.Validators;
 using Spice.ViewModels.Fields.Validators;
 using Spice.WebAPI.Tests.Common;
 
@@ -43,16 +44,10 @@ namespace Spice.WebAPI.Tests.Fields.Validators
             _validator.ShouldNotHaveValidationErrorFor(x => x.Name, "Capsicum annuum");
         }
 
-        [TestCase(TestName = "Create Field Validator should have error for empty description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsEmpty()
+        [TestCase(TestName = "Create Field Validator should have child validator for Description")]
+        public void ValidatorShouldHaveChildDescriptionValidator()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
-        }
-
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Create Field Validator should have error for whitespace description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, name);
+            _validator.ShouldHaveChildValidator(x => x.Description, typeof(DescriptionViewModelValidator));
         }
 
         [TestCase(4, TestName = "Create Field Validator should have error for too short description")]
@@ -61,13 +56,6 @@ namespace Spice.WebAPI.Tests.Fields.Validators
         {
             string description = StringGenerator.Generate(charCount);
             _validator.ShouldHaveValidationErrorFor(x => x.Description, description);
-        }
-
-        [TestCase(null, TestName = "Create Field Validator should not have error for null description")]
-        [TestCase("This is an example description of a field", TestName = "Create Field Validator should not have error for correct description")]
-        public void ValidatorShouldNotHaveErrorWhenDescriptionIsSpecified(string value)
-        {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Description, value);
         }
 
         [TestCase(-91, TestName = "Create Field Validator should have error for latitude lower than -90")]
