@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Spice.ViewModels.Common.Validators;
 
 namespace Spice.ViewModels.Fields.Validators
 {
@@ -12,7 +13,7 @@ namespace Spice.ViewModels.Fields.Validators
                 .MaximumLength(50).WithMessage("Maximum length of field name is 50 characters.");
 
             RuleFor(x => x.Description)
-                .Must(BeAValidDescription).WithMessage("Description cannot be build from whitespace characters only.")
+                .SetValidator(new DescriptionViewModelValidator())
                 .MinimumLength(5).WithMessage("Minimum length of field description is 5 characters.")
                 .MaximumLength(500).WithMessage("Maximum length of field description is 500 characters.");
 
@@ -23,11 +24,6 @@ namespace Spice.ViewModels.Fields.Validators
             RuleFor(x => x.Longtitude)
                 .GreaterThanOrEqualTo(-180).WithMessage("Longtitude cannot be less than -180 degrees.")
                 .LessThanOrEqualTo(180).WithMessage("Longtitude cannot be greater than +180 degrees.");
-        }
-
-        private bool BeAValidDescription(string arg)
-        {
-            return arg is null || (arg.Trim().Length > 0);
         }
     }
 }
