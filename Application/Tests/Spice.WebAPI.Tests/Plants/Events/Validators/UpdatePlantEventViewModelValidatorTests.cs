@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
+using Spice.ViewModels.Common.Validators;
 using Spice.ViewModels.Plants.Events;
 using Spice.ViewModels.Plants.Events.Validators;
 using Spice.WebAPI.Tests.Common;
@@ -49,16 +50,10 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
             _validator.ShouldNotHaveValidationErrorFor(x => x.Occured, DateTime.Now.AddDays(-1));
         }
 
-        [TestCase(TestName = "Update Plant Event Validator should have error for empty description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsEmpty()
+        [TestCase(TestName = "Update Plant Event Validator should have child validator for Description")]
+        public void ValidatorShouldHaveChildDescriptionValidator()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
-        }
-
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Plant Event Validator should have error for whitespace description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, name);
+            _validator.ShouldHaveChildValidator(x => x.Description, typeof(DescriptionViewModelValidator));
         }
 
         [TestCase(1, TestName = "Update Plant Event Validator should have error for too short description")]
@@ -67,13 +62,6 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
         {
             string description = StringGenerator.Generate(charCount);
             _validator.ShouldHaveValidationErrorFor(x => x.Description, description);
-        }
-
-        [TestCase(null, TestName = "Update Plant Event Validator should not have error for null description")]
-        [TestCase("This is an example description of a Plant Event", TestName = "Update Plant Event Validator should not have error for correct description")]
-        public void ValidatorShouldNotHaveErrorWhenDescriptionIsSpecified(string value)
-        {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Description, value);
         }
     }
 }
