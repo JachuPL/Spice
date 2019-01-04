@@ -6,7 +6,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
     {
         public static CreateSpeciesViewModel CreateValidCreationModel()
         {
-            return new CreateSpeciesViewModel()
+            return new CreateSpeciesViewModel
             {
                 Name = "Pepper",
                 LatinName = "Capsicum annuum",
@@ -16,7 +16,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
 
         public static CreateSpeciesViewModel CreateInvalidCreationModel()
         {
-            return new CreateSpeciesViewModel()
+            return new CreateSpeciesViewModel
             {
                 Name = "A",
                 LatinName = "B",
@@ -26,7 +26,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
 
         public static UpdateSpeciesViewModel CreateValidUpdateModel()
         {
-            return new UpdateSpeciesViewModel()
+            return new UpdateSpeciesViewModel
             {
                 Name = "Chinese Pepper",
                 LatinName = "Capsicum chinense",
@@ -36,7 +36,7 @@ namespace Spice.WebAPI.Tests.Species.Factories
 
         public static UpdateSpeciesViewModel CreateInvalidUpdateModel()
         {
-            return new UpdateSpeciesViewModel()
+            return new UpdateSpeciesViewModel
             {
                 Name = "A",
                 LatinName = "B",

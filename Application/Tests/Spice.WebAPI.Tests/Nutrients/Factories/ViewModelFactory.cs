@@ -6,7 +6,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
     {
         public static CreateNutrientViewModel CreateValidCreationModel()
         {
-            return new CreateNutrientViewModel()
+            return new CreateNutrientViewModel
             {
                 Name = "Mineral water",
                 Description = "Either tap or bottled.",
@@ -16,7 +16,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
 
         public static CreateNutrientViewModel CreateInvalidCreationModel()
         {
-            return new CreateNutrientViewModel()
+            return new CreateNutrientViewModel
             {
                 Name = "A",
                 Description = "B",
@@ -26,7 +26,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
 
         public static UpdateNutrientViewModel CreateValidUpdateModel()
         {
-            return new UpdateNutrientViewModel()
+            return new UpdateNutrientViewModel
             {
                 Name = "Mineral water",
                 Description = "Either tap or bottled.",
@@ -36,7 +36,7 @@ namespace Spice.WebAPI.Tests.Nutrients.Factories
 
         public static UpdateNutrientViewModel CreateInvalidUpdateModel()
         {
-            return new UpdateNutrientViewModel()
+            return new UpdateNutrientViewModel
             {
                 Name = "A",
                 Description = "B",

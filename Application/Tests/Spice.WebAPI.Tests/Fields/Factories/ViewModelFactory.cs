@@ -6,7 +6,7 @@ namespace Spice.WebAPI.Tests.Fields.Factories
     {
         public static CreateFieldViewModel CreateValidCreationModel()
         {
-            return new CreateFieldViewModel()
+            return new CreateFieldViewModel
             {
                 Name = "Field A",
                 Description = "Lots of sun in the morning and in the early afternoon. Formerly there was a barn.",
@@ -17,7 +17,7 @@ namespace Spice.WebAPI.Tests.Fields.Factories
 
         public static CreateFieldViewModel CreateInvalidCreationModel()
         {
-            return new CreateFieldViewModel()
+            return new CreateFieldViewModel
             {
                 Name = "A",
                 Description = "B",
@@ -28,7 +28,7 @@ namespace Spice.WebAPI.Tests.Fields.Factories
 
         public static UpdateFieldViewModel CreateValidUpdateModel()
         {
-            return new UpdateFieldViewModel()
+            return new UpdateFieldViewModel
             {
                 Name = "Field B",
                 Description = "Opposite site of the river. High risk of flooding on early spring.",
@@ -39,7 +39,7 @@ namespace Spice.WebAPI.Tests.Fields.Factories
 
         public static UpdateFieldViewModel CreateInvalidUpdateModel()
         {
-            return new UpdateFieldViewModel()
+            return new UpdateFieldViewModel
             {
                 Name = "B",
                 Description = "C",

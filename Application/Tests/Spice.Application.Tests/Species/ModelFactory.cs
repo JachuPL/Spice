@@ -7,7 +7,7 @@ namespace Spice.Application.Tests.Species
     {
         public static Domain.Species DomainModel(string speciesName = "Pepper")
         {
-            return new Domain.Species()
+            return new Domain.Species
             {
                 Name = speciesName,
                 LatinName = "Capsicum annuum",
@@ -17,7 +17,7 @@ namespace Spice.Application.Tests.Species
 
         public static CreateSpeciesModel CreationModel()
         {
-            return new CreateSpeciesModel()
+            return new CreateSpeciesModel
             {
                 Name = "Pepper",
                 LatinName = "Capsicum annuum",
@@ -27,7 +27,7 @@ namespace Spice.Application.Tests.Species
 
         public static UpdateSpeciesModel UpdateModel(Guid? id = null)
         {
-            return new UpdateSpeciesModel()
+            return new UpdateSpeciesModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Pepper",
