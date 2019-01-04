@@ -42,7 +42,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetSpeciesWorksProperly()
         {
             // Given
-            Species species = new Species()
+            Species species = new Species
             {
                 Name = "Pepper",
                 LatinName = "Capsicum Annuum"
@@ -59,7 +59,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetFieldWorksProperly()
         {
             // Given
-            Field field = new Field()
+            Field field = new Field
             {
                 Name = "Random field #1"
             };

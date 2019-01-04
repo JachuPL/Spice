@@ -9,7 +9,7 @@ namespace Spice.Application.Tests.Plants
     {
         public static CreatePlantModel CreationModel(Guid? fieldId = null, Guid? speciesId = null)
         {
-            return new CreatePlantModel()
+            return new CreatePlantModel
             {
                 Name = "Rocoto Giant Red",
                 SpeciesId = speciesId ?? Guid.NewGuid(),
@@ -23,7 +23,7 @@ namespace Spice.Application.Tests.Plants
 
         public static UpdatePlantModel UpdateModel(Guid? id = null, Guid? fieldId = null, Guid? speciesId = null)
         {
-            return new UpdatePlantModel()
+            return new UpdatePlantModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Rocoto Giant Red",

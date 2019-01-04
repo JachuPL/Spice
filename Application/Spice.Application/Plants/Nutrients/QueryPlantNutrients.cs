@@ -74,7 +74,7 @@ namespace Spice.Application.Plants.Nutrients
                 from administeredNutrient in administeredNutrients
                 group administeredNutrient by administeredNutrient.Nutrient
                 into administeredNutrientNutrient
-                select new PlantNutrientAdministrationSummaryModel()
+                select new PlantNutrientAdministrationSummaryModel
                 {
                     Nutrient = _mapper.Map<NutrientDetailsModel>(administeredNutrientNutrient.Key),
                     TotalAmount = administeredNutrientNutrient.Sum(z => z.Amount),

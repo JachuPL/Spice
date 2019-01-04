@@ -9,7 +9,7 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class FieldTests : AbstractBaseDomainTestFixture<Field>
     {
-        protected override Field CreateDomainObject() => new Field()
+        protected override Field CreateDomainObject() => new Field
         {
             Name = "Test",
             Description = "Test desc",

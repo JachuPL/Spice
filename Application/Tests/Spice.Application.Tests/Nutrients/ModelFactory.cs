@@ -8,7 +8,7 @@ namespace Spice.Application.Tests.Nutrients
     {
         public static CreateNutrientModel CreationModel()
         {
-            return new CreateNutrientModel()
+            return new CreateNutrientModel
             {
                 Name = "Nutrient A",
                 Description = "Random nutrient description",
@@ -18,7 +18,7 @@ namespace Spice.Application.Tests.Nutrients
 
         public static UpdateNutrientModel UpdateModel(Guid? id = null)
         {
-            return new UpdateNutrientModel()
+            return new UpdateNutrientModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Name = "Nutrient A",
@@ -29,7 +29,7 @@ namespace Spice.Application.Tests.Nutrients
 
         public static Nutrient DomainModel(string nutrientName = "Nutrient A", string description = "Random nutrient description", string dosageUnits = "ml")
         {
-            return new Nutrient()
+            return new Nutrient
             {
                 Name = nutrientName,
                 Description = description,

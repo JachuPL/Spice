@@ -7,7 +7,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Factories
     {
         public static CreatePlantEventViewModel CreateValidCreationModel()
         {
-            return new CreatePlantEventViewModel()
+            return new CreatePlantEventViewModel
             {
                 Type = EventTypeViewModel.UnderWatering,
                 Description = "This plant quickly absorbs water and needs to be watered more often from now on.",
@@ -17,7 +17,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Factories
 
         public static CreatePlantEventViewModel CreateInvalidCreationModel()
         {
-            return new CreatePlantEventViewModel()
+            return new CreatePlantEventViewModel
             {
                 Type = (EventTypeViewModel)999,
                 Description = "A",
@@ -27,7 +27,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Factories
 
         public static UpdatePlantEventViewModel CreateValidUpdateModel()
         {
-            return new UpdatePlantEventViewModel()
+            return new UpdatePlantEventViewModel
             {
                 Type = EventTypeViewModel.UnderWatering,
                 Description = "This plant quickly absorbs water and needs to be watered more often from now on.",
@@ -37,7 +37,7 @@ namespace Spice.WebAPI.Tests.Plants.Events.Factories
 
         public static UpdatePlantEventViewModel CreateInvalidUpdateModel()
         {
-            return new UpdatePlantEventViewModel()
+            return new UpdatePlantEventViewModel
             {
                 Type = (EventTypeViewModel)999,
                 Description = "A",

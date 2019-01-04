@@ -9,7 +9,7 @@ namespace Spice.Application.Tests.Plants.Events
     {
         public static CreatePlantEventModel CreationModel(DateTime? occurenceDate = null, EventType type = EventType.Disease)
         {
-            return new CreatePlantEventModel()
+            return new CreatePlantEventModel
             {
                 Type = type,
                 Description = "Spotted a disease yesterday.",
@@ -19,7 +19,7 @@ namespace Spice.Application.Tests.Plants.Events
 
         public static UpdatePlantEventModel UpdateModel(Guid? id = null, DateTime? occurenceDate = null, EventType type = EventType.Disease)
         {
-            return new UpdatePlantEventModel()
+            return new UpdatePlantEventModel
             {
                 Id = id ?? Guid.NewGuid(),
                 Type = type,

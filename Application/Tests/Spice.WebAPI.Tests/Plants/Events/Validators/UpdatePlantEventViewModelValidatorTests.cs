@@ -1,6 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
-using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Common.Validators;
 using Spice.ViewModels.Plants.Events.Validators;
 using Spice.WebAPI.Tests.Common;
 using System;
@@ -18,23 +18,10 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
             _validator = new UpdatePlantEventViewModelValidator();
         }
 
-        [TestCase(EventTypeViewModel.OverWatering, TestName = "Update Plant Event Validator should not have error for Overwatering type")]
-        [TestCase(EventTypeViewModel.Disease, TestName = "Update Plant Event Validator should not have error for Disease type")]
-        [TestCase(EventTypeViewModel.Fungi, TestName = "Update Plant Event Validator should not have error for Fungi type")]
-        [TestCase(EventTypeViewModel.Growth, TestName = "Update Plant Event Validator should not have error for Growth type")]
-        [TestCase(EventTypeViewModel.Insects, TestName = "Update Plant Event Validator should not have error for Insects type")]
-        [TestCase(EventTypeViewModel.Pests, TestName = "Update Plant Event Validator should not have error for Pests type")]
-        [TestCase(EventTypeViewModel.UnderWatering, TestName = "Update Plant Event Validator should not have error for Underwatering type")]
-        public void ValidatorShouldNotHaveErrorWhenTypeIsValid(EventTypeViewModel value)
+        [TestCase(TestName = "Update Plant Event Validator should have child validator for event type")]
+        public void ValidatorShouldHaveChildValidatorForEventType()
         {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Type, value);
-        }
-
-        [TestCase(-1, TestName = "Update Plant Event Validator should have error for negative numeric value as type")]
-        [TestCase(999, TestName = "Update Plant Event Validator should have error for any other numeric value as type")]
-        public void ValidatorShouldHaveErrorWhenTypeIsInvalid(EventTypeViewModel value)
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Type, value);
+            _validator.ShouldHaveChildValidator(x => x.Type, typeof(EventTypeViewModelValidator));
         }
 
         [TestCase(TestName = "Update Plant Event Validator should have error for Occurence date in future")]
@@ -49,16 +36,10 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
             _validator.ShouldNotHaveValidationErrorFor(x => x.Occured, DateTime.Now.AddDays(-1));
         }
 
-        [TestCase(TestName = "Update Plant Event Validator should have error for empty description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsEmpty()
+        [TestCase(TestName = "Update Plant Event Validator should have child validator for Description")]
+        public void ValidatorShouldHaveChildDescriptionValidator()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, string.Empty);
-        }
-
-        [TestCase(" \n\r\t\r\n\r\n", TestName = "Update Plant Event Validator should have error for whitespace description")]
-        public void ValidatorShouldHaveErrorWhenDescriptionIsIncorrect(string name)
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Description, name);
+            _validator.ShouldHaveChildValidator(x => x.Description, typeof(DescriptionViewModelValidator));
         }
 
         [TestCase(1, TestName = "Update Plant Event Validator should have error for too short description")]
@@ -67,13 +48,6 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
         {
             string description = StringGenerator.Generate(charCount);
             _validator.ShouldHaveValidationErrorFor(x => x.Description, description);
-        }
-
-        [TestCase(null, TestName = "Update Plant Event Validator should not have error for null description")]
-        [TestCase("This is an example description of a Plant Event", TestName = "Update Plant Event Validator should not have error for correct description")]
-        public void ValidatorShouldNotHaveErrorWhenDescriptionIsSpecified(string value)
-        {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Description, value);
         }
     }
 }
