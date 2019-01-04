@@ -18,7 +18,7 @@ namespace Spice.Persistence
         public DbSet<AdministeredNutrient> AdministeredNutrients { get; protected set; }
         public DbSet<Event> Events { get; protected set; }
 
-        public SpiceContext() : base()
+        public SpiceContext()
         {
         }
 
