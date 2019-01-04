@@ -19,26 +19,10 @@ namespace Spice.WebAPI.Tests.Plants.Events.Validators
             _validator = new CreatePlantEventViewModelValidator();
         }
 
-        [TestCase(EventTypeViewModel.OverWatering, TestName = "Create Plant Event Validator should not have error for Overwatering type")]
-        [TestCase(EventTypeViewModel.Disease, TestName = "Create Plant Event Validator should not have error for Disease type")]
-        [TestCase(EventTypeViewModel.Fungi, TestName = "Create Plant Event Validator should not have error for Fungi type")]
-        [TestCase(EventTypeViewModel.Growth, TestName = "Create Plant Event Validator should not have error for Growth type")]
-        [TestCase(EventTypeViewModel.Insects, TestName = "Create Plant Event Validator should not have error for Insects type")]
-        [TestCase(EventTypeViewModel.Pests, TestName = "Create Plant Event Validator should not have error for Pests type")]
-        [TestCase(EventTypeViewModel.UnderWatering, TestName = "Create Plant Event Validator should not have error for Underwatering type")]
-        [TestCase(EventTypeViewModel.Nutrition, TestName = "Create Plant Event Validator should not have error for Nutrition type")]
-        public void ValidatorShouldNotHaveErrorWhenTypeIsValid(EventTypeViewModel value)
+        [TestCase(TestName = "Create Plant Event Validator should have child validator for event type")]
+        public void ValidatorShouldHaveChildValidatorForEventType()
         {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Type, value);
-        }
-
-        [TestCase(-1, TestName = "Create Plant Event Validator should have error for negative numeric value as type")]
-        [TestCase(999, TestName = "Create Plant Event Validator should have error for any other numeric value as type")]
-        [TestCase(EventTypeViewModel.Moving, TestName = "Create Plant Event Validator should have error for Moving type")]
-        [TestCase(EventTypeViewModel.Start, TestName = "Create Plant Event Validator should have error for Start type")]
-        public void ValidatorShouldHaveErrorWhenTypeIsInvalid(EventTypeViewModel value)
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Type, value);
+            _validator.ShouldHaveChildValidator(x => x.Type, typeof(EventTypeViewModelValidator));
         }
 
         [TestCase(TestName = "Create Plant Event Validator should have error for Occurence date in future")]

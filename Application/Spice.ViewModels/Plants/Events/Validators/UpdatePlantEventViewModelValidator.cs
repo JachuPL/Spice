@@ -9,7 +9,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
         public UpdatePlantEventViewModelValidator()
         {
             RuleFor(x => x.Type)
-                .Must(BeAValidValue).WithMessage("Select a valid type of event.");
+                .SetValidator(new EventTypeViewModelValidator());
 
             RuleFor(x => x.Description)
                 .SetValidator(new DescriptionViewModelValidator())
@@ -18,24 +18,6 @@ namespace Spice.ViewModels.Plants.Events.Validators
 
             RuleFor(x => x.Occured)
                 .LessThanOrEqualTo(DateTime.Now).WithMessage("Event occurence date cannot be in the future");
-        }
-
-        private bool BeAValidValue(EventTypeViewModel value)
-        {
-            switch (value)
-            {
-                case EventTypeViewModel.Disease:
-                case EventTypeViewModel.Fungi:
-                case EventTypeViewModel.Growth:
-                case EventTypeViewModel.Insects:
-                case EventTypeViewModel.OverWatering:
-                case EventTypeViewModel.Pests:
-                case EventTypeViewModel.UnderWatering:
-                    return true;
-
-                default:
-                    return false;
-            }
         }
     }
 }
