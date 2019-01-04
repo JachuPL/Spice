@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Spice.ViewModels.Common.Validators;
 
 namespace Spice.ViewModels.Nutrients.Validators
 {
@@ -12,7 +13,7 @@ namespace Spice.ViewModels.Nutrients.Validators
                 .MaximumLength(50).WithMessage("Maximum length of nutrient name is 50 characters.");
 
             RuleFor(x => x.Description)
-                .Must(BeAValidDescription).WithMessage("Description cannot be build from whitespace characters only.")
+                .SetValidator(new DescriptionViewModelValidator())
                 .MinimumLength(5).WithMessage("Minimum length of nutrient description is 5 characters.")
                 .MaximumLength(500).WithMessage("Maximum length of nutrient description is 500 characters.");
 
@@ -20,11 +21,6 @@ namespace Spice.ViewModels.Nutrients.Validators
                 .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage("Dosage units cannot be build from whitespace characters only.")
                 .NotEmpty().WithMessage("Nutrient dosage unit cannot be empty.")
                 .MaximumLength(20).WithMessage("Maximum length of nutrient dosage unit is 20 characters.");
-        }
-
-        private bool BeAValidDescription(string arg)
-        {
-            return arg is null || (arg.Trim().Length > 0);
         }
     }
 }
