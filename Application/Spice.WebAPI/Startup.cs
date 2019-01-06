@@ -40,6 +40,11 @@ namespace Spice.WebAPI
 
             RegisterApplicationServices(services);
 
+            services.Configure<IISOptions>(options =>
+                                           {
+                                               options.ForwardClientCertificate = true;
+                                           });
+
             services.AddDbContext<SpiceContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
