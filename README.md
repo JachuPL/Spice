@@ -35,12 +35,44 @@ Spice comes to you with a wide set of unit and integration tests. To run tests f
       * Domain\Spice.Domain.Tests\Spice.Domain.Tests.csproj
    2. If you prefer using Visual Studio 2017 open Test Explorer window (Test -> Windows -> Test Explorer), then click `Run all`
 
-### How do I help?
-I'm glad you want to help! Just fork the project, add your changes and create a new pull request. Your pull request will automatically be reviewed by AppVeyor and Codacy. Please remember about unit tests for your changes as all PR's with untested changes will be rejected. And keep your code clean!
-
-
 ### Launching the application
 When database is created, you can launch web application project by pressing F5 in Visual Studio (make sure its still a default project - its name should be displayed **in bold** in Solution Explorer). Now the project will build and when build succeeds a new browser window will be displayed with default page.
+
+### Deploying application with Visual Studio 2017 and Web Deploy 3.6
+You can deploy Spice to another server or virtual machine is really easy. First, you have to set up remote host. Following these steps will help you configure Windows Server 2016 for web deploy:
+1. Install latest Windows Server 2016 either on physical or virtual machine and perform a basic setup.
+2. Install IIS Server with all options related (event IIS 6 integration)
+3. Download and install [Web Deploy 3.6](https://www.microsoft.com/en-us/download/details.aspx?id=43717) on Windows Server 2016
+4. Make sure that access to ports 80 and 8172 is possible through firewall
+5. Add `C:\Program Files\IIS\Microsoft Web Deploy V3` to path variable
+6. Verify that web deploy service is up and running by vising `https://localhost:8172/msdeploy.axd` in your browser. You should be prompted with authentication box, type in your local account credentials. After confirming the form you will receive 404 error.
+7. Download and install [.NET Core SDK 2.2.101](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.101-windows-x64-installer) and [.NET Core Runtime 2.2.101](https://dotnet.microsoft.com/download/thank-you/dotnet-runtime-2.2.0-windows-hosting-bundle-installer)
+8. Launch IIS Manager and add new website with basic configuration. Verify that used account has access to chosen path. I used account by credentials.
+9. Change settings of application pool used by created site to "No managed code".
+10. Install and configure Microsoft SQL Server (Enterprise 2017 in my case) and Microsoft SQL Server Management Studio (17.9.1 in my case)
+11. Configure network access to ports related to SQL Server ((here is a full list of ports)[https://docs.microsoft.com/en-us/sql/sql-server/install/configure-the-windows-firewall-to-allow-sql-server-access?view=sql-server-2017]))
+12. In SQL Server Configuration Manager make sure that value for `Named Pipes` is "Enabled" under SQL Server Network Configuration -> Protocols for MSSQLSERVER
+13. Restart SQL Server service
+14. Using SQL Server Management Studio create a new login with name and password of your choice.
+15. In IIS Manager right-click your website, then Deploy -> Configure Web Deploy Publishing
+16. Click the button with three dots located near SQL Server connection string text box
+17. Choose SQL Server. In server name type `.`, pick the database name of your choice.
+18. Choose the other credentials option and click 'Set' button. Now fill the form with data created in step 13.
+19. (*Optional*) You can change the path where your config will be saved using last button with three dots.
+20. Confirm form by clicking 'Setup'.
+21. Navigate to the folder where your config file was saved and copy it to the machine with Visual Studio 2017 (e.g. via OneDrive, Google Drive or Dropbox).
+22. Open Spice solution in Visual Studio 2017, then right-click `Spice.WebAPI` in Solution Explorer and choose `Publish`.
+23. Click `Run` button, then `Import Profile` and choose the created publish profile.
+24. Click `Configure...` and `Verify connection`. Type in the password for Windows Server's administrator account. Verification passed if a green tick mark is shown on the right.
+25. Open publish profile file with text editor and copy value of `SQLServerDBConnectionString`.
+26. In the settings tab select `netcoreapp2.2` for target structure, `structure dependent` for deployment mode, and `portable` for runtime. Expand the `Entity Framework platform migrations` and check the checkbox. Paste value copied in previous step to the field below. Click save. **This step might be required each time you're publishing a project to remote server**.
+27. Click `Publish` button to start publishing project. You might be prompted to accept untrusted server certificate, do it. You might be prompted again for Windows Server's admin password.
+28. After publishing succeed, your project url will open in browser.
+29. (*Optional*) After first publishing some files are created in Properties/PublishProfiles. You can add `<AllowUntrustedCertificate>True</AllowUntrustedCertificate>` inside the `Property` group.
+Note that there's an example publishing profile in dist folder.
+
+## How do I help?
+I'm glad you want to help! Just fork the project, add your changes and create a new pull request. Your pull request will automatically be reviewed by AppVeyor and Codacy. Please remember about unit tests for your changes as all PR's with untested changes will be rejected. And keep your code clean!
 
 ## Third Party software used by Spice
 Spice relies on the following packages (via NuGet):
