@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NUnit.Framework;
 using Spice.Domain.Builders;
 using Spice.Domain.Plants;
@@ -13,7 +13,7 @@ namespace Spice.Domain.Tests.Models.Plants
             new Plant("Test", New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"),
                       New.Field.WithName("Test field"), 0, 0);
 
-        private readonly Nutrient _nutrient = new Nutrient { Name = "Water", DosageUnits = "ml" };
+        private readonly Nutrient _nutrient = New.Nutrient.WithName("Water").WithDosageUnits("ml");
 
         protected override AdministeredNutrient CreateDomainObject() =>
             _nutritionedPlant.AdministerNutrient(_nutrient, 1.0, DateTime.Now);
@@ -49,7 +49,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetNutrientWorksProperly()
         {
             // Given
-            Nutrient nutrient = new Nutrient();
+            Nutrient nutrient = New.Nutrient.WithName("Test").WithDescription("Test desc").WithDosageUnits("g");
 
             // When
             DomainObject.Nutrient = nutrient;
