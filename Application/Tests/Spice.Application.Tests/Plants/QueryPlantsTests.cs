@@ -51,7 +51,7 @@ namespace Spice.Application.Tests.Plants
                 Field field = Fields.ModelFactory.DomainModel();
                 Domain.Species species = Species.ModelFactory.DomainModel();
                 ctx.Plants.Add(ModelFactory.DomainModel(field));
-                ctx.Plants.Add(ModelFactory.DomainModel(field, species, 0, 1));
+                ctx.Plants.Add(ModelFactory.DomainModel(field, species, "Rocoto Giant Red", 0, 1));
                 ctx.Save();
             }
         }

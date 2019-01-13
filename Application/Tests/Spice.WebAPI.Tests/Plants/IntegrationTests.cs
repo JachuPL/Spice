@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
@@ -73,7 +74,7 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetPlantReturnsPlantAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Plant>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(New.Plant.WithName("Test plant").WithField(New.Field.WithName("Test Field")));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -194,7 +195,8 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task PutPlantReturnsPlantAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Returns(A.Fake<Plant>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
+             .Returns(New.Plant.WithName("Test plant").WithField(New.Field.WithName("Test field")));
 
             // When
             HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

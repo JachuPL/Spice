@@ -10,8 +10,10 @@ namespace Spice.Domain.Tests.Models.Plants
     internal sealed class AdministeredNutritionTests : AbstractBaseDomainTestFixture<AdministeredNutrient>
     {
         private readonly Plant _nutritionedPlant =
-            new Plant("Test", New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"),
-                      New.Field.WithName("Test field"), 0, 0);
+            New.Plant.WithName("Test").WithSpecies(New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"))
+               .WithField(New.Field.WithName("Test field"))
+               .InRow(0)
+               .InColumn(0);
 
         private readonly Nutrient _nutrient = New.Nutrient.WithName("Water").WithDosageUnits("ml");
 
@@ -35,8 +37,11 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Plant plant = new Plant("Test", New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"),
-                                    New.Field.WithName("Test field"), 0, 0);
+            Plant plant = New.Plant.WithName("Test").WithSpecies(New.Species.WithName("Pepper")
+                                                                            .WithLatinName("Capsicum Annuum"))
+                             .WithField(New.Field.WithName("Test field"))
+                             .InRow(0)
+                             .InColumn(0);
 
             // When
             DomainObject.Plant = plant;
