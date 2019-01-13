@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using Spice.Domain.Plants.Events;
 using System;
@@ -10,7 +11,7 @@ namespace Spice.Domain.Tests.Models.Plants
     [TestFixture]
     internal sealed class PlantsTests : AbstractBaseDomainTestFixture<Plant>
     {
-        protected override Plant CreateDomainObject() => new Plant("Test", new Species(), new Field(), 0, 0);
+        protected override Plant CreateDomainObject() => new Plant("Test", new Species(), New.Field.WithName("Test field"), 0, 0);
 
         [TestCase(TestName = "Get and Set plant Id property works properly")]
         public void GetAndSetIdWorksProperly()
@@ -59,10 +60,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetFieldWorksProperly()
         {
             // Given
-            Field field = new Field
-            {
-                Name = "Random field #1"
-            };
+            Field field = New.Field.WithName("Random field #1");
 
             // When
             DomainObject.Field = field;
@@ -155,7 +153,7 @@ namespace Spice.Domain.Tests.Models.Plants
             // Given
             string plantName = "Plant";
             Species species = new Species();
-            Field field = new Field();
+            Field field = New.Field.WithName("Test field");
             int row = 0;
             int col = 0;
 
@@ -172,11 +170,11 @@ namespace Spice.Domain.Tests.Models.Plants
             // Given
             string plantName = "Plant";
             Species species = new Species();
-            Field field = new Field();
+            Field field = New.Field.WithName("Test field #1");
             int row = 0;
             int col = 0;
             Plant plant = new Plant(plantName, species, field, row, col);
-            Field newField = new Field();
+            Field newField = New.Field.WithName("Test field #2");
 
             // When
             plant.ChangeField(newField);

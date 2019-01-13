@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,8 @@ namespace Spice.Domain.Tests.Models
         {
             // Given
             List<Plant> plants = new List<Plant>();
-            Plant examplePlant = new Plant("Random plant #1", new Species(), new Field(), 0, 0);
+            Plant examplePlant = new Plant("Random plant #1", new Species(),
+                                           New.Field.WithName("Plant Setter Test"), 0, 0);
 
             plants.Add(examplePlant);
 

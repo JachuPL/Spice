@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 
@@ -8,7 +9,7 @@ namespace Spice.Domain.Tests.Models.Plants
     [TestFixture]
     internal sealed class AdministeredNutritionTests : AbstractBaseDomainTestFixture<AdministeredNutrient>
     {
-        private readonly Plant _nutritionedPlant = new Plant("Test", new Species(), new Field(), 0, 0);
+        private readonly Plant _nutritionedPlant = new Plant("Test", new Species(), New.Field.WithName("Test field"), 0, 0);
         private readonly Nutrient _nutrient = new Nutrient { Name = "Water", DosageUnits = "ml" };
 
         protected override AdministeredNutrient CreateDomainObject() =>
@@ -31,7 +32,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
+            Plant plant = new Plant("Test", new Species(), New.Field.WithName("Test field"), 0, 0);
 
             // When
             DomainObject.Plant = plant;

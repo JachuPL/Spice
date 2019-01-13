@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,9 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class FieldTests : AbstractBaseDomainTestFixture<Field>
     {
-        protected override Field CreateDomainObject() => new Field
-        {
-            Name = "Test",
-            Description = "Test desc",
-            Latitude = 52,
-            Longtitude = 21
-        };
+        protected override Field CreateDomainObject() => New.Field
+                                                         .WithName("Test").WithDescription("Test desc").OnLatitude(52)
+                                                         .OnLongtitude(21);
 
         [TestCase(TestName = "Get and Set field Id property works properly")]
         public void GetAndSetIdWorksProperly()
@@ -87,7 +84,7 @@ namespace Spice.Domain.Tests.Models
         {
             // Given
             List<Plant> plants = new List<Plant>();
-            Plant examplePlant = new Plant("Random plant #1", new Species(), new Field(), 0, 0);
+            Plant examplePlant = new Plant("Random plant #1", new Species(), New.Field.WithName("Test field"), 0, 0);
 
             plants.Add(examplePlant);
 
