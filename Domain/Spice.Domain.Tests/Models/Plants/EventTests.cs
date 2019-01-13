@@ -10,7 +10,7 @@ namespace Spice.Domain.Tests.Models.Plants
     [TestFixture]
     internal sealed class EventTests : AbstractBaseDomainTestFixture<Event>
     {
-        private readonly Plant _eventOwnerPlant = new Plant("Test plant", new Species(), New.Field.WithName("Plant event tests"), 0, 0);
+        private readonly Plant _eventOwnerPlant = new Plant("Test plant", New.Species.WithName("Test species"), New.Field.WithName("Plant event tests"), 0, 0);
 
         protected override Event CreateDomainObject() =>
             _eventOwnerPlant.AddEvent(EventType.Disease, "Spotted some brown leaves.");
@@ -32,7 +32,8 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Plant plant = new Plant("Test", new Species(), New.Field.WithName("Plant event tests"), 0, 0);
+            Plant plant = new Plant("Test", New.Species.WithName("Test species"),
+                                    New.Field.WithName("Plant event tests"), 0, 0);
 
             // When
             DomainObject.Plant = plant;

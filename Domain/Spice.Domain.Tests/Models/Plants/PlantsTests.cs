@@ -11,7 +11,7 @@ namespace Spice.Domain.Tests.Models.Plants
     [TestFixture]
     internal sealed class PlantsTests : AbstractBaseDomainTestFixture<Plant>
     {
-        protected override Plant CreateDomainObject() => new Plant("Test", new Species(), New.Field.WithName("Test field"), 0, 0);
+        protected override Plant CreateDomainObject() => new Plant("Test", New.Species.WithName("Test species"), New.Field.WithName("Test field"), 0, 0);
 
         [TestCase(TestName = "Get and Set plant Id property works properly")]
         public void GetAndSetIdWorksProperly()
@@ -43,11 +43,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetSpeciesWorksProperly()
         {
             // Given
-            Species species = new Species
-            {
-                Name = "Pepper",
-                LatinName = "Capsicum Annuum"
-            };
+            Species species = New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum");
 
             // When
             DomainObject.Species = species;
@@ -152,7 +148,7 @@ namespace Spice.Domain.Tests.Models.Plants
         {
             // Given
             string plantName = "Plant";
-            Species species = new Species();
+            Species species = New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum");
             Field field = New.Field.WithName("Test field");
             int row = 0;
             int col = 0;
@@ -169,7 +165,7 @@ namespace Spice.Domain.Tests.Models.Plants
         {
             // Given
             string plantName = "Plant";
-            Species species = new Species();
+            Species species = New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum");
             Field field = New.Field.WithName("Test field #1");
             int row = 0;
             int col = 0;

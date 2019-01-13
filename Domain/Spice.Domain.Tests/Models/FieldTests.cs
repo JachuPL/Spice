@@ -84,7 +84,8 @@ namespace Spice.Domain.Tests.Models
         {
             // Given
             List<Plant> plants = new List<Plant>();
-            Plant examplePlant = new Plant("Random plant #1", new Species(), New.Field.WithName("Test field"), 0, 0);
+            Plant examplePlant = new Plant("Random plant #1", New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"),
+                                           DomainObject, 0, 0);
 
             plants.Add(examplePlant);
 

@@ -10,12 +10,9 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class SpeciesTests : AbstractBaseDomainTestFixture<Species>
     {
-        protected override Species CreateDomainObject() => new Species
-        {
-            Name = "Bell pepper",
-            LatinName = "Capsicum annuum",
-            Description = "Completely lacks spiciness.",
-        };
+        protected override Species CreateDomainObject() => New
+                                                           .Species.WithName("Pepper").WithLatinName("Capsicum Annuum")
+                                                           .WithDescription("Completely lacks spiciness.");
 
         [TestCase(TestName = "Get and Set species Id property works properly")]
         public void GetAndSetIdWorksProperly()
@@ -74,7 +71,7 @@ namespace Spice.Domain.Tests.Models
         {
             // Given
             List<Plant> plants = new List<Plant>();
-            Plant examplePlant = new Plant("Random plant #1", new Species(),
+            Plant examplePlant = new Plant("Random plant #1", DomainObject,
                                            New.Field.WithName("Plant Setter Test"), 0, 0);
 
             plants.Add(examplePlant);
