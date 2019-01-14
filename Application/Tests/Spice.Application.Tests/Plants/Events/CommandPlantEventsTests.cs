@@ -242,8 +242,26 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Plant.Id.Should().Be(plant.Id);
         }
 
-        [TestCase(TestName = "Delete plant event succeeds")]
-        public async Task DeletePlantEventSucceeds()
+        [TestCase(TestName = "Update plant event throws exception if event was created automatically")]
+        public void UpdatePlantEventThrowsExceptionIfEventWasAutomaticallyCreated()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = plant.Events.First(x => x.Type == EventType.StartedTracking);
+            Guid eventId = @event.Id;
+
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
+
+            // When
+            Func<Task> updateAutomaticEvent = async () => await _commands.Update(plantId, model);
+
+            // Then
+            updateAutomaticEvent.Should().Throw<AttemptedToModifyAutomaticallyCreatedEventException>();
+        }
+
+        [TestCase(TestName = "Delete plant event succeeds for manually created events")]
+        public async Task DeletePlantEventSucceedsForManuallyCreatedEvents()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
@@ -257,6 +275,22 @@ namespace Spice.Application.Tests.Plants.Events
             // Then
             @event = await DatabaseContext.Events.FindAsync(id);
             @event.Should().BeNull();
+        }
+
+        [TestCase(TestName = "Delete plant event fails for automatically created events")]
+        public void DeletePlantEventFailsForAutomaticallyCreatedEvents()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = plant.Events.First(x => x.Type == EventType.StartedTracking);
+            Guid id = @event.Id;
+
+            // When
+            Func<Task> deleteAutomaticEvent = async () => await _commands.Delete(plantId, id);
+
+            // Then
+            deleteAutomaticEvent.Should().Throw<AttemptedToModifyAutomaticallyCreatedEventException>();
         }
     }
 }

@@ -24,10 +24,12 @@ namespace Spice.AutoMapper.Profiles.Plant
 
             CreateMap<CreatePlantEventModel, Event>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => Guid.Empty))
-                .ForMember(x => x.Plant, opt => opt.Ignore());
+                .ForMember(x => x.Plant, opt => opt.Ignore())
+                .ForMember(x => x.CreatedAutomatically, opt => opt.MapFrom(x => false));
 
             CreateMap<UpdatePlantEventModel, Event>()
-                .ForMember(x => x.Plant, opt => opt.Ignore());
+                .ForMember(x => x.Plant, opt => opt.Ignore())
+                .ForMember(x => x.CreatedAutomatically, opt => opt.MapFrom(x => false));
 
             CreateMap<Event, PlantEventsIndexViewModel>();
 

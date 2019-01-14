@@ -1,4 +1,4 @@
-using Spice.Domain.Plants.Events;
+﻿using Spice.Domain.Plants.Events;
 using System;
 using System.Collections.Generic;
 
@@ -43,9 +43,8 @@ namespace Spice.Domain.Plants
 
         private void AddCreationEvent()
         {
-            Event plantCreatedEvent = new Event(this, EventType.Start,
             Event plantCreatedEvent =
-                new Event(this, EventType.StartedTracking, $"{Name} was added to Spice tracklog.");
+                new Event(this, EventType.StartedTracking, $"{Name} was added to Spice tracklog.", true);
             Events.Add(plantCreatedEvent);
         }
 
@@ -61,18 +60,18 @@ namespace Spice.Domain.Plants
         private void AddFieldChangeEvent(Field newField)
         {
             Event fieldChangedEvent = new Event(this, EventType.Moving,
-                                                $"{Name} was moved to field {newField.Name}. (Generated automatically)");
+                                                $"{Name} was moved to field {newField.Name}. (Generated automatically)", true);
             Events.Add(fieldChangedEvent);
         }
 
-        public Event AddEvent(EventType type, string description)
+        public Event AddEvent(EventType type, string description, bool createdAutomatically)
         {
-            return AddEvent(type, description, DateTime.Now);
+            return AddEvent(type, description, DateTime.Now, createdAutomatically);
         }
 
-        public Event AddEvent(EventType type, string description, DateTime occured)
+        public Event AddEvent(EventType type, string description, DateTime occured, bool createdAutomatically)
         {
-            Event newEvent = new Event(this, type, description, occured);
+            Event newEvent = new Event(this, type, description, createdAutomatically, occured);
             Events.Add(newEvent);
             return newEvent;
         }
@@ -86,7 +85,7 @@ namespace Spice.Domain.Plants
             {
                 AddEvent(EventType.Nutrition,
                          $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
-                         date);
+                         date, true);
             }
 
             return administeredNutrient;
@@ -98,15 +97,15 @@ namespace Spice.Domain.Plants
             switch (State)
             {
                 case PlantState.Sprouting:
-                    AddEvent(EventType.Sprouting, $"{Name} is sprouting.");
+                    AddEvent(EventType.Sprouting, $"{Name} is sprouting.", true);
                     break;
 
                 case PlantState.Flowering:
-                    AddEvent(EventType.Growth, $"{Name} has its first flowers");
+                    AddEvent(EventType.Growth, $"{Name} has its first flowers.", true);
                     break;
 
                 case PlantState.Fruiting:
-                    AddEvent(EventType.Growth, $"{Name} has its first fruits!");
+                    AddEvent(EventType.Growth, $"{Name} has its first fruits!", true);
                     break;
             }
         }
