@@ -17,13 +17,13 @@ namespace Spice.Domain.Plants
         public ICollection<AdministeredNutrient> AdministeredNutrients { get; set; }
         public ICollection<Event> Events { get; set; }
 
-        protected Plant()
+        private Plant()
         {
             AdministeredNutrients = new List<AdministeredNutrient>();
             Events = new List<Event>();
         }
 
-        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn) : this()
+        internal Plant(string name, Species species, Field field, int fieldRow, int fieldColumn) : this()
         {
             Column = fieldColumn;
             Row = fieldRow;
@@ -35,7 +35,7 @@ namespace Spice.Domain.Plants
             AddCreationEvent();
         }
 
-        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn, PlantState state) :
+        internal Plant(string name, Species species, Field field, int fieldRow, int fieldColumn, PlantState state) :
             this(name, species, field, fieldRow, fieldColumn)
         {
             State = state;

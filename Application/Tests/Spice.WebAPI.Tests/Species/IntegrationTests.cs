@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Species.Interfaces;
 using Spice.Application.Species.Models;
+using Spice.Domain.Builders;
 using Spice.ViewModels.Species;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Species.Factories;
@@ -72,7 +73,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task GetSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Domain.Species>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(New.Species.WithName("Test species"));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -162,7 +163,7 @@ namespace Spice.WebAPI.Tests.Species
         public async Task PutSpeciesReturnsSpeciesAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(A.Fake<Domain.Species>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdateSpeciesModel>.Ignored)).Returns(New.Species.WithName("Test species"));
 
             // When
             HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
