@@ -114,10 +114,17 @@ namespace Spice.WebAPI.Controllers.Plants
 
         // DELETE api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/DC117408-630E-459B-B16F-DE36EBC58E8F
         [HttpDelete("{id:guid}")]
-        public async Task<NoContentResult> Delete([FromRoute] Guid plantId, Guid id)
+        public async Task<ActionResult> Delete([FromRoute] Guid plantId, Guid id)
         {
-            await _commands.Delete(plantId, id);
-            return NoContent();
+            try
+            {
+                await _commands.Delete(plantId, id);
+                return NoContent();
+            }
+            catch (Exception ex) when (ex is ResourceStateException)
+            {
+                return Conflict(new ErrorViewModel(ex));
+            }
         }
 
         // GET api/plants/F3694C70-AC96-4BBC-9D70-7C1AF728E93F/events/summary?fromDate=2018-12-01T00:00:00&toDate=2018-12-31T23:59:59

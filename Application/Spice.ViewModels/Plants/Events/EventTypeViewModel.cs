@@ -10,7 +10,8 @@
         OverWatering,
         Moving,
         Growth,
-        Start,
-        Nutrition
+        StartedTracking,
+        Nutrition,
+        Sprouting
     }
 }

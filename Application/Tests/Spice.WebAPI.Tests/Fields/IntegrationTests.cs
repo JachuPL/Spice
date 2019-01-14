@@ -6,6 +6,7 @@ using Spice.Application.Common.Exceptions;
 using Spice.Application.Fields.Interfaces;
 using Spice.Application.Fields.Models;
 using Spice.Domain;
+using Spice.Domain.Builders;
 using Spice.ViewModels.Fields;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Fields.Factories;
@@ -73,7 +74,7 @@ namespace Spice.WebAPI.Tests.Fields
         public async Task GetFieldReturnsFieldAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Field>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(New.Field.WithName("Mock"));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -163,7 +164,7 @@ namespace Spice.WebAPI.Tests.Fields
         public async Task PutFieldReturnsFieldAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Returns(A.Fake<Field>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdateFieldModel>.Ignored)).Returns(New.Field.WithName("Mock"));
 
             // When
             HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

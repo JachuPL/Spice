@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
+using Spice.ViewModels.Plants;
+using Spice.ViewModels.Plants.Validators;
 
-namespace Spice.ViewModels.Plants.Validators
+namespace Spice.WebAPI.Tests.Plants.Validators
 {
     [TestFixture]
     public class PlantStateViewModelValidatorTests
@@ -21,6 +23,7 @@ namespace Spice.ViewModels.Plants.Validators
         [TestCase(PlantStateViewModel.Fruiting, TestName = "Update Plant Validator should not have error for Fruiting state")]
         [TestCase(PlantStateViewModel.Harvested, TestName = "Update Plant Validator should not have error for Harvested state")]
         [TestCase(PlantStateViewModel.Sick, TestName = "Update Plant Validator should not have error for Sick state")]
+        [TestCase(PlantStateViewModel.Sprouting, TestName = "Update Plant Validator should not have error for Sprouting state")]
         public void ValidatorShouldNotHaveErrorWhenStateIsValid(PlantStateViewModel value)
         {
             ValidationResult result = _validator.Validate(value);

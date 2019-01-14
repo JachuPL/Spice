@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
 using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using Spice.ViewModels.Plants;
 using Spice.WebAPI.Tests.Common;
@@ -73,7 +74,9 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task GetPlantReturnsPlantAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored)).Returns(A.Fake<Plant>());
+            A.CallTo(() => _fakeQuery.Get(A<Guid>.Ignored))
+             .Returns(New.Plant.WithName("Test plant").WithField(New.Field.WithName("Test Field"))
+                         .WithSpecies(New.Species.WithName("Test species")));
 
             // When
             HttpResponseMessage response = await Client.GetAsync(EndPointFactory.DetailsEndpoint());
@@ -91,7 +94,9 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response =
+                await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+                                             ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -107,7 +112,9 @@ namespace Spice.WebAPI.Tests.Plants
                 .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
-            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response =
+                await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+                                             ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -122,7 +129,9 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Create(A<CreatePlantModel>.Ignored)).Returns(Guid.NewGuid());
 
             // When
-            HttpResponseMessage response = await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(), ViewModelFactory.CreateValidCreationModel());
+            HttpResponseMessage response =
+                await Client.PostAsJsonAsync(EndPointFactory.CreateEndpoint(),
+                                             ViewModelFactory.CreateValidCreationModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -151,7 +160,9 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Throws(A.Fake<ResourceStateException>());
 
             // When
-            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response =
+                await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+                                            ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -167,7 +178,9 @@ namespace Spice.WebAPI.Tests.Plants
                 .Throws(A.Fake<ResourceNotFoundException>());
 
             // When
-            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response =
+                await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+                                            ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -182,7 +195,9 @@ namespace Spice.WebAPI.Tests.Plants
             A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Returns(Task.FromResult<Plant>(null));
 
             // When
-            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response =
+                await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+                                            ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -194,10 +209,14 @@ namespace Spice.WebAPI.Tests.Plants
         public async Task PutPlantReturnsPlantAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored)).Returns(A.Fake<Plant>());
+            A.CallTo(() => _fakeCommand.Update(A<UpdatePlantModel>.Ignored))
+             .Returns(New.Plant.WithName("Test plant").WithField(New.Field.WithName("Test field"))
+                         .WithSpecies(New.Species.WithName("Test species")));
 
             // When
-            HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());
+            HttpResponseMessage response =
+                await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(),
+                                            ViewModelFactory.CreateValidUpdateModel());
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.OK);

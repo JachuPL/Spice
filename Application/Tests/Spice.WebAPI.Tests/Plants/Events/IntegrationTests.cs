@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Spice.Application.Common.Exceptions;
+using Spice.Application.Plants.Events.Exceptions;
 using Spice.Application.Plants.Events.Interfaces;
 using Spice.Application.Plants.Events.Models;
 using Spice.Application.Plants.Events.Models.Summary;
@@ -263,6 +264,22 @@ namespace Spice.WebAPI.Tests.Plants.Events
 
             // Then
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+        }
+
+        [TestCase(TestName = "DELETE plant event returns \"Conflict\" and correct content type if resource state exception occured")]
+        public async Task DeletePlantEventReturnsConflictIfAttemptedToDeleteAutomaticallyCreatedEventExceptionOccured()
+        {
+            // Given
+            A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored))
+             .Throws(A.Fake<AttemptedToModifyAutomaticallyCreatedEventException>());
+
+            // When
+            HttpResponseMessage response = await Client.DeleteAsync(EndPointFactory.DeleteEndpoint());
+
+            // Then
+            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
             A.CallTo(() => _fakeCommand.Delete(A<Guid>.Ignored, A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
         }
 

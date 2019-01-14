@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,8 @@ namespace Spice.Domain.Tests.Models
     [TestFixture]
     internal sealed class NutrientTests : AbstractBaseDomainTestFixture<Nutrient>
     {
-        protected override Nutrient CreateDomainObject() => new Nutrient
-        {
-            Name = "Test",
-            Description = "Test desc",
-            DosageUnits = "g"
-        };
+        protected override Nutrient CreateDomainObject() =>
+            New.Nutrient.WithName("Test").WithDescription("Test desc").WithDosageUnits("g");
 
         [TestCase(TestName = "Get and Set nutrient Id property works properly")]
         public void GetAndSetIdWorksProperly()

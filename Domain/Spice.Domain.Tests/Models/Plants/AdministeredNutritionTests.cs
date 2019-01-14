@@ -1,5 +1,6 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NUnit.Framework;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 
@@ -8,8 +9,13 @@ namespace Spice.Domain.Tests.Models.Plants
     [TestFixture]
     internal sealed class AdministeredNutritionTests : AbstractBaseDomainTestFixture<AdministeredNutrient>
     {
-        private readonly Plant _nutritionedPlant = new Plant("Test", new Species(), new Field(), 0, 0);
-        private readonly Nutrient _nutrient = new Nutrient { Name = "Water", DosageUnits = "ml" };
+        private readonly Plant _nutritionedPlant =
+            New.Plant.WithName("Test").WithSpecies(New.Species.WithName("Pepper").WithLatinName("Capsicum Annuum"))
+               .WithField(New.Field.WithName("Test field"))
+               .InRow(0)
+               .InColumn(0);
+
+        private readonly Nutrient _nutrient = New.Nutrient.WithName("Water").WithDosageUnits("ml");
 
         protected override AdministeredNutrient CreateDomainObject() =>
             _nutritionedPlant.AdministerNutrient(_nutrient, 1.0, DateTime.Now);
@@ -31,7 +37,11 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetPlantWorksProperly()
         {
             // Given
-            Plant plant = new Plant("Test", new Species(), new Field(), 0, 0);
+            Plant plant = New.Plant.WithName("Test").WithSpecies(New.Species.WithName("Pepper")
+                                                                            .WithLatinName("Capsicum Annuum"))
+                             .WithField(New.Field.WithName("Test field"))
+                             .InRow(0)
+                             .InColumn(0);
 
             // When
             DomainObject.Plant = plant;
@@ -44,7 +54,7 @@ namespace Spice.Domain.Tests.Models.Plants
         public void GetAndSetNutrientWorksProperly()
         {
             // Given
-            Nutrient nutrient = new Nutrient();
+            Nutrient nutrient = New.Nutrient.WithName("Test").WithDescription("Test desc").WithDosageUnits("g");
 
             // When
             DomainObject.Nutrient = nutrient;

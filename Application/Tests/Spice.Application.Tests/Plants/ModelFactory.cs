@@ -1,5 +1,6 @@
 ﻿using Spice.Application.Plants.Models;
 using Spice.Domain;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 
@@ -36,12 +37,14 @@ namespace Spice.Application.Tests.Plants
             };
         }
 
-        public static Plant DomainModel(Field field = null, Domain.Species species = null, int row = 0, int col = 0)
+        public static Plant DomainModel(Field field = null, Domain.Species species = null, string name = "Rocoto Giant Red", int row = 0, int col = 0, PlantState state = PlantState.Healthy)
         {
-            return new Plant("Rocoto Giant Red",
-                species ?? Species.ModelFactory.DomainModel(),
-                field ?? Fields.ModelFactory.DomainModel(),
-                row, col);
+            return New.Plant.WithName(name)
+                             .WithSpecies(species ?? New.Species.WithName("Test species"))
+                             .WithField(field ?? New.Field.WithName("Test field"))
+                             .InRow(row)
+                             .InColumn(col)
+                             .WithState(state);
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spice.Persistence;
 
 namespace Spice.Persistence.Migrations
 {
     [DbContext(typeof(SpiceContext))]
-    partial class SpiceContextModelSnapshot : ModelSnapshot
+    [Migration("20190114111517_FieldForAutomaticallyCreatedEvents")]
+    partial class FieldForAutomaticallyCreatedEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
