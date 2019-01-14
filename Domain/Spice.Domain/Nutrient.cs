@@ -17,7 +17,7 @@ namespace Spice.Domain
             AdministeredToPlants = new List<AdministeredNutrient>();
         }
 
-        internal Nutrient(string name, string description, string dosageUnits)
+        internal Nutrient(string name, string description, string dosageUnits) : this()
         {
             Name = name;
             Description = description;

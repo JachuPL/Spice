@@ -1,4 +1,5 @@
 ﻿using Spice.Domain.Plants;
+using System.Data;
 
 namespace Spice.Domain.Builders
 {
@@ -13,6 +14,16 @@ namespace Spice.Domain.Builders
 
         public static implicit operator Plant(PlantBuilder builder)
         {
+            if (builder._field is null)
+            {
+                throw new NoNullAllowedException("Field cannot be null");
+            }
+
+            if (builder._species is null)
+            {
+                throw new NoNullAllowedException("Species cannot be null");
+            }
+
             return new Plant(builder._name, builder._species, builder._field, builder._row, builder._column, builder._state);
         }
 
