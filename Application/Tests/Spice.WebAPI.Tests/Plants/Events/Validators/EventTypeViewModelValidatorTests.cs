@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
+using Spice.ViewModels.Plants.Events;
+using Spice.ViewModels.Plants.Events.Validators;
 
-namespace Spice.ViewModels.Plants.Events.Validators
+namespace Spice.WebAPI.Tests.Plants.Events.Validators
 {
     internal sealed class EventTypeViewModelValidatorTests
     {
@@ -22,6 +24,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
         [TestCase(EventTypeViewModel.Pests, TestName = "Event Type Validator should not have error for Pests type")]
         [TestCase(EventTypeViewModel.UnderWatering, TestName = "Event Type Validator should not have error for Underwatering type")]
         [TestCase(EventTypeViewModel.Nutrition, TestName = "Event Type Validator should not have error for Nutrition type")]
+        [TestCase(EventTypeViewModel.Sprouting, TestName = "Event Type Validator should not have error for Sprouting type")]
         public void ValidatorShouldNotHaveErrorWhenTypeIsValid(EventTypeViewModel value)
         {
             ValidationResult result = _validator.Validate(value);
@@ -31,7 +34,7 @@ namespace Spice.ViewModels.Plants.Events.Validators
         [TestCase(-1, TestName = "Event Type Validator should have error for negative numeric value as type")]
         [TestCase(999, TestName = "Event Type Validator should have error for any other numeric value as type")]
         [TestCase(EventTypeViewModel.Moving, TestName = "Event Type Validator should have error for Moving type")]
-        [TestCase(EventTypeViewModel.Start, TestName = "Event Type Validator should have error for Start type")]
+        [TestCase(EventTypeViewModel.StartedTracking, TestName = "Event Type Validator should have error for StartedTracking type")]
         public void ValidatorShouldHaveErrorWhenTypeIsInvalid(EventTypeViewModel value)
         {
             ValidationResult result = _validator.Validate(value);

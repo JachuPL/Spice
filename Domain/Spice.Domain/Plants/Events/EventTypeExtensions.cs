@@ -4,7 +4,7 @@ namespace Spice.Domain.Plants.Events
 {
     public static class EventTypeExtensions
     {
-        private static readonly EventType[] UnchangeableTypes = { EventType.Moving, EventType.Start };
+        private static readonly EventType[] UnchangeableTypes = { EventType.Moving, EventType.StartedTracking };
 
         public static bool IsChangeable(this EventType type)
         {

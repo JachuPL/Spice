@@ -160,7 +160,7 @@ namespace Spice.Domain.Tests.Models.Plants
             Plant plant = New.Plant.WithName(plantName).WithSpecies(species).WithField(field).InRow(row).InColumn(col);
 
             // Then
-            plant.Events.Should().Contain(x => x.Type == EventType.Start);
+            plant.Events.Should().Contain(x => x.Type == EventType.StartedTracking);
         }
 
         [TestCase(TestName = "Change field should produce field changed event")]
@@ -180,6 +180,63 @@ namespace Spice.Domain.Tests.Models.Plants
 
             // Then
             plant.Events.Should().Contain(x => x.Type == EventType.Moving);
+        }
+
+        [TestCase(TestName = "UpdateState to Sprouting should produce event")]
+        public void UpdateStateToSproutingShouldProduceEvent()
+        {
+            // Given
+            string plantName = "Plant";
+            Species species = New.Species.WithName("Test species");
+            Field field = New.Field.WithName("Test field");
+            int row = 0;
+            int col = 0;
+            Plant plant = New.Plant.WithName(plantName).WithSpecies(species).WithField(field).InRow(row).InColumn(col);
+
+            // When
+            plant.UpdateState(PlantState.Sprouting);
+
+            // Then
+            plant.State.Should().Be(PlantState.Sprouting);
+            plant.Events.Should().Contain(x => x.Type == EventType.Sprouting);
+        }
+
+        [TestCase(TestName = "UpdateState to Flowering should produce event")]
+        public void UpdateStateToFloweringShouldProduceEvent()
+        {
+            // Given
+            string plantName = "Plant";
+            Species species = New.Species.WithName("Test species");
+            Field field = New.Field.WithName("Test field");
+            int row = 0;
+            int col = 0;
+            Plant plant = New.Plant.WithName(plantName).WithSpecies(species).WithField(field).InRow(row).InColumn(col);
+
+            // When
+            plant.UpdateState(PlantState.Flowering);
+
+            // Then
+            plant.State.Should().Be(PlantState.Flowering);
+            plant.Events.Should().Contain(x => x.Type == EventType.Growth);
+        }
+
+        [TestCase(TestName = "UpdateState to Fruiting should produce event if possible")]
+        public void UpdateStateToFruitingShouldProduceEvent()
+        {
+            // Given
+            string plantName = "Plant";
+            Species species = New.Species.WithName("Test species");
+            Field field = New.Field.WithName("Test field");
+            int row = 0;
+            int col = 0;
+            Plant plant = New.Plant.WithName(plantName).WithSpecies(species).WithField(field).InRow(row).InColumn(col);
+
+            // When
+            plant.UpdateState(PlantState.Fruiting);
+
+            // Then
+            plant.State.Should().Be(PlantState.Fruiting);
+            plant.Events.Should().Contain(x => x.Type == EventType.Growth);
         }
     }
 }

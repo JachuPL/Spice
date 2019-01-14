@@ -18,7 +18,7 @@ namespace Spice.Domain.Tests.Models.Plants
                                                      .InColumn(0);
 
         protected override Event CreateDomainObject() =>
-            _eventOwnerPlant.AddEvent(EventType.Disease, "Spotted some brown leaves.");
+            _eventOwnerPlant.AddEvent(EventType.Disease, "Spotted some brown leaves.", false);
 
         [TestCase(TestName = "Get and Set event Id property works properly")]
         public void GetAndSetIdWorksProperly()
@@ -83,6 +83,19 @@ namespace Spice.Domain.Tests.Models.Plants
 
             // Then
             DomainObject.Occured.Should().Be(date);
+        }
+
+        [TestCase(TestName = "Get and Set event created automatically property works properly")]
+        public void GetAndSetAutomaticallyCreatedWorksProperly()
+        {
+            // Given
+            bool createdAutomatically = true;
+
+            // When
+            DomainObject.CreatedAutomatically = createdAutomatically;
+
+            // Then
+            DomainObject.CreatedAutomatically.Should().Be(createdAutomatically);
         }
     }
 }

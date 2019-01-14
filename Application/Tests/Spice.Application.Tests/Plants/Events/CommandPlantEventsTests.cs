@@ -80,7 +80,7 @@ namespace Spice.Application.Tests.Plants.Events
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             Guid plantId = SeedDatabase(plant);
-            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now, EventType.Start);
+            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now, EventType.StartedTracking);
 
             // When
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
@@ -160,31 +160,13 @@ namespace Spice.Application.Tests.Plants.Events
             Guid plantId = SeedDatabase(plant);
             Event @event = ModelFactory.DomainModel(plant);
             Guid eventId = SeedDatabase(@event);
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
 
             // When
             Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
 
             // Then
             updateEvent.Should().Throw<EventTypeChangedToIllegalException>();
-        }
-
-        [TestCase(TestName = "Update plant event throws exception if changed event type from the one that is automatically created")]
-        public void UpdatePlantEventThrowsExceptionIfEventTypeWasChangedFromAutomaticallyCreated()
-        {
-            // Given
-            Plant plant = Plants.ModelFactory.DomainModel();
-            Event startEvent = plant.Events.First(x => x.Type == EventType.Start);
-            plant.Events.Add(startEvent);
-            Guid plantId = SeedDatabase(plant);
-            Guid eventId = startEvent.Id;
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Fungi);
-
-            // When
-            Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
-
-            // Then
-            updateEvent.Should().Throw<EventTypeChangedFromIllegalException>();
         }
 
         [TestCase(TestName = "Update plant event returns null if occured event does not exist")]
@@ -208,10 +190,10 @@ namespace Spice.Application.Tests.Plants.Events
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             Guid plantId = SeedDatabase(plant);
-            Event @event = ModelFactory.DomainModel(plant, type: EventType.Start);
+            Event @event = ModelFactory.DomainModel(plant, type: EventType.StartedTracking);
             Guid eventId = SeedDatabase(@event);
 
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
 
             // When
             @event = await _commands.Update(plantId, model);
@@ -242,8 +224,26 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Plant.Id.Should().Be(plant.Id);
         }
 
-        [TestCase(TestName = "Delete plant event succeeds")]
-        public async Task DeletePlantEventSucceeds()
+        [TestCase(TestName = "Update plant event throws exception if updated event was created automatically")]
+        public void UpdatePlantEventThrowsExceptionIfEventWasAutomaticallyCreated()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = plant.Events.First(x => x.Type == EventType.StartedTracking);
+            Guid eventId = @event.Id;
+
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
+
+            // When
+            Func<Task> updateAutomaticEvent = async () => await _commands.Update(plantId, model);
+
+            // Then
+            updateAutomaticEvent.Should().Throw<AttemptedToModifyAutomaticallyCreatedEventException>();
+        }
+
+        [TestCase(TestName = "Delete plant event succeeds for manually created events")]
+        public async Task DeletePlantEventSucceedsForManuallyCreatedEvents()
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
@@ -257,6 +257,22 @@ namespace Spice.Application.Tests.Plants.Events
             // Then
             @event = await DatabaseContext.Events.FindAsync(id);
             @event.Should().BeNull();
+        }
+
+        [TestCase(TestName = "Delete plant event throws exception for automatically created events")]
+        public void DeletePlantEventFailsForAutomaticallyCreatedEvents()
+        {
+            // Given
+            Plant plant = Plants.ModelFactory.DomainModel();
+            Guid plantId = SeedDatabase(plant);
+            Event @event = plant.Events.First(x => x.Type == EventType.StartedTracking);
+            Guid id = @event.Id;
+
+            // When
+            Func<Task> deleteAutomaticEvent = async () => await _commands.Delete(plantId, id);
+
+            // Then
+            deleteAutomaticEvent.Should().Throw<AttemptedToModifyAutomaticallyCreatedEventException>();
         }
     }
 }
