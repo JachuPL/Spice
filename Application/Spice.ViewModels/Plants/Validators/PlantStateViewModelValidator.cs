@@ -20,6 +20,7 @@ namespace Spice.ViewModels.Plants.Validators
                 case PlantStateViewModel.Fruiting:
                 case PlantStateViewModel.Harvested:
                 case PlantStateViewModel.Sick:
+                case PlantStateViewModel.Sprouting:
                     return true;
 
                 default: return false;

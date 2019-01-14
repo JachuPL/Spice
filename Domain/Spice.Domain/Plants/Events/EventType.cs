@@ -11,6 +11,7 @@
         Moving,
         Growth,
         Start,
-        Nutrition
+        Nutrition,
+        Sprouting
     }
 }
