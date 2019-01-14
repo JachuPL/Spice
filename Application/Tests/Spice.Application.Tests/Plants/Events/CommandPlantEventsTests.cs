@@ -169,24 +169,6 @@ namespace Spice.Application.Tests.Plants.Events
             updateEvent.Should().Throw<EventTypeChangedToIllegalException>();
         }
 
-        [TestCase(TestName = "Update plant event throws exception if changed event type from the one that is automatically created")]
-        public void UpdatePlantEventThrowsExceptionIfEventTypeWasChangedFromAutomaticallyCreated()
-        {
-            // Given
-            Plant plant = Plants.ModelFactory.DomainModel();
-            Event startEvent = plant.Events.First(x => x.Type == EventType.StartedTracking);
-            plant.Events.Add(startEvent);
-            Guid plantId = SeedDatabase(plant);
-            Guid eventId = startEvent.Id;
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Fungi);
-
-            // When
-            Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
-
-            // Then
-            updateEvent.Should().Throw<EventTypeChangedFromIllegalException>();
-        }
-
         [TestCase(TestName = "Update plant event returns null if occured event does not exist")]
         public async Task UpdatePlantEventReturnsNullIfEventDoesNotExist()
         {
@@ -242,7 +224,7 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Plant.Id.Should().Be(plant.Id);
         }
 
-        [TestCase(TestName = "Update plant event throws exception if event was created automatically")]
+        [TestCase(TestName = "Update plant event throws exception if updated event was created automatically")]
         public void UpdatePlantEventThrowsExceptionIfEventWasAutomaticallyCreated()
         {
             // Given
@@ -277,7 +259,7 @@ namespace Spice.Application.Tests.Plants.Events
             @event.Should().BeNull();
         }
 
-        [TestCase(TestName = "Delete plant event fails for automatically created events")]
+        [TestCase(TestName = "Delete plant event throws exception for automatically created events")]
         public void DeletePlantEventFailsForAutomaticallyCreatedEvents()
         {
             // Given

@@ -68,6 +68,11 @@ namespace Spice.Application.Plants.Events
                 return null;
             }
 
+            if (@event.CreatedAutomatically)
+            {
+                throw new AttemptedToModifyAutomaticallyCreatedEventException("Events created automatically can't be edited.");
+            }
+
             if (EventOccuredBeforePlantedOrInTheFuture(plant, model.Occured))
             {
                 throw new EventOccurenceDateBeforePlantDateOrInTheFutureException();
@@ -75,11 +80,6 @@ namespace Spice.Application.Plants.Events
 
             if (@event.Type != model.Type)
             {
-                if (!@event.Type.IsChangeable())
-                {
-                    throw new EventTypeChangedFromIllegalException(@event.Type);
-                }
-
                 if (!model.Type.IsChangeable())
                 {
                     throw new EventTypeChangedToIllegalException(model.Type);
@@ -106,6 +106,11 @@ namespace Spice.Application.Plants.Events
             if (@event is null)
             {
                 return;
+            }
+
+            if (@event.CreatedAutomatically)
+            {
+                throw new AttemptedToModifyAutomaticallyCreatedEventException("Events created automatically can't be deleted.");
             }
 
             plant.Events.Remove(@event);
