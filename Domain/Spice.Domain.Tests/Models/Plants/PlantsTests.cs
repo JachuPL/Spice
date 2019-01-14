@@ -163,7 +163,7 @@ namespace Spice.Domain.Tests.Models.Plants
             Plant plant = new Plant(plantName, species, field, row, col);
 
             // Then
-            plant.Events.Should().Contain(x => x.Type == EventType.Start);
+            plant.Events.Should().Contain(x => x.Type == EventType.StartedTracking);
         }
 
         [TestCase(TestName = "Change field should produce field changed event")]
@@ -183,6 +183,12 @@ namespace Spice.Domain.Tests.Models.Plants
 
             // Then
             plant.Events.Should().Contain(x => x.Type == EventType.Moving);
+        }
+
+        [TestCase(TestName = "UpdateState should produce event if possible")]
+        public void UpdateStateShouldProduceEventIfPossible()
+        {
+            throw new NotImplementedException();
         }
     }
 }

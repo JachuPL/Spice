@@ -90,6 +90,7 @@ namespace Spice.Application.Plants
             _mapper.Map(model, plant);
             plant.ChangeField(field);
             plant.Species = species;
+            plant.UpdateState(model.State);
             _database.Plants.Update(plant);
             await _database.SaveAsync();
 

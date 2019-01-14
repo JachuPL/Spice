@@ -34,8 +34,8 @@ namespace Spice.AutoMapper.Profiles.Plant.Converters
                 case EventTypeViewModel.UnderWatering:
                     return EventType.UnderWatering;
 
-                case EventTypeViewModel.Start:
-                    return EventType.Start;
+                case EventTypeViewModel.StartedTracking:
+                    return EventType.StartedTracking;
 
                 case EventTypeViewModel.Nutrition:
                     return EventType.Nutrition;

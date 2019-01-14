@@ -80,7 +80,7 @@ namespace Spice.Application.Tests.Plants.Events
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             Guid plantId = SeedDatabase(plant);
-            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now, EventType.Start);
+            CreatePlantEventModel model = ModelFactory.CreationModel(DateTime.Now, EventType.StartedTracking);
 
             // When
             Func<Task> createPlant = async () => await _commands.Create(plantId, model);
@@ -160,7 +160,7 @@ namespace Spice.Application.Tests.Plants.Events
             Guid plantId = SeedDatabase(plant);
             Event @event = ModelFactory.DomainModel(plant);
             Guid eventId = SeedDatabase(@event);
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
 
             // When
             Func<Task> updateEvent = async () => await _commands.Update(plantId, model);
@@ -174,7 +174,7 @@ namespace Spice.Application.Tests.Plants.Events
         {
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
-            Event startEvent = plant.Events.First(x => x.Type == EventType.Start);
+            Event startEvent = plant.Events.First(x => x.Type == EventType.StartedTracking);
             plant.Events.Add(startEvent);
             Guid plantId = SeedDatabase(plant);
             Guid eventId = startEvent.Id;
@@ -208,10 +208,10 @@ namespace Spice.Application.Tests.Plants.Events
             // Given
             Plant plant = Plants.ModelFactory.DomainModel();
             Guid plantId = SeedDatabase(plant);
-            Event @event = ModelFactory.DomainModel(plant, type: EventType.Start);
+            Event @event = ModelFactory.DomainModel(plant, type: EventType.StartedTracking);
             Guid eventId = SeedDatabase(@event);
 
-            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.Start);
+            UpdatePlantEventModel model = ModelFactory.UpdateModel(eventId, type: EventType.StartedTracking);
 
             // When
             @event = await _commands.Update(plantId, model);
