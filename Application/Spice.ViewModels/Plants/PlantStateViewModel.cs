@@ -7,6 +7,7 @@
         Fruiting,
         Harvested,
         Sick,
-        Deceased
+        Deceased,
+        Sprouting
     }
 }

@@ -17,13 +17,13 @@ namespace Spice.Domain.Plants
         public ICollection<AdministeredNutrient> AdministeredNutrients { get; set; }
         public ICollection<Event> Events { get; set; }
 
-        protected Plant()
+        private Plant()
         {
             AdministeredNutrients = new List<AdministeredNutrient>();
             Events = new List<Event>();
         }
 
-        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn) : this()
+        internal Plant(string name, Species species, Field field, int fieldRow, int fieldColumn) : this()
         {
             Column = fieldColumn;
             Row = fieldRow;
@@ -35,7 +35,7 @@ namespace Spice.Domain.Plants
             AddCreationEvent();
         }
 
-        public Plant(string name, Species species, Field field, int fieldRow, int fieldColumn, PlantState state) :
+        internal Plant(string name, Species species, Field field, int fieldRow, int fieldColumn, PlantState state) :
             this(name, species, field, fieldRow, fieldColumn)
         {
             State = state;
@@ -43,8 +43,8 @@ namespace Spice.Domain.Plants
 
         private void AddCreationEvent()
         {
-            Event plantCreatedEvent = new Event(this, EventType.Start,
-                $"{Name} was planted on field {Field.Name}. (Generated automatically)");
+            Event plantCreatedEvent =
+                new Event(this, EventType.StartedTracking, $"{Name} was added to Spice tracklog.", true);
             Events.Add(plantCreatedEvent);
         }
 
@@ -60,35 +60,54 @@ namespace Spice.Domain.Plants
         private void AddFieldChangeEvent(Field newField)
         {
             Event fieldChangedEvent = new Event(this, EventType.Moving,
-                $"{Name} was moved to field {newField.Name}. (Generated automatically)");
+                                                $"{Name} was moved to field {newField.Name}. (Generated automatically)", true);
             Events.Add(fieldChangedEvent);
         }
 
-        public Event AddEvent(EventType type, string description)
+        public Event AddEvent(EventType type, string description, bool createdAutomatically)
         {
-            return AddEvent(type, description, DateTime.Now);
+            return AddEvent(type, description, DateTime.Now, createdAutomatically);
         }
 
-        public Event AddEvent(EventType type, string description, DateTime occured)
+        public Event AddEvent(EventType type, string description, DateTime occured, bool createdAutomatically)
         {
-            Event newEvent = new Event(this, type, description, occured);
+            Event newEvent = new Event(this, type, description, createdAutomatically, occured);
             Events.Add(newEvent);
             return newEvent;
         }
 
-        public AdministeredNutrient AdministerNutrient(Nutrient nutrient, double amount, DateTime date, bool createEvent = false)
+        public AdministeredNutrient AdministerNutrient(Nutrient nutrient, double amount, DateTime date,
+                                                       bool createEvent = false)
         {
             AdministeredNutrient administeredNutrient = new AdministeredNutrient(this, nutrient, amount, date);
             AdministeredNutrients.Add(administeredNutrient);
             if (createEvent)
             {
-                Event @event = AddEvent(EventType.Nutrition,
-                    $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
-                    date);
-                Events.Add(@event);
+                AddEvent(EventType.Nutrition,
+                         $"Given {amount} {nutrient.DosageUnits} of {nutrient.Name} to {Name}. (Generated automatically)",
+                         date, true);
             }
 
             return administeredNutrient;
+        }
+
+        public void UpdateState(PlantState state)
+        {
+            State = state;
+            switch (State)
+            {
+                case PlantState.Sprouting:
+                    AddEvent(EventType.Sprouting, $"{Name} is sprouting.", true);
+                    break;
+
+                case PlantState.Flowering:
+                    AddEvent(EventType.Growth, $"{Name} has its first flowers.", true);
+                    break;
+
+                case PlantState.Fruiting:
+                    AddEvent(EventType.Growth, $"{Name} has its first fruits!", true);
+                    break;
+            }
         }
     }
 }

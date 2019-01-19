@@ -6,6 +6,7 @@ using Spice.Application.Common.Exceptions;
 using Spice.Application.Nutrients.Interfaces;
 using Spice.Application.Nutrients.Models;
 using Spice.Domain;
+using Spice.Domain.Builders;
 using Spice.ViewModels.Nutrients;
 using Spice.WebAPI.Tests.Common;
 using Spice.WebAPI.Tests.Nutrients.Factories;
@@ -166,7 +167,7 @@ namespace Spice.WebAPI.Tests.Nutrients
         public async Task PutNutrientReturnsNutrientAndCorrectContentType()
         {
             // Given
-            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(A.Fake<Nutrient>());
+            A.CallTo(() => _fakeCommands.Update(A<UpdateNutrientModel>.Ignored)).Returns(New.Nutrient.WithName("Test nutrient"));
 
             // When
             HttpResponseMessage response = await Client.PutAsJsonAsync(EndPointFactory.UpdateEndpoint(), ViewModelFactory.CreateValidUpdateModel());

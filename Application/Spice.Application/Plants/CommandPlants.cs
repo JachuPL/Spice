@@ -7,6 +7,7 @@ using Spice.Application.Plants.Interfaces;
 using Spice.Application.Plants.Models;
 using Spice.Application.Species.Exceptions;
 using Spice.Domain;
+using Spice.Domain.Builders;
 using Spice.Domain.Plants;
 using System;
 using System.Linq;
@@ -51,7 +52,12 @@ namespace Spice.Application.Plants
                 throw new SpeciesNotFoundException(model.SpeciesId);
             }
 
-            Plant plant = new Plant(model.Name, species, field, model.Row, model.Column, model.State);
+            Plant plant = New.Plant.WithName(model.Name)
+                             .WithSpecies(species)
+                             .WithField(field)
+                             .InRow(model.Row)
+                             .InColumn(model.Column)
+                             .WithState(model.State);
             await _database.Plants.AddAsync(plant);
             await _database.SaveAsync();
 
@@ -90,6 +96,7 @@ namespace Spice.Application.Plants
             _mapper.Map(model, plant);
             plant.ChangeField(field);
             plant.Species = species;
+            plant.UpdateState(model.State);
             _database.Plants.Update(plant);
             await _database.SaveAsync();
 

@@ -99,6 +99,8 @@ namespace Spice.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("CreatedAutomatically");
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .IsUnicode(true);
@@ -151,7 +153,7 @@ namespace Spice.Persistence.Migrations
                     b.ToTable("Plants");
                 });
 
-            modelBuilder.Entity("Spice.Domain.Plants.Species", b =>
+            modelBuilder.Entity("Spice.Domain.Species", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -205,7 +207,7 @@ namespace Spice.Persistence.Migrations
                         .HasForeignKey("FieldId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Spice.Domain.Plants.Species", "Species")
+                    b.HasOne("Spice.Domain.Species", "Species")
                         .WithMany("Plants")
                         .HasForeignKey("SpeciesId")
                         .OnDelete(DeleteBehavior.Cascade);

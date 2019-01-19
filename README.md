@@ -1,4 +1,4 @@
-# Spice <img src="images/spice-logo.png" width="48">
+# Spice <img src="Presentation\Spice.AngularUI\ClientApp\src\assets\images\spice-logo.png" width="48">
 
 A free and open source software to manage your garden and track plant growth.
 

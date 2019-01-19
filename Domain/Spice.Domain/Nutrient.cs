@@ -10,6 +10,18 @@ namespace Spice.Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public string DosageUnits { get; set; }
-        public ICollection<AdministeredNutrient> AdministeredToPlants { get; set; } = new List<AdministeredNutrient>();
+        public ICollection<AdministeredNutrient> AdministeredToPlants { get; set; }
+
+        private Nutrient()
+        {
+            AdministeredToPlants = new List<AdministeredNutrient>();
+        }
+
+        internal Nutrient(string name, string description, string dosageUnits) : this()
+        {
+            Name = name;
+            Description = description;
+            DosageUnits = dosageUnits;
+        }
     }
 }

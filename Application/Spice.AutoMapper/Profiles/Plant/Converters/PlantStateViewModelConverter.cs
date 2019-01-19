@@ -28,6 +28,9 @@ namespace Spice.AutoMapper.Profiles.Plant.Converters
                 case PlantStateViewModel.Deceased:
                     return PlantState.Deceased;
 
+                case PlantStateViewModel.Sprouting:
+                    return PlantState.Sprouting;
+
                 default:
                     return PlantState.Healthy;
             }

@@ -90,7 +90,7 @@ namespace Spice.Application.Tests.Fields
         public async Task UpdateFieldReturnsFieldOnSuccess()
         {
             // Given
-            Field field = ModelFactory.DomainModel("Field B", 13, 37);
+            Field field = ModelFactory.DomainModel("Field B", "Very sunny", 13, 37);
             Guid fieldId = SeedDatabase(field);
             UpdateFieldModel model = ModelFactory.UpdateModel(fieldId);
 
@@ -108,7 +108,7 @@ namespace Spice.Application.Tests.Fields
         public async Task DeleteFieldSucceeds()
         {
             // Given
-            Guid fieldId = SeedDatabase(ModelFactory.DomainModel("Field B", 13, 37));
+            Guid fieldId = SeedDatabase(ModelFactory.DomainModel("Field B", "Very sunny", 13, 37));
 
             // When
             await _commands.Delete(fieldId);
