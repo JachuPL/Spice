@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ using Spice.Application.Species.Interfaces;
 using Spice.AutoMapper;
 using Spice.Persistence;
 using Spice.ViewModels.Plants.Validators;
+using System;
 
 namespace Spice.WebAPI
 {
@@ -36,6 +38,8 @@ namespace Spice.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddSingleton(AutoMapperFactory.CreateMapper());
 
             RegisterApplicationServices(services);
@@ -79,15 +83,26 @@ namespace Spice.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Action<CorsPolicyBuilder> corsPolicyBuilder;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                corsPolicyBuilder = (builder) =>
+                                    {
+                                        builder.AllowAnyOrigin();
+                                    };
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                corsPolicyBuilder = (builder) =>
+                                    {
+                                        // TODO: configure to allow your application server
+                                    };
             }
+
+            app.UseCors(corsPolicyBuilder);
 
             app.UseHttpsRedirection();
             app.UseMvc();
