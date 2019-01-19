@@ -9,14 +9,6 @@ import { NavLink } from './navlink.model';
 export class NavMenuComponent {
   isExpanded = false;
   navLinks: NavLink[] = [
-    {
-      url: '/counter',
-      text: 'Test'
-    },
-    {
-      url: '/fetch-data',
-      text: 'Fetch data'
-    },
   ];
 
   collapse() {
