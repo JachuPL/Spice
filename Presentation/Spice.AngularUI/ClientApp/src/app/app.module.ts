@@ -7,12 +7,17 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
+import { UrlProvider } from './services/urlprovider';
+import { FieldsUrlProvider } from './fields/services/fieldsurlprovider';
+import { FieldIndexComponent } from './fields/index/index.component';
+import { FieldService } from './fields/services/fields.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent
+    HomeComponent,
+    FieldIndexComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -20,9 +25,10 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'fields', component: FieldIndexComponent },
     ])
   ],
-  providers: [],
+  providers: [UrlProvider, FieldsUrlProvider, FieldService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,6 +9,10 @@ import { NavLink } from './navlink.model';
 export class NavMenuComponent {
   isExpanded = false;
   navLinks: NavLink[] = [
+    {
+      url: 'fields',
+      text: 'Fields'
+    }
   ];
 
   collapse() {

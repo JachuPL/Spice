@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <ul class="list-unstyled border-right">
+        <li
+          *ngFor="let field of fields">
+            <a routerLink="/fields/{{field.id}}">
+              {{field.name}}
+            </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
