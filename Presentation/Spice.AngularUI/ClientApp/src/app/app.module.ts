@@ -11,6 +11,7 @@ import { UrlProvider } from './services/urlprovider';
 import { FieldsUrlProvider } from './fields/services/fieldsurlprovider';
 import { FieldIndexComponent } from './fields/index/index.component';
 import { FieldService } from './fields/services/fields.service';
+import { FieldDetailsComponent } from './fields/details/details.component';
 import { WeatherService } from './services/weather.service';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { WeatherService } from './services/weather.service';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FieldIndexComponent
+    FieldIndexComponent,
+    FieldDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,7 +28,9 @@ import { WeatherService } from './services/weather.service';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fields', component: FieldIndexComponent },
+      { path: 'fields', component: FieldIndexComponent, children: [
+        { path: ':id', component: FieldDetailsComponent }
+      ] },
     ])
   ],
   providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService],

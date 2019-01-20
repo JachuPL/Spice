@@ -35,7 +35,7 @@ export class WeatherService {
         newWeatherRecord.date = new Date();
         newWeatherRecord.latitude = value['coord'].lat;
         newWeatherRecord.longitude = value['coord'].lon;
-        newWeatherRecord.weather = this.createNewWeatherInfoFromValue(value);
+        newWeatherRecord.info = this.createNewWeatherInfoFromValue(value);
         return newWeatherRecord;
     }
 

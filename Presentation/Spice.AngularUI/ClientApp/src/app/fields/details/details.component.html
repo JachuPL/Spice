@@ -1,0 +1,25 @@
+<h2>{{this.field?.name}}</h2>
+<ul class="list-unstyled list-inline">
+  <li>
+    <i class="fas fa-thermometer-quarter fa-lg" title="Temperatura"></i> {{this.weather?.info.general.temperature}} &#x2103;
+    <i class="fas fa-cloud fa-lg" title="Zachmurzenie"></i> {{this.weather?.info.clouds}}%
+    <i class="fas fa-tint fa-lg" title="Wilgotność"></i> {{this.weather?.info.general.humidity}}%
+  </li>
+</ul>
+<ul class="list-unstyled list-inline">
+  <li
+    *ngFor="let weatherOccurence of this.weather?.info.weather"
+    class="list-inline-item">
+    <i
+      class="owf owf-{{weatherOccurence.id}}-{{this.isNightAtLocation() ? 'n' : 'd'}} owf-2x"
+      title="{{weatherOccurence.description}}"></i>
+  </li>
+</ul>
+<p>{{this.field?.description}}</p>
+
+<!--TODO: modify this after plant list introduction-->
+<ul *ngIf="this.field?.plants.length > 0">
+  <li *ngFor="let plant of this.field?.plants">
+    {{plant.name}}
+  </li>
+</ul>
