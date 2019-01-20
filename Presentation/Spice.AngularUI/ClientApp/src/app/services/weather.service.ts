@@ -5,13 +5,11 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { WeatherByCoordinates } from '../models/weatherbycoordinates.model';
 import { UrlProvider } from './urlprovider';
 import { WeatherInfo } from '../models/weatherinfo.model';
-import { WeatherConditions } from '../models/weatherconditions.model';
-import { GeneralConditions } from '../models/generalconditions.model';
 
 @Injectable()
 export class WeatherService {
-    private weatherSubject = new ReplaySubject<object>(1);
-    weather: Observable<object> = this.weatherSubject.asObservable();
+    private weatherSubject = new ReplaySubject<WeatherByCoordinates>(1);
+    weather: Observable<WeatherByCoordinates> = this.weatherSubject.asObservable();
     constructor(private httpClient: HttpClient,
         private urls: UrlProvider) {
     }
