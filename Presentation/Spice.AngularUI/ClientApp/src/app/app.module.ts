@@ -11,6 +11,7 @@ import { UrlProvider } from './services/urlprovider';
 import { FieldsUrlProvider } from './fields/services/fieldsurlprovider';
 import { FieldIndexComponent } from './fields/index/index.component';
 import { FieldService } from './fields/services/fields.service';
+import { WeatherService } from './services/weather.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { FieldService } from './fields/services/fields.service';
       { path: 'fields', component: FieldIndexComponent },
     ])
   ],
-  providers: [UrlProvider, FieldsUrlProvider, FieldService],
+  providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
