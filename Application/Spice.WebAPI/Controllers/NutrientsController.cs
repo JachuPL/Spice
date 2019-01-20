@@ -61,7 +61,7 @@ namespace Spice.WebAPI.Controllers
             {
                 CreateNutrientModel createNutrientModel = _mapper.Map<CreateNutrientModel>(model);
                 Guid nutrientId = await _commands.Create(createNutrientModel);
-                return CreatedAtRoute(nameof(GetNutrient), new { id = nutrientId }, null);
+                return CreatedAtRoute(nameof(GetNutrient), new { id = nutrientId }, nutrientId);
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {

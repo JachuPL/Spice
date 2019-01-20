@@ -89,6 +89,15 @@ namespace Spice.WebAPI
                 app.UseHsts();
             }
 
+            app.UseCors((builder) =>
+                        {
+                            builder.AllowAnyOrigin();
+                            builder.AllowAnyHeader();
+                            builder.AllowAnyMethod();
+                            builder.AllowCredentials();
+                            builder.WithExposedHeaders("Location");
+                        });
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }
