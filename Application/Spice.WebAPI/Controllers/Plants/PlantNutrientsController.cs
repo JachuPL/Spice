@@ -66,7 +66,7 @@ namespace Spice.WebAPI.Controllers.Plants
             {
                 CreateAdministeredNutrientModel createAdministeredNutrientModel = _mapper.Map<CreateAdministeredNutrientModel>(model);
                 Guid nutrientId = await _commands.Create(plantId, createAdministeredNutrientModel);
-                return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, null);
+                return CreatedAtRoute(nameof(GetAdministeredNutrient), new { plantId = plantId, id = nutrientId }, nutrientId);
             }
             catch (Exception ex) when (ex is ResourceNotFoundException)
             {

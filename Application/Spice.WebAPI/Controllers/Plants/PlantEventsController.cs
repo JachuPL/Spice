@@ -68,7 +68,7 @@ namespace Spice.WebAPI.Controllers.Plants
             {
                 CreatePlantEventModel createEventModel = _mapper.Map<CreatePlantEventModel>(model);
                 Guid eventId = await _commands.Create(plantId, createEventModel);
-                return CreatedAtRoute(nameof(GetEvent), new { plantId = plantId, id = eventId }, null);
+                return CreatedAtRoute(nameof(GetEvent), new { plantId = plantId, id = eventId }, eventId);
             }
             catch (Exception ex) when (ex is ResourceNotFoundException)
             {

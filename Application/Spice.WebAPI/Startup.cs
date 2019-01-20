@@ -102,7 +102,14 @@ namespace Spice.WebAPI
                                     };
             }
 
-            app.UseCors(corsPolicyBuilder);
+            app.UseCors((builder) =>
+                        {
+                            builder.AllowAnyOrigin();
+                            builder.AllowAnyHeader();
+                            builder.AllowAnyMethod();
+                            builder.AllowCredentials();
+                            builder.WithExposedHeaders("Location");
+                        });
 
             app.UseHttpsRedirection();
             app.UseMvc();

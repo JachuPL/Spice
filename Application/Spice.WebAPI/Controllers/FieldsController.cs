@@ -61,7 +61,7 @@ namespace Spice.WebAPI.Controllers
             {
                 CreateFieldModel createFieldModel = _mapper.Map<CreateFieldModel>(model);
                 Guid fieldId = await _commands.Create(createFieldModel);
-                return CreatedAtRoute(nameof(GetField), new { id = fieldId }, null);
+                return CreatedAtRoute(nameof(GetField), new { id = fieldId }, fieldId);
             }
             catch (Exception ex) when (ex is ResourceStateException)
             {
