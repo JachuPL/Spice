@@ -13,8 +13,7 @@ export class FieldIndexComponent implements OnInit, OnDestroy {
   fields: FieldIndexModel[];
   fieldsSubscription: Subscription;
 
-  constructor(private service: FieldService,
-    private urls: FieldsUrlProvider) { }
+  constructor(private service: FieldService) { }
 
   ngOnInit() {
     this.fieldsSubscription = this.service.getAll().subscribe(

@@ -19,4 +19,8 @@ export class FieldService {
     get(id: string): Observable<FieldDetailsModel> {
         return this.httpClient.get<FieldDetailsModel>(this.urls.DetailsUrl(id));
     }
+
+    create(value: any): Observable<Object> {
+        return this.httpClient.post(this.urls.CreateUrl(), value, { observe: 'response' });
+    }
 }

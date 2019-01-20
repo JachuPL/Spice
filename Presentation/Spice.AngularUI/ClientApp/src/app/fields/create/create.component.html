@@ -1,0 +1,76 @@
+<h2>Create new field</h2>
+<form [formGroup]="f" (ngSubmit)="onSubmit()">
+  <div *ngIf="this.errors" class="alert alert-danger">
+    <ul>
+      <ng-container *ngFor="let property of errors; let i = index">
+        <ng-container *ngFor="let error of property; let j = index">
+          <li>{{error}}</li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control">
+    <span
+      *ngIf="!f.get('name').valid && f.get('name').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('name').errors['minlength']">Name must be minimum 2 characters long.</span>
+        <span *ngIf="f.get('name').errors['maxlength']">Name must be maximum 50 characters long.</span>
+        <span *ngIf="f.get('name').errors['required']">Name is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      class="form-control"
+      rows="4"
+      cols="25"></textarea>
+    <span
+      *ngIf="!f.get('description').valid && f.get('description').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('description').errors['invalidDescriptionLength']">
+          Description can either be empty or 5 to 500 characters long.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="latitude">Latitude:</label>
+    <input
+      type="number"
+      id="latitude"
+      formControlName="latitude"
+      class="form-control">
+    <span
+      *ngIf="!f.get('latitude').valid && f.get('latitude').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('latitude').errors['invalidLatitude']">The value for latitude must be between -90 and 90.</span>
+        <span *ngIf="f.get('latitude').errors['required']">Latitude is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="longtitude">Longitude:</label>
+    <input
+      type="number"
+      id="longtitude"
+      formControlName="longtitude"
+      class="form-control">
+    <span
+      *ngIf="!f.get('longtitude').valid && f.get('longtitude').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('longtitude').errors['invalidLongitude']">The value for longitude must be between -180 and 180.</span>
+        <span *ngIf="f.get('longtitude').errors['required']">Longitude is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <span
+      *ngIf="!f.valid && f.touched"
+      class="form-text text-danger">Please enter valid data!</span>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!f.valid">Create</button>
+</form>
