@@ -23,3 +23,23 @@
     {{plant.name}}
   </li>
 </ul>
+
+<div class="card border-danger">
+  <div class="card-header bg-danger text-white">
+    Delete field
+  </div>
+  <div class="card-body">
+    <p class="card-text">Warning: deleting the selected field will also delete all plants growing there. If you want to keep some plants please move them to the other field. To delete field type its name (<code>{{this.field?.name}}</code>) to the box below.</p>
+    <div class="form-group">
+      <input type="text" name="deletionConfirmation" [(ngModel)]="deletionConfirmation" class="form-control">
+    </div>
+    <div>
+      <button
+        [disabled]="deletionConfirmation !== this.field?.name"
+        (click)="onDelete()"
+        class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>

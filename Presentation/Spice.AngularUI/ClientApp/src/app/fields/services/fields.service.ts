@@ -23,4 +23,8 @@ export class FieldService {
     create(value: any): Observable<Object> {
         return this.httpClient.post(this.urls.CreateUrl(), value, { observe: 'response' });
     }
+
+    delete(id: string): Observable<Object> {
+      return this.httpClient.delete(this.urls.DeleteUrl(id), {observe: 'response' });
+    }
 }

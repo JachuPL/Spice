@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { FieldDetailsModel } from '../models/field.details.model';
 import { FieldService } from '../services/fields.service';
 import { WeatherService } from '../../services/weather.service';
 import { WeatherByCoordinates } from '../../models/weatherbycoordinates.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-details',
@@ -18,9 +19,11 @@ export class FieldDetailsComponent implements OnInit, OnDestroy {
   field: FieldDetailsModel;
   weatherSubscription: Subscription;
   weather: WeatherByCoordinates;
+  deletionSubscription: Subscription;
   constructor(private service: FieldService,
     private weatherService: WeatherService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.idSubscription = this.activatedRoute.params.subscribe((params: Params) => {
@@ -45,6 +48,14 @@ export class FieldDetailsComponent implements OnInit, OnDestroy {
 
   isNightAtLocation() {
     return this.weather.info.sunset < this.weather.info.date;
+  }
+
+  onDelete() {
+    this.deletionSubscription = this.service.delete(this.field.id).subscribe((result: HttpResponse<object>) => {
+      if (result.status === 204) {
+        this.router.navigate(['/fields']);
+      }
+    });
   }
 
 }
