@@ -9,7 +9,7 @@ import { WeatherByCoordinates } from '../../models/weatherbycoordinates.model';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-details',
+  selector: 'app-field-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })

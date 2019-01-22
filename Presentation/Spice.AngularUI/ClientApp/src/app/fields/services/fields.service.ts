@@ -27,4 +27,8 @@ export class FieldService {
     delete(id: string): Observable<Object> {
       return this.httpClient.delete(this.urls.DeleteUrl(id), {observe: 'response' });
     }
+
+    edit(id: string, value: any): any {
+      return this.httpClient.put(this.urls.EditUrl(id), value, {observe: 'response'});
+    }
 }

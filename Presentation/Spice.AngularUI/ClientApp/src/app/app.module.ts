@@ -14,6 +14,7 @@ import { FieldService } from './fields/services/fields.service';
 import { FieldDetailsComponent } from './fields/details/details.component';
 import { WeatherService } from './services/weather.service';
 import { FieldCreateComponent } from './fields/create/create.component';
+import { FieldEditComponent } from './fields/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FieldCreateComponent } from './fields/create/create.component';
     HomeComponent,
     FieldIndexComponent,
     FieldDetailsComponent,
-    FieldCreateComponent
+    FieldCreateComponent,
+    FieldEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,8 @@ import { FieldCreateComponent } from './fields/create/create.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fields', component: FieldIndexComponent, children: [
         { path: 'new', component: FieldCreateComponent },
-        { path: ':id', component: FieldDetailsComponent }
+        { path: ':id', component: FieldDetailsComponent },
+        { path: ':id/edit', component: FieldEditComponent }
       ] },
     ]),
     ReactiveFormsModule

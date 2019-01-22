@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FieldService } from '../services/fields.service';
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-field-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })

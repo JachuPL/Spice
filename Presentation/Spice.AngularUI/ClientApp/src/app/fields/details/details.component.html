@@ -1,4 +1,9 @@
-<h2>{{this.field?.name}}</h2>
+<div class="d-flex flex-row row">
+  <h2 class="mr-3">{{this.field?.name}}</h2>
+  <a routerLink="/fields/{{field?.id}}/edit" class="btn btn-light" title="Edit '{{field?.name}}'">
+    <i class="fas fa-edit"></i>
+  </a>
+</div>
 <ul class="list-unstyled list-inline">
   <li>
     <i class="fas fa-thermometer-quarter fa-lg" title="Temperatura"></i> {{this.weather?.info.general.temperature}} &#x2103;
