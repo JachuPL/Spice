@@ -28,4 +28,8 @@ export class SpeciesService {
     delete(id: string): Observable<Object> {
         return this.http.delete(this.urls.DeleteUrl(id), {observe: 'response'});
     }
+
+    create(value: any): Observable<Object> {
+        return this.http.post(this.urls.CreateUrl(), value, { observe: 'response' });
+    }
 }
