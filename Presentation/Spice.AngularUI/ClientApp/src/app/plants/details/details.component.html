@@ -1,8 +1,8 @@
 <div class="d-flex flex-row row">
   <h2 class="mr-3">{{this.plant?.name}} <small>{{this.plant?.species.latinName}}</small></h2>
-  <!--<a routerLink="/plants/{{plant?.id}}/edit" class="btn btn-light" title="Edit '{{plant?.name}}'">
+  <a routerLink="/plants/{{plant?.id}}/edit" class="btn btn-light" title="Edit '{{plant?.name}}'">
     <i class="fas fa-edit"></i>
-  </a>-->
+  </a>
 </div>
 <p>Grows on {{this.plant?.field.name}}</p>
 <p>{{this.service.mapState(this.plant?.state)}}</p>

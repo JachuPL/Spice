@@ -26,6 +26,7 @@ import { PlantsService } from './plants/services/plants.service';
 import { PlantsUrlProvider } from './plants/services/plantsurlprovider';
 import { PlantDetailsComponent } from './plants/details/details.component';
 import { PlantCreateComponent } from './plants/create/create.component';
+import { PlantEditComponent } from './plants/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PlantCreateComponent } from './plants/create/create.component';
     SpeciesEditComponent,
     PlantsIndexComponent,
     PlantDetailsComponent,
-    PlantCreateComponent
+    PlantCreateComponent,
+    PlantEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +64,8 @@ import { PlantCreateComponent } from './plants/create/create.component';
       ] },
       { path: 'plants', component: PlantsIndexComponent, children: [
         { path: 'new', component: PlantCreateComponent },
-        { path: ':id', component: PlantDetailsComponent }
+        { path: ':id', component: PlantDetailsComponent },
+        { path: ':id/edit', component: PlantEditComponent }
       ] }
     ]),
     ReactiveFormsModule
