@@ -30,4 +30,9 @@ export class SpeciesUrlProvider {
     DeleteUrl(id: string): string {
         return this.urls.BaseApiAddress + '/species/' + id;
     }
+
+    @Output()
+    SummaryUrl(id: string): string {
+        return this.urls.BaseApiAddress + '/species/' + id + '/summary';
+    }
 }

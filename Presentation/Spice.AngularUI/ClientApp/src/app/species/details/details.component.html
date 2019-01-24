@@ -1,0 +1,53 @@
+<div class="d-flex flex-row row">
+  <h2 class="mr-3">{{this.species?.name}} <small>{{this.species?.latinName}}</small></h2>
+  <!--<a routerLink="/species/{{species?.id}}/edit" class="btn btn-light" title="Edit '{{species?.latinName}}'">
+    <i class="fas fa-edit"></i>
+  </a>-->
+</div>
+
+<p>{{this.species?.description}}</p>
+
+<!--TODO: modify this after plant list introduction-->
+<ul *ngIf="this.species?.plants.length > 0">
+  <li *ngFor="let plant of this.species?.plants">
+    {{plant.name}}
+  </li>
+</ul>
+
+<!--TODO: modify this after nutrients introduction-->
+<div *ngIf="this.nutritionSummary?.length > 0">
+  <div
+    class="card"
+    style="width: 18rem;"
+    *ngFor="let nutrientSummary of this.nutritionSummary">
+      <div class="card-body">
+        <h5 class="card-title">{{nutrientSummary.nutrient.name}}</h5>
+        <p class="card-text">{{nutrientSummary.nutrient.description}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Total {{nutrientSummary.totalAmount + ' ' + nutrientSummary.nutrient.dosageUnits}}</li>
+        <li class="list-group-item">First administered on {{nutrientSummary.firstAdministration}}</li>
+        <li class="list-group-item">Latest administration on {{nutrientSummary.lastAdministration}}</li>
+      </ul>
+  </div>
+</div>
+
+<div class="card border-danger">
+  <div class="card-header bg-danger text-white">
+    Delete species
+  </div>
+  <div class="card-body">
+    <p class="card-text">Warning: deleting the selected species will also delete all underlying plants. If you want to keep some plants do not remove species. To delete species type its name (<code>{{this.species?.name}}</code>) to the box below.</p>
+    <div class="form-group">
+      <input type="text" name="deletionConfirmation" [(ngModel)]="deletionConfirmation" class="form-control">
+    </div>
+    <div>
+      <button
+        [disabled]="deletionConfirmation !== this.species?.name"
+        (click)="onDelete()"
+        class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>

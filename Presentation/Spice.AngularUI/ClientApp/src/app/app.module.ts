@@ -18,6 +18,7 @@ import { FieldEditComponent } from './fields/edit/edit.component';
 import { SpeciesIndexComponent } from './species/index/index.component';
 import { SpeciesService } from './species/services/species.service';
 import { SpeciesUrlProvider } from './species/services/speciesurlprovider';
+import { SpeciesDetailsComponent } from './species/details/details.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SpeciesUrlProvider } from './species/services/speciesurlprovider';
     FieldDetailsComponent,
     FieldCreateComponent,
     FieldEditComponent,
-    SpeciesIndexComponent
+    SpeciesIndexComponent,
+    SpeciesDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,6 +44,7 @@ import { SpeciesUrlProvider } from './species/services/speciesurlprovider';
         { path: ':id/edit', component: FieldEditComponent }
       ] },
       { path: 'species', component: SpeciesIndexComponent, children: [
+        { path: ':id', component: SpeciesDetailsComponent }
       ] }
     ]),
     ReactiveFormsModule
