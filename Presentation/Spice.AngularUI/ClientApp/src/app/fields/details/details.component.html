@@ -1,0 +1,50 @@
+<div class="d-flex flex-row row">
+  <h2 class="mr-3">{{this.field?.name}}</h2>
+  <a routerLink="/fields/{{field?.id}}/edit" class="btn btn-light" title="Edit '{{field?.name}}'">
+    <i class="fas fa-edit"></i>
+  </a>
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <i class="fas fa-thermometer-quarter fa-lg" title="Temperatura"></i> {{this.weather?.info.general.temperature}} &#x2103;
+    <i class="fas fa-cloud fa-lg" title="Zachmurzenie"></i> {{this.weather?.info.clouds}}%
+    <i class="fas fa-tint fa-lg" title="Wilgotność"></i> {{this.weather?.info.general.humidity}}%
+  </li>
+</ul>
+<ul class="list-unstyled list-inline">
+  <li
+    *ngFor="let weatherOccurence of this.weather?.info.weather"
+    class="list-inline-item">
+    <i
+      class="owf owf-{{weatherOccurence.id}}-{{this.isNightAtLocation() ? 'n' : 'd'}} owf-2x"
+      title="{{weatherOccurence.description}}"></i>
+  </li>
+</ul>
+<p>{{this.field?.description}}</p>
+
+<!--TODO: modify this after plant list introduction-->
+<ul *ngIf="this.field?.plants.length > 0">
+  <li *ngFor="let plant of this.field?.plants">
+    {{plant.name}}
+  </li>
+</ul>
+
+<div class="card border-danger">
+  <div class="card-header bg-danger text-white">
+    Delete field
+  </div>
+  <div class="card-body">
+    <p class="card-text">Warning: deleting the selected field will also delete all plants growing there. If you want to keep some plants please move them to the other field. To delete field type its name (<code>{{this.field?.name}}</code>) to the box below.</p>
+    <div class="form-group">
+      <input type="text" name="deletionConfirmation" [(ngModel)]="deletionConfirmation" class="form-control">
+    </div>
+    <div>
+      <button
+        [disabled]="deletionConfirmation !== this.field?.name"
+        (click)="onDelete()"
+        class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>

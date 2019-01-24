@@ -1,18 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
+import { UrlProvider } from './services/urlprovider';
+import { FieldsUrlProvider } from './fields/services/fieldsurlprovider';
+import { FieldIndexComponent } from './fields/index/index.component';
+import { FieldService } from './fields/services/fields.service';
+import { FieldDetailsComponent } from './fields/details/details.component';
+import { WeatherService } from './services/weather.service';
+import { FieldCreateComponent } from './fields/create/create.component';
+import { FieldEditComponent } from './fields/edit/edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent
+    HomeComponent,
+    FieldIndexComponent,
+    FieldDetailsComponent,
+    FieldCreateComponent,
+    FieldEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -20,9 +32,15 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-    ])
+      { path: 'fields', component: FieldIndexComponent, children: [
+        { path: 'new', component: FieldCreateComponent },
+        { path: ':id', component: FieldDetailsComponent },
+        { path: ':id/edit', component: FieldEditComponent }
+      ] },
+    ]),
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
