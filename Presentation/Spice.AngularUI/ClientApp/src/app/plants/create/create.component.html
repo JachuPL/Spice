@@ -1,0 +1,116 @@
+<h2>Create new plant</h2>
+<form [formGroup]="f" (ngSubmit)="onSubmit()">
+  <div *ngIf="this.errors" class="alert alert-danger">
+    <ul>
+      <ng-container *ngFor="let property of errors; let i = index">
+        <ng-container *ngFor="let error of property; let j = index">
+          <li>{{error}}</li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control">
+    <span
+      *ngIf="!f.get('name').valid && f.get('name').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('name').errors['minlength']">Name must be minimum 2 characters long.</span>
+        <span *ngIf="f.get('name').errors['maxlength']">Name must be maximum 50 characters long.</span>
+        <span *ngIf="f.get('name').errors['required']">Name is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="fieldId">Field:</label>
+    <select
+      id="fieldId"
+      formControlName="fieldId"
+      class="form-control">
+        <option [value]="field.id" *ngFor="let field of fields">{{field.name}}</option>
+    </select>
+    <span
+      *ngIf="!f.get('fieldId').valid && f.get('fieldId').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('fieldId').errors['required']">Field is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="speciesId">Species:</label>
+    <select
+      id="speciesId"
+      formControlName="speciesId"
+      class="form-control">
+        <option [value]="iSpecies.id" *ngFor="let iSpecies of species">{{iSpecies.name}}</option>
+    </select>
+    <span
+      *ngIf="!f.get('speciesId').valid && f.get('speciesId').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('speciesId').errors['required']">Species is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="state">State:</label>
+    <select
+      id="state"
+      formControlName="state"
+      class="form-control">
+        <option [value]="state" *ngFor="let state of states.values()">{{this.plantsService.mapState(state)}}</option>
+    </select>
+    <span
+      *ngIf="!f.get('speciesId').valid && f.get('speciesId').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('speciesId').errors['required']">Species is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="row">Row:</label>
+    <input
+      type="number"
+      id="row"
+      formControlName="row"
+      class="form-control">
+    <span
+      *ngIf="!f.get('row').valid && f.get('row').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('row').errors['greaterThan']">Row must be greater than 0.</span>
+        <span *ngIf="f.get('row').errors['required']">Row is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="column">Column:</label>
+    <input
+      type="number"
+      id="column"
+      formControlName="column"
+      class="form-control">
+    <span
+      *ngIf="!f.get('column').valid && f.get('column').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('column').errors['greaterThan']">Column must be greater than 0.</span>
+        <span *ngIf="f.get('column').errors['required']">Column is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="planted">Planted:</label>
+    <input
+      type="datetime"
+      id="planted"
+      formControlName="planted"
+      class="form-control">
+    <span
+      *ngIf="!f.get('planted').valid && f.get('planted').touched"
+      class="form-text text-danger">
+        <span *ngIf="f.get('planted').errors['required']">Planted date is required.</span>
+    </span>
+  </div>
+  <div class="form-group">
+    <span
+      *ngIf="!f.valid && f.touched"
+      class="form-text text-danger">Please enter valid data!</span>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!f.valid">Create</button>
+</form>
