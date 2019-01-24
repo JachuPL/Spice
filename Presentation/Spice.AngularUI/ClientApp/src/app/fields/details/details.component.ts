@@ -36,14 +36,26 @@ export class FieldDetailsComponent implements OnInit, OnDestroy {
             this.weather = value;
             console.log(this.weather);
           });
+        },
+        (error) => {
+          console.error(error);
+          this.router.navigate(['/fields']);
         });
     });
   }
 
   ngOnDestroy() {
-    this.idSubscription.unsubscribe();
+    if (this.idSubscription) {
+      this.idSubscription.unsubscribe();
+    }
+
+    if (this.fieldSubscription) {
     this.fieldSubscription.unsubscribe();
+    }
+
+    if (this.weatherSubscription) {
     this.weatherSubscription.unsubscribe();
+    }
   }
 
   isNightAtLocation() {

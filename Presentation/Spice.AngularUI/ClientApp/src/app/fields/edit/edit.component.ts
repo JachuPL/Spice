@@ -34,7 +34,11 @@ export class FieldEditComponent implements OnInit, OnDestroy {
         delete field['id'];
         delete field['plants'];
         this.fieldEditionForm.setValue(field);
-      }));
+      }),
+      (error) => {
+        console.error(error);
+        this.router.navigate(['/fields']);
+      });
     });
   }
 
