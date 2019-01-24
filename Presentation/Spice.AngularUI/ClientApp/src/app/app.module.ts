@@ -15,6 +15,9 @@ import { FieldDetailsComponent } from './fields/details/details.component';
 import { WeatherService } from './services/weather.service';
 import { FieldCreateComponent } from './fields/create/create.component';
 import { FieldEditComponent } from './fields/edit/edit.component';
+import { SpeciesIndexComponent } from './species/index/index.component';
+import { SpeciesService } from './species/services/species.service';
+import { SpeciesUrlProvider } from './species/services/speciesurlprovider';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { FieldEditComponent } from './fields/edit/edit.component';
     FieldIndexComponent,
     FieldDetailsComponent,
     FieldCreateComponent,
-    FieldEditComponent
+    FieldEditComponent,
+    SpeciesIndexComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,10 +41,12 @@ import { FieldEditComponent } from './fields/edit/edit.component';
         { path: ':id', component: FieldDetailsComponent },
         { path: ':id/edit', component: FieldEditComponent }
       ] },
+      { path: 'species', component: SpeciesIndexComponent, children: [
+      ] }
     ]),
     ReactiveFormsModule
   ],
-  providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService],
+  providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService, SpeciesService, SpeciesUrlProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
