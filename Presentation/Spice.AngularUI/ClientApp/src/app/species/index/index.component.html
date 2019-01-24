@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <ul class="list-unstyled list-group border-right">
+        <li
+          class="list-group-item list-group-item-success"
+          routerLinkActive="active"
+          routerLink="/species/new">
+            <i class="fas fa-plus"></i> Create new species
+        </li>
+        <li
+          *ngFor="let iSpecies of species"
+          class="list-group-item"
+          routerLinkActive="active"
+          routerLink="/species/{{iSpecies.id}}">
+            {{iSpecies.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

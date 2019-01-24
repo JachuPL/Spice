@@ -12,6 +12,10 @@ export class NavMenuComponent {
     {
       url: 'fields',
       text: 'Fields'
+    },
+    {
+      url: 'species',
+      text: 'Species'
     }
   ];
 
