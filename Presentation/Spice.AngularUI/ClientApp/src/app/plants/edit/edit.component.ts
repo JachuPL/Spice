@@ -53,15 +53,17 @@ export class PlantEditComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe((param: Params) => {
       this.id = param['id'];
       this.plantSubscription = this.plantsService.get(this.id).subscribe(((plant: PlantDetailsModel) => {
+        plant['fieldId'] = plant['field'].id;
+        plant['speciesId'] = plant['species'].id;
         delete plant['id'];
         delete plant['nutrients'];
         delete plant['events'];
-        plant['fieldId'] = plant['field'].id;
         delete plant['field'];
-        plant['speciesId'] = plant['species'].id;
         delete plant['species'];
-        plant
-        this.plantEditionForm.setValue(plant);  // TODO: fix - field appears as blank after initialization
+        this.plantEditionForm.setValue(plant);
+        this.plantEditionForm.patchValue({
+          'state': this.plantsService.mapState(plant.state)
+        });
         this.fieldsSubscription = this.fieldsService.getAll().subscribe((values: FieldIndexModel[]) => {
           this.fields = values;
         });

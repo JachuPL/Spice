@@ -41,7 +41,7 @@ export class PlantCreateComponent implements OnInit, OnDestroy {
       'name': new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
       'fieldId': new FormControl('', [Validators.required]),
       'speciesId': new FormControl('', [Validators.required]),
-      'state': new FormControl('', [Validators.required]),
+      'state': new FormControl(this.plantsService.mapState(PlantStateModel.Healthy), [Validators.required]),
       'row': new FormControl('1', [Validators.required, Validators.min(1)]),
       'column': new FormControl('1', [Validators.required, Validators.min(1)]),
       'planted': new FormControl(new Date(), [Validators.required])
