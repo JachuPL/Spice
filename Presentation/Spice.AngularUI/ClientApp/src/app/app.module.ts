@@ -28,6 +28,7 @@ import { PlantDetailsComponent } from './plants/details/details.component';
 import { PlantCreateComponent } from './plants/create/create.component';
 import { PlantEditComponent } from './plants/edit/edit.component';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { PlantListComponent } from './plants/list/list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
     PlantsIndexComponent,
     PlantDetailsComponent,
     PlantCreateComponent,
-    PlantEditComponent
+    PlantEditComponent,
+    PlantListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Species</th>
+      <th>State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let plant of this.plants" (click)="onClick(plant.id)">
+      <td>
+        {{plant.name}}
+      </td>
+      <td>
+        {{plant.species}}
+      </td>
+      <td>
+        {{this.plantsService.mapState(plant.state)}}
+      </td>
+    </tr>
+  </tbody>
+</table>
