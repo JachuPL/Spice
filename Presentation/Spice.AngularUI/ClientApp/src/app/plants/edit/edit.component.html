@@ -96,11 +96,10 @@
   </div>
   <div class="form-group">
     <label for="planted">Planted:</label>
-    <input
-      type="datetime"
+    <angular2-date-picker
       id="planted"
       formControlName="planted"
-      class="form-control">
+      [settings]="datePickerSettings"></angular2-date-picker>
     <span
       *ngIf="!f.get('planted').valid && f.get('planted').touched"
       class="form-text text-danger">
@@ -112,5 +111,5 @@
       *ngIf="!f.valid && f.touched"
       class="form-text text-danger">Please enter valid data!</span>
   </div>
-  <button type="submit" class="btn btn-success" [disabled]="!f.valid">Create</button>
+  <button type="submit" class="btn btn-light" [disabled]="!f.valid">Save</button>
 </form>

@@ -58,4 +58,8 @@ export class PlantsService {
     create(value: any): Observable<Object> {
         return this.http.post(this.urls.CreateUrl(), value, { observe: 'response' });
     }
+
+    edit(id: string, value: any): Observable<Object> {
+        return this.http.put(this.urls.EditUrl(id), value, { observe: 'response' });
+    }
 }

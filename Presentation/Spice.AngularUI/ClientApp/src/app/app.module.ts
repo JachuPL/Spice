@@ -27,6 +27,7 @@ import { PlantsUrlProvider } from './plants/services/plantsurlprovider';
 import { PlantDetailsComponent } from './plants/details/details.component';
 import { PlantCreateComponent } from './plants/create/create.component';
 import { PlantEditComponent } from './plants/edit/edit.component';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { PlantEditComponent } from './plants/edit/edit.component';
         { path: ':id/edit', component: PlantEditComponent }
       ] }
     ]),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularDateTimePickerModule
   ],
   providers: [UrlProvider,
     FieldsUrlProvider, FieldService, WeatherService,

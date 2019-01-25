@@ -96,11 +96,10 @@
   </div>
   <div class="form-group">
     <label for="planted">Planted:</label>
-    <input
-      type="datetime"
+    <angular2-date-picker
       id="planted"
       formControlName="planted"
-      class="form-control">
+      [settings]="datePickerSettings"></angular2-date-picker>
     <span
       *ngIf="!f.get('planted').valid && f.get('planted').touched"
       class="form-text text-danger">

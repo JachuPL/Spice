@@ -18,6 +18,11 @@ import { PlantStateModel } from '../models/plantstate.model';
   styleUrls: ['./create.component.css']
 })
 export class PlantCreateComponent implements OnInit, OnDestroy {
+  datePickerSettings = {
+    bigBanner: true,
+    format: 'dd.MM.yyyy'
+  };
+
   keys = Object.keys;
   states = PlantStateModel;
   plantCreationForm: FormGroup;

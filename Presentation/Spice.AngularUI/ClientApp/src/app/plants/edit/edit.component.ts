@@ -19,6 +19,11 @@ import { PlantDetailsModel } from '../models/plant.details';
   styleUrls: ['./edit.component.css']
 })
 export class PlantEditComponent implements OnInit, OnDestroy {
+  datePickerSettings = {
+    bigBanner: true,
+    format: 'dd.MM.yyyy'
+  };
+
   keys = Object.keys;
   states = PlantStateModel;
   plantEditionForm: FormGroup;
@@ -55,6 +60,7 @@ export class PlantEditComponent implements OnInit, OnDestroy {
         delete plant['field'];
         plant['speciesId'] = plant['species'].id;
         delete plant['species'];
+        plant
         this.plantEditionForm.setValue(plant);  // TODO: fix - field appears as blank after initialization
         this.fieldsSubscription = this.fieldsService.getAll().subscribe((values: FieldIndexModel[]) => {
           this.fields = values;
@@ -82,8 +88,8 @@ export class PlantEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.plantEditionForm.value['planted'] = formatDate(this.plantEditionForm.value['planted'], 'yyyy-MM-dd HH:mm:ss', 'en');
-    this.plantsService.create(this.plantEditionForm.value).subscribe(
-      (value: HttpResponse<object>) => this.router.navigate(['/plants', value.body]), // TODO: make index list refresh on success
+    this.plantsService.edit(this.id, this.plantEditionForm.value).subscribe(
+      (value: HttpResponse<object>) => this.router.navigate(['/plants', this.id]), // TODO: make index list refresh on success
       (error: HttpErrorResponse) => {
         switch (error.status) {
           case 400:
