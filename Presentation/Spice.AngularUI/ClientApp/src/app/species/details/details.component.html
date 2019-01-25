@@ -7,12 +7,9 @@
 
 <p>{{this.species?.description}}</p>
 
-<!--TODO: modify this after plant list introduction-->
-<ul *ngIf="this.species?.plants.length > 0">
-  <li *ngFor="let plant of this.species?.plants">
-    {{plant.name}}
-  </li>
-</ul>
+<div *ngIf="this.species?.plants.length > 0">
+  <app-plants-list [plants]="this.species?.plants"></app-plants-list>
+</div>
 
 <!--TODO: modify this after nutrients introduction-->
 <div *ngIf="this.nutritionSummary?.length > 0">

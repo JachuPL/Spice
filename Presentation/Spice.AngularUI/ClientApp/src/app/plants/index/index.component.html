@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+      <div class="col-3">
+        <ul class="list-unstyled list-group border-right">
+          <li
+            class="list-group-item list-group-item-success"
+            routerLinkActive="active"
+            routerLink="/plants/new">
+              <i class="fas fa-plus"></i> Create new plant
+          </li>
+          <li
+            *ngFor="let plant of plants"
+            class="list-group-item"
+            routerLinkActive="active"
+            routerLink="/plants/{{plant.id}}">
+              {{plant.name}}
+          </li>
+        </ul>
+      </div>
+      <div class="col-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

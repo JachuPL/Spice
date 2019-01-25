@@ -1,0 +1,42 @@
+<div class="d-flex flex-row row">
+  <h2 class="mr-3">{{this.plant?.name}} <small>{{this.plant?.species.latinName}}</small></h2>
+  <a routerLink="/plants/{{plant?.id}}/edit" class="btn btn-light" title="Edit '{{plant?.name}}'">
+    <i class="fas fa-edit"></i>
+  </a>
+</div>
+<p>Grows on {{this.plant?.field.name}}</p>
+<p>{{this.service.mapState(this.plant?.state)}}</p>
+  
+<!--TODO: modify this after introducing administered nutrients list-->
+<ul *ngIf="this.plant?.nutrients.length > 0">
+  <li *ngFor="let nutrient of this.plant?.nutrients">
+    {{nutrient.date}}: {{nutrient.amount}} of {{nutrient.name}}
+  </li>
+</ul>
+
+<!--TODO: modify this after introducing plant events list-->
+<ul *ngIf="this.plant?.events.length > 0">
+  <li *ngFor="let event of this.plant?.events">
+    {{event.occured}}: {{this.service.mapEventType(event.type)}}
+  </li>
+</ul>
+  
+<div class="card border-danger">
+  <div class="card-header bg-danger text-white">
+    Delete plant
+  </div>
+  <div class="card-body">
+    <p class="card-text">Warning: deleting the selected plant will also delete all plants growing there. If you want to keep some plants please move them to the other plant. To delete plant type its name (<code>{{this.plant?.name}}</code>) to the box below.</p>
+    <div class="form-group">
+      <input type="text" name="deletionConfirmation" [(ngModel)]="deletionConfirmation" class="form-control">
+    </div>
+    <div>
+      <button
+        [disabled]="deletionConfirmation !== this.plant?.name"
+        (click)="onDelete()"
+        class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>

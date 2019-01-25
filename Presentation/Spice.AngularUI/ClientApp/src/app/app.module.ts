@@ -21,6 +21,14 @@ import { SpeciesUrlProvider } from './species/services/speciesurlprovider';
 import { SpeciesDetailsComponent } from './species/details/details.component';
 import { SpeciesCreateComponent } from './species/create/create.component';
 import { SpeciesEditComponent } from './species/edit/edit.component';
+import { PlantsIndexComponent } from './plants/index/index.component';
+import { PlantsService } from './plants/services/plants.service';
+import { PlantsUrlProvider } from './plants/services/plantsurlprovider';
+import { PlantDetailsComponent } from './plants/details/details.component';
+import { PlantCreateComponent } from './plants/create/create.component';
+import { PlantEditComponent } from './plants/edit/edit.component';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { PlantListComponent } from './plants/list/list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +42,12 @@ import { SpeciesEditComponent } from './species/edit/edit.component';
     SpeciesIndexComponent,
     SpeciesDetailsComponent,
     SpeciesCreateComponent,
-    SpeciesEditComponent
+    SpeciesEditComponent,
+    PlantsIndexComponent,
+    PlantDetailsComponent,
+    PlantCreateComponent,
+    PlantEditComponent,
+    PlantListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,11 +64,20 @@ import { SpeciesEditComponent } from './species/edit/edit.component';
         { path: 'new', component: SpeciesCreateComponent },
         { path: ':id', component: SpeciesDetailsComponent },
         { path: ':id/edit', component: SpeciesEditComponent }
+      ] },
+      { path: 'plants', component: PlantsIndexComponent, children: [
+        { path: 'new', component: PlantCreateComponent },
+        { path: ':id', component: PlantDetailsComponent },
+        { path: ':id/edit', component: PlantEditComponent }
       ] }
     ]),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularDateTimePickerModule
   ],
-  providers: [UrlProvider, FieldsUrlProvider, FieldService, WeatherService, SpeciesService, SpeciesUrlProvider],
+  providers: [UrlProvider,
+    FieldsUrlProvider, FieldService, WeatherService,
+    SpeciesService, SpeciesUrlProvider,
+    PlantsService, PlantsUrlProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
